@@ -1,26 +1,24 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Login from './pages/login/Login';
+import Main from './pages/main/Main';
+import { AuthServiceType } from './services/auth_service';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+type PropType = {
+  authService: AuthServiceType;
+};
+
+const App = ({ authService }: PropType) => (
+  <BrowserRouter>
+    <Switch>
+      <Route path="/" exact>
+        <Login authService={authService} />
+      </Route>
+      <Route path="/main" exact>
+        <Main authService={authService} />
+      </Route>
+    </Switch>
+  </BrowserRouter>
+);
 
 export default App;
