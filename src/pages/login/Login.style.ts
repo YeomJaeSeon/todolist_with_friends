@@ -4,12 +4,13 @@ import {
   BlackColor,
   WhiteColor,
   StrongMainColor,
+  NotiColor,
 } from '../../utils/css-utils';
 
 export const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 500px;
+  width: 700px;
   height: 500px;
   background-color: ${MainBackgroundColor};
   border-radius: 10px;
@@ -28,7 +29,7 @@ export const TextContainer = styled.div`
   height: 100%;
   border-right: 3px solid ${BlackColor};
   padding: 0 15px;
-  flex-basis: 65%;
+  flex-basis: 50%;
 `;
 
 export const Title = styled.h1`
@@ -59,6 +60,14 @@ export const ButtonTitle = styled.p`
   font-weight: bold;
   font-size: 20px;
 `;
+
+export const InputText = styled.input`
+  width: 80%;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  padding: 5px 10px;
+`;
+
 export const Button = styled.button`
   font-size: 20px;
   background-color: white;
@@ -75,11 +84,31 @@ export const Button = styled.button`
   }
 `;
 
+export const SignUpContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const SignUpText = styled.span`
+  margin-right: 10px;
+`;
+
+export const SignUpButton = styled.button`
+  color: ${NotiColor};
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 300ms ease;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 export const Footer = styled.footer`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-basis: 20%;
+  flex: 1;
   background-color: ${BlackColor};
   color: ${WhiteColor};
   border-radius: 0 0 10px 10px;

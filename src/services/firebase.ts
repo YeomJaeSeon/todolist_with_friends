@@ -10,6 +10,7 @@ const firebaseConfig = {
 
 // types
 export type AuthType = firebase.User | null;
+export type SinUpType = Promise<firebase.auth.UserCredential>;
 
 // firebaseApp
 export const firebaseApp = firebase.initializeApp(firebaseConfig);

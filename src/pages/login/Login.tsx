@@ -7,7 +7,11 @@ import {
   Description,
   ButtonContainer,
   ButtonTitle,
+  InputText,
   Button,
+  SignUpContainer,
+  SignUpText,
+  SignUpButton,
   Footer,
 } from './Login.style';
 import { AuthServiceType } from '../../services/auth_service';
@@ -30,6 +34,10 @@ const Login = ({ authService }: PropType) => {
       state: { id: uid },
     });
   };
+
+  const goToSignUp = () => {
+    history.push('/signup');
+  };
   useEffect(() => {
     authService.onAuthStatus((user: AuthType) => {
       user && goToMain(user.uid);
@@ -44,9 +52,13 @@ const Login = ({ authService }: PropType) => {
         </TextContainer>
         <ButtonContainer>
           <ButtonTitle>Please Login</ButtonTitle>
-          <Button id="Google" onClick={loginHandler}>
-            Google
-          </Button>
+          <InputText type="text" />
+          <InputText type="password" />
+          <Button>Login</Button>
+          <SignUpContainer>
+            <SignUpText>처음 방문하셨나요?</SignUpText>
+            <SignUpButton onClick={goToSignUp}>Sign Up</SignUpButton>
+          </SignUpContainer>
         </ButtonContainer>
       </ContentContainer>
       <Footer>Show your passion!!🥇🥇🥇</Footer>

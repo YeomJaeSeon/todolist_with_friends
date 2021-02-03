@@ -1,12 +1,16 @@
-import { AuthType, firebaseAuth, GoogleProvider } from './firebase';
+import { AuthType, SinUpType, firebaseAuth, GoogleProvider } from './firebase';
 
 export type AuthServiceType = {
+  signUp(email: string, password: string): SinUpType;
   login(provider: string): void;
   onAuthStatus(callback: (user: AuthType) => void): void;
   logout(): void;
 };
 
 export default class AuthService {
+  signUp(email: string, password: string) {
+    return firebaseAuth.createUserWithEmailAndPassword(email, password);
+  }
   login(provider: string) {
     firebaseAuth.signInWithPopup(this.createProvider(provider));
   }
@@ -22,6 +26,9 @@ export default class AuthService {
     firebaseAuth.onAuthStateChanged((user: AuthType) => {
       callback(user);
     });
+  }
+  isUser() {
+    const user = firebaseAuth.currentUser;
   }
   logout() {
     firebaseAuth.signOut();
