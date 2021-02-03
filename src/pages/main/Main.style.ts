@@ -7,14 +7,17 @@ export const MainContainer = styled.div`
 `;
 
 export const ListContainer = styled.ul`
-  flex: 1 1 20%;
+  width: 300px;
   background-color: gray;
   margin: 0;
   padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 export const ContentContainer = styled.div`
-  flex: 1 1 80%;
+  flex: 1;
   background-color: orange;
   position: relative;
 `;
