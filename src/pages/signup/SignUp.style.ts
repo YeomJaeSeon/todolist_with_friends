@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { MainBackgroundColor } from '../../utils/css-utils';
+import { MainBackgroundColor, NotiColor } from '../../utils/css-utils';
 
 export const SignUpForm = styled.form`
+  position: relative;
   width: 500px;
   height: 600px;
   background-color: ${MainBackgroundColor};
@@ -9,6 +10,7 @@ export const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-shadow: 10px 10px 13px 5px rgba(0, 10, 18, 1);
 `;
 
 export const SignUpTitle = styled.h1`
@@ -52,4 +54,26 @@ export const SignUpBtn = styled.button`
   opacity: ${(props: SignUpButtonType) => (props.isComplete ? '1' : '0.3')};
   cursor: ${(props: SignUpButtonType) =>
     props.isComplete ? 'pointer' : 'default'};
+`;
+
+export const BackLoginContainer = styled.div`
+  position: absolute;
+  bottom: 15px;
+  right: 20px;
+`;
+
+export const BackLoginText = styled.span`
+  font-size: 15px;
+`;
+
+export const BackLoginBtn = styled.button`
+  font-size: 15px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: ${NotiColor};
+  font-weight: bold;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

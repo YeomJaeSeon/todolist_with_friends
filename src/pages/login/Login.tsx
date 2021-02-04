@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   LoginContainer,
   ContentContainer,
@@ -22,10 +22,36 @@ type PropType = {
   authService: AuthServiceType;
 };
 const Login = ({ authService }: PropType) => {
+  const emailRef = useRef<HTMLInputElement>(null);
+  const pwdRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
-  const loginHandler = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    authService.login(e.currentTarget.id);
+  const loginHandler = () => {
+    const email = emailRef.current && emailRef.current.value;
+    const pwd = pwdRef.current && pwdRef.current.value;
+    if (email && pwd) {
+      authService
+        .login(email, pwd)
+        .then((value) => {
+          alert('로그인 성공');
+        })
+        .catch((err) => {
+          console.log(err.code);
+          if (err.code === 'auth/user-not-found') {
+            alert('존재하지 않는 아이디입니다.');
+          } else if (err.code === 'auth/invalid-email') {
+            alert('잘못된 이메일 형식입니다.');
+          } else if (err.code === 'auth/wrong-password') {
+            alert('잘못된 비밀번호입니다.');
+          } else if (err.code === 'auth/too-many-requests') {
+            alert('너무많이 틀렸습니다. 잠시후 시도해주세요');
+          } else {
+            alert(err.message);
+          }
+        });
+    } else {
+      alert('이메일이나 비밀번호를 입력해주세요');
+    }
   };
 
   const goToMain = (uid: string) => {
@@ -52,9 +78,17 @@ const Login = ({ authService }: PropType) => {
         </TextContainer>
         <ButtonContainer>
           <ButtonTitle>Please Login</ButtonTitle>
-          <InputText type="text" />
-          <InputText type="password" />
-          <Button>Login</Button>
+          <InputText
+            ref={emailRef}
+            type="text"
+            placeholder="이메일 입력해주세요."
+          />
+          <InputText
+            ref={pwdRef}
+            type="password"
+            placeholder="비밀번호 입력해주세요."
+          />
+          <Button onClick={loginHandler}>Login</Button>
           <SignUpContainer>
             <SignUpText>처음 방문하셨나요?</SignUpText>
             <SignUpButton onClick={goToSignUp}>Sign Up</SignUpButton>

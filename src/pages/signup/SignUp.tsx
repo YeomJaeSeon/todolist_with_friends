@@ -7,8 +7,13 @@ import {
   SinUpInput,
   CheckIcon,
   SignUpBtn,
+  BackLoginContainer,
+  BackLoginText,
+  BackLoginBtn,
 } from './SignUp.style';
 import { AuthServiceType } from '../../services/auth_service';
+import { useHistory } from 'react-router-dom';
+
 const EmailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
 type PropType = {
@@ -25,6 +30,10 @@ const SignUp: React.FC<PropType> = ({ authService }) => {
     pwd: '',
     rePwd: '',
   });
+  const history = useHistory();
+  const goToLogin = () => {
+    history.push('/');
+  };
   const signUpHandler = (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
@@ -32,12 +41,13 @@ const SignUp: React.FC<PropType> = ({ authService }) => {
     authService
       .signUp(newUser.email, newUser.pwd)
       .then((user) => {
-        console.log('*****');
-        console.log(user);
+        alert('회원가입 성공!');
+        goToLogin();
       })
       .catch((err) => {
-        console.log('!!!!');
-        console.log(err);
+        if (err.code === 'auth/email-already-in-use') {
+          alert('이미 존재하는 이메일입니다.');
+        }
       });
   };
   const upDateUserInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,6 +143,11 @@ const SignUp: React.FC<PropType> = ({ authService }) => {
       <SignUpBtn isComplete={isAllClear()} onClick={signUpHandler}>
         가입하기
       </SignUpBtn>
+      <BackLoginContainer>
+        <BackLoginText>회원이신가요?</BackLoginText>
+        <BackLoginBtn onClick={goToLogin}>로그인</BackLoginBtn>
+        <BackLoginText>으로 돌아가기</BackLoginText>
+      </BackLoginContainer>
     </SignUpForm>
   );
 };

@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory, useLocation } from 'react-router-dom';
-import {
-  MainContainer,
-  ListContainer,
-  ContentContainer,
-  LogoutBtn,
-} from './Main.style';
-import InputTodoCard from 'src/components/InputTodoCard/InputTodoCard';
+import { MainContainer } from './Main.style';
+import Editor from 'src/components/Editor/Editor';
+import Timer from 'src/components/Timer/Timer';
 
 type PropType = {
   authService: AuthServiceType;
@@ -39,13 +35,8 @@ const Main = ({ authService }: PropType) => {
   };
   return (
     <MainContainer>
-      <ListContainer>
-        <h1>Plan your todos</h1>
-        <InputTodoCard />
-      </ListContainer>
-      <ContentContainer>
-        <LogoutBtn onClick={logoutHandler}>Logout</LogoutBtn>
-      </ContentContainer>
+      <Editor />
+      <Timer logout={logoutHandler} />
     </MainContainer>
   );
 };

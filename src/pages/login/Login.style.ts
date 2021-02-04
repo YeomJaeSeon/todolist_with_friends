@@ -94,11 +94,12 @@ export const SignUpText = styled.span`
 `;
 
 export const SignUpButton = styled.button`
+  font-size: 15px;
+  font-weight: bold;
   color: ${NotiColor};
   background-color: transparent;
   border: none;
   cursor: pointer;
-  transition: all 300ms ease;
   &:hover {
     transform: scale(1.1);
   }
