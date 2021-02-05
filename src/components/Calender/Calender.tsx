@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
-import Calendar from 'react-calendar';
-import {} from './Calender.style';
+import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import DatePicker from 'react-datepicker';
+import { CalendarBtn } from './Calender.style';
 
-const Calender = () => {
-  const [value, onChange] = useState(new Date());
+import 'react-datepicker/dist/react-datepicker.css';
 
-  // const change = (e) => {
-  //   setValue((value) => e.target.value);
-  // };
-  return (
-    <div>
-      <Calendar onChange={onChange} value={value} />
-    </div>
-  );
+export type RefType = {
+  startDate: Date | null;
 };
 
-export default Calender;
+const Calendar = forwardRef<RefType>((_props, ref) => {
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      startDate,
+    }),
+    [startDate]
+  );
+
+  return (
+    <DatePicker
+      selected={startDate}
+      onChange={(date) => date && setStartDate(date)}
+      customInput={<ExampleCustomInput />}
+    />
+  );
+});
+
+export default Calendar;
+
+type CustomType = {
+  value?: string;
+  onClick?: () => void;
+};
+
+const ExampleCustomInput: React.FC<CustomType> = forwardRef(
+  ({ value, onClick }, ref) => (
+    <CalendarBtn className="example-custom-input" onClick={onClick}>
+      {value} 📆
+    </CalendarBtn>
+  )
+);

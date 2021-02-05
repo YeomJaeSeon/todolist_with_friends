@@ -8,16 +8,10 @@ import Timer from 'src/components/Timer/Timer';
 type PropType = {
   authService: AuthServiceType;
 };
+
 const Main = ({ authService }: PropType) => {
-  // const [todos, setTodos] = useState({
-  //   1: {
-  //     id : 1,
+  const [cards, setCards] = useState<number[]>([]);
 
-  //   }
-  //   2: {
-
-  //   }
-  // });
   const location = useLocation();
   console.log(location.state);
   //  로그인한 사람의 uid를받음
@@ -33,9 +27,16 @@ const Main = ({ authService }: PropType) => {
   const logoutHandler = () => {
     authService.logout();
   };
+
+  const addCard = (id: number) => {
+    setCards((cards) => [...cards, id]);
+  };
+  const deleteCard = (selectedId: number) => {
+    setCards((cards) => cards.filter((id) => id !== selectedId));
+  };
   return (
     <MainContainer>
-      <Editor />
+      <Editor cards={cards} addCard={addCard} onDeleteCard={deleteCard} />
       <Timer logout={logoutHandler} />
     </MainContainer>
   );

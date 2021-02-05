@@ -1,38 +1,53 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import Calendar, { RefType } from '../Calender/Calender';
 import Todo from '../TodoForm/Todo';
-import { CardContainer, TodoInput, TodoContainer } from './Card.style';
+import {
+  CardContainer,
+  CardDeleteBtn,
+  TrashIcon,
+  AddContainer,
+  AddInput,
+  AddBtn,
+  TodoContainer,
+} from './Card.style';
 
-type ObjectType = {
+type StateType = {
   [key: string]: {
     id: number;
     thing: string;
-    check: boolean;
   };
 };
 
-const Card: React.FC = () => {
-  const [todos, setTodos] = useState<ObjectType>({});
+type PropType = {
+  id: number;
+  onDeleteCard(id: number): void;
+};
+
+const Card: React.FC<PropType> = ({ id, onDeleteCard }) => {
+  const [todos, setTodos] = useState<StateType>({});
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const addTodo = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const calendarRef = useRef<RefType>(null);
+
+  const divRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    divRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, []);
+
+  const addTodo = () => {
     if (inputRef.current && inputRef.current.value) {
       const newTodo = inputRef.current.value;
       const newId = Date.now();
       setTodos((todos) => ({
         ...todos,
-        [newId]: { id: newId, thing: newTodo, check: false },
+        [newId]: { id: newId, thing: newTodo },
       }));
 
       inputRef.current.value = '';
     }
   };
 
-  const onCheck = (id: number) => {
-    setTodos((todos) => ({
-      ...todos,
-      [id]: { ...todos[id], check: !todos[id].check },
-    }));
-  };
   const onDelete = (id: number) => {
     setTodos((todos) => {
       const newTodo = { ...todos };
@@ -41,21 +56,34 @@ const Card: React.FC = () => {
     });
   };
 
+  const onUpdate = (id: number, value: string) => {
+    setTodos((todos) => ({
+      ...todos,
+      [id]: { ...todos[id], thing: value },
+    }));
+  };
+
+  const deleteCard = () => {
+    onDeleteCard(id);
+  };
+
   return (
-    <CardContainer
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
-    >
-      <TodoInput ref={inputRef} type="text" />
-      <button onClick={addTodo}>➕</button>
+    <CardContainer ref={divRef}>
+      <Calendar ref={calendarRef} />
+      <CardDeleteBtn onClick={deleteCard}>
+        <TrashIcon />
+      </CardDeleteBtn>
+      <AddContainer>
+        <AddInput ref={inputRef} type="text" />
+        <AddBtn onClick={addTodo}>➕</AddBtn>
+      </AddContainer>
       <TodoContainer>
         {Object.keys(todos).map((key) => (
           <Todo
             key={key}
             todo={todos[key]}
-            onCheck={onCheck}
             onDelete={onDelete}
+            onUpdate={onUpdate}
           />
         ))}
       </TodoContainer>

@@ -1,12 +1,27 @@
 import React from 'react';
 import Card from '../Card/Card';
-import { EditorContainer } from './Editor.style';
+import { EditorContainer, CardAddBtn } from './Editor.style';
 
-const Editor = () => {
+type PropType = {
+  cards: number[];
+  addCard: (id: number) => void;
+  onDeleteCard(selectedId: number): void;
+};
+
+let newId: number;
+
+const Editor: React.FC<PropType> = ({ cards, addCard, onDeleteCard }) => {
+  const addCardHandler = () => {
+    newId = Date.now();
+    addCard(newId);
+  };
   return (
     <EditorContainer>
       <h1>Plan your todos</h1>
-      <Card />
+      {cards.map((id: number) => (
+        <Card key={id} id={id} onDeleteCard={onDeleteCard} />
+      ))}
+      <CardAddBtn onClick={addCardHandler}>➕</CardAddBtn>
     </EditorContainer>
   );
 };
