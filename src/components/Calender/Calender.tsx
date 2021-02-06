@@ -37,7 +37,11 @@ type CustomType = {
 
 const ExampleCustomInput: React.FC<CustomType> = forwardRef(
   ({ value, onClick }, ref) => (
-    <CalendarBtn className="example-custom-input" onClick={onClick}>
+    <CalendarBtn
+      type="button"
+      className="example-custom-input"
+      onClick={onClick}
+    >
       {value} 📆
     </CalendarBtn>
   )

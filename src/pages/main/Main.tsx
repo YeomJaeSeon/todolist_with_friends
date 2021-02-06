@@ -10,8 +10,6 @@ type PropType = {
 };
 
 const Main = ({ authService }: PropType) => {
-  const [cards, setCards] = useState<number[]>([]);
-
   const location = useLocation();
   console.log(location.state);
   //  로그인한 사람의 uid를받음
@@ -28,15 +26,9 @@ const Main = ({ authService }: PropType) => {
     authService.logout();
   };
 
-  const addCard = (id: number) => {
-    setCards((cards) => [...cards, id]);
-  };
-  const deleteCard = (selectedId: number) => {
-    setCards((cards) => cards.filter((id) => id !== selectedId));
-  };
   return (
     <MainContainer>
-      <Editor cards={cards} addCard={addCard} onDeleteCard={deleteCard} />
+      <Editor />
       <Timer logout={logoutHandler} />
     </MainContainer>
   );

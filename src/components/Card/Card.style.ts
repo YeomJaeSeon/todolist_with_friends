@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { WhiteColor } from '../../utils/css-utils';
 import { ReactComponent as TrashSVG } from '../../assets/svg/trash-solid.svg';
 
-export const CardContainer = styled.div`
+export const CardContainer = styled.form`
   position: relative;
   width: 245px;
   height: 230px;

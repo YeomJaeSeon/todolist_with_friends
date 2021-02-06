@@ -1,30 +1,33 @@
 import React, { useState, useRef } from 'react';
 import { TodoList, TodoText, TodoBtn } from './Todo.style';
+import { useDispatch } from 'react-redux';
+import { deleteTodoAction, updateTodoAction } from '../../modules/todos';
 
 type PropType = {
+  cardId: string;
   todo: {
     id: number;
     thing: string;
   };
-  onDelete: (id: number) => void;
-  onUpdate: (id: number, value: string) => void;
 };
 
-const Todo: React.FC<PropType> = ({ todo, onDelete, onUpdate }) => {
+const Todo: React.FC<PropType> = ({ cardId, todo }) => {
+  const dispatch = useDispatch();
   const [canEdit, setCanEdit] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const deleteHandler = () => {
-    onDelete(todo.id);
-  };
 
   const clickEdit = () => {
     setCanEdit((edit) => !edit);
     inputRef.current && inputRef.current.focus();
   };
 
-  const upDateHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onUpdate(todo.id, e.currentTarget.value);
+  const deleteTodo = () => {
+    dispatch(deleteTodoAction(cardId, todo.id));
+  };
+
+  const updateTodo = () => {
+    if (inputRef && inputRef.current)
+      dispatch(updateTodoAction(cardId, todo.id, inputRef.current.value));
   };
 
   return (
@@ -32,12 +35,17 @@ const Todo: React.FC<PropType> = ({ todo, onDelete, onUpdate }) => {
       <TodoText
         ref={inputRef}
         value={todo.thing}
-        onChange={upDateHandler}
         readOnly={canEdit ? false : true}
         edits={canEdit}
+        onChange={updateTodo}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && canEdit) {
+            clickEdit();
+          }
+        }}
       />
       <TodoBtn onClick={clickEdit}>{canEdit ? '✔' : 'Edit'}</TodoBtn>
-      <TodoBtn onClick={deleteHandler}>Delete</TodoBtn>
+      <TodoBtn onClick={deleteTodo}>Delete</TodoBtn>
     </TodoList>
   );
 };

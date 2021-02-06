@@ -1,27 +1,25 @@
 import React from 'react';
 import Card from '../Card/Card';
 import { EditorContainer, CardAddBtn } from './Editor.style';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootType } from '../../modules/index';
+import { addCardAction } from '../../modules/todos';
 
-type PropType = {
-  cards: number[];
-  addCard: (id: number) => void;
-  onDeleteCard(selectedId: number): void;
-};
-
-let newId: number;
-
-const Editor: React.FC<PropType> = ({ cards, addCard, onDeleteCard }) => {
-  const addCardHandler = () => {
-    newId = Date.now();
-    addCard(newId);
+const Editor: React.FC = () => {
+  const dispatch = useDispatch();
+  const cards = useSelector((state: RootType) => state.todoReducer);
+  const addCard = () => {
+    const newId = Date.now();
+    dispatch(addCardAction(newId));
   };
+
   return (
     <EditorContainer>
       <h1>Plan your todos</h1>
-      {cards.map((id: number) => (
-        <Card key={id} id={id} onDeleteCard={onDeleteCard} />
+      {Object.keys(cards).map((key) => (
+        <Card key={key} cardId={key} todos={cards[key].todos} />
       ))}
-      <CardAddBtn onClick={addCardHandler}>➕</CardAddBtn>
+      <CardAddBtn onClick={addCard}>➕</CardAddBtn>
     </EditorContainer>
   );
 };
