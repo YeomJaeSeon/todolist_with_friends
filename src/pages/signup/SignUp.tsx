@@ -42,6 +42,7 @@ const SignUp: React.FC<PropType> = ({ authService }) => {
       .signUp(newUser.email, newUser.pwd)
       .then((user) => {
         alert('회원가입 성공!');
+        authService.logout();
         goToLogin();
       })
       .catch((err) => {

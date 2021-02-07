@@ -1,13 +1,16 @@
 import styled from 'styled-components';
+import { WhiteColor, BoxShadow } from '../../utils/css-utils';
 
 export const PlanTimerContainer = styled.div`
-  width: 80%;
+  width: 60%;
   height: 30%;
-  background-color: gray;
+  background-color: ${WhiteColor};
   display: flex;
   align-items: center;
   justify-content: space-around;
   font-size: 50px;
+  border-radius: 15px;
+  box-shadow: ${BoxShadow};
 `;
 
 export const TimeSection = styled.section``;

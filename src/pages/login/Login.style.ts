@@ -5,6 +5,7 @@ import {
   WhiteColor,
   StrongMainColor,
   NotiColor,
+  BoxShadow,
 } from '../../utils/css-utils';
 
 export const LoginContainer = styled.div`
@@ -14,7 +15,7 @@ export const LoginContainer = styled.div`
   height: 500px;
   background-color: ${MainBackgroundColor};
   border-radius: 10px;
-  box-shadow: 10px 10px 13px 5px rgba(0, 10, 18, 1);
+  box-shadow: ${BoxShadow};
 `;
 export const ContentContainer = styled.div`
   display: flex;
@@ -49,14 +50,14 @@ export const Description = styled.p`
   font-size: 20px;
   animation: ${flow} 3s linear infinite;
 `;
-export const ButtonContainer = styled.div`
+export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   flex: 1;
 `;
-export const ButtonTitle = styled.p`
+export const FormTitle = styled.p`
   font-weight: bold;
   font-size: 20px;
 `;

@@ -5,8 +5,8 @@ import {
   TextContainer,
   Title,
   Description,
-  ButtonContainer,
-  ButtonTitle,
+  FormContainer,
+  FormTitle,
   InputText,
   Button,
   SignUpContainer,
@@ -76,8 +76,8 @@ const Login = ({ authService }: PropType) => {
           <Title>todo list 🏃‍♂️🏃‍♀️🏃‍♂🏃‍♀️</Title>
           <Description>What is your first small step🦶?</Description>
         </TextContainer>
-        <ButtonContainer>
-          <ButtonTitle>Please Login</ButtonTitle>
+        <FormContainer onSubmit={(e) => e.preventDefault()}>
+          <FormTitle>Please Login</FormTitle>
           <InputText
             ref={emailRef}
             type="text"
@@ -93,7 +93,7 @@ const Login = ({ authService }: PropType) => {
             <SignUpText>처음 방문하셨나요?</SignUpText>
             <SignUpButton onClick={goToSignUp}>Sign Up</SignUpButton>
           </SignUpContainer>
-        </ButtonContainer>
+        </FormContainer>
       </ContentContainer>
       <Footer>Show your passion!!🥇🥇🥇</Footer>
     </LoginContainer>

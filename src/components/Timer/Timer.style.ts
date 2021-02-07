@@ -1,12 +1,13 @@
 import styled from 'styled-components';
+import { MainBackgroundColor } from '../../utils/css-utils';
 
 export const TimerContainer = styled.div`
   flex: 1;
-  background-color: orange;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: ${MainBackgroundColor};
 `;
 
 export const TimerTitle = styled.h1``;

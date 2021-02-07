@@ -12,6 +12,7 @@ const PlanTimer = () => {
 
   useEffect(() => {
     return () => stop();
+    // clean up함수로 메모리 누수방지
   }, []);
 
   const start = () => {

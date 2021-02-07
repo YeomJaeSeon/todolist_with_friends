@@ -1,5 +1,9 @@
 import styled from 'styled-components';
-import { MainBackgroundColor, NotiColor } from '../../utils/css-utils';
+import {
+  MainBackgroundColor,
+  NotiColor,
+  BoxShadow,
+} from '../../utils/css-utils';
 
 export const SignUpForm = styled.form`
   position: relative;
@@ -10,7 +14,7 @@ export const SignUpForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 10px 10px 13px 5px rgba(0, 10, 18, 1);
+  box-shadow: ${BoxShadow};
 `;
 
 export const SignUpTitle = styled.h1`
