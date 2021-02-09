@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Calendar, { RefType } from '../Calender/Calender';
 import Todo from '../TodoForm/Todo';
 import {

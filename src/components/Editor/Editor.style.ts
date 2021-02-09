@@ -11,6 +11,7 @@ export const ReactContainer = styled.div`
 export const Container = styled.div`
   flex: 1;
   display: flex;
+  padding-bottom: 20px;
 `;
 export const EditorTitle = styled.h1<{ fold: boolean }>`
   display: ${(props) => (props.fold ? 'inline' : 'none')};
@@ -24,6 +25,18 @@ export const CardListContainer = styled.ul`
   align-items: center;
 `;
 
+export const CardAddBtn = styled.button`
+  font-size: 30px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  margin: 0 0 20px 0;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 export const EditorContainer = styled.div<{ fold: boolean }>`
   width: ${(props) => (props.fold ? '300px' : '0')};
   margin: 0;
@@ -35,6 +48,9 @@ export const EditorContainer = styled.div<{ fold: boolean }>`
   ${CardListContainer} {
     display: ${(props) => (props.fold ? 'flex' : 'none')};
   }
+  ${CardAddBtn} {
+    display: ${(props) => (props.fold ? 'flex' : 'none')};
+  }
 `;
 export const ArrowIcon = styled.svg`
   position: sticky;
@@ -43,16 +59,4 @@ export const ArrowIcon = styled.svg`
   height: 40px;
   cursor: pointer;
   padding: 0 10px;
-`;
-
-export const CardAddBtn = styled.button`
-  font-size: 30px;
-  background-color: transparent;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  margin: 0 0 20px 0;
-  &:hover {
-    transform: scale(1.1);
-  }
 `;

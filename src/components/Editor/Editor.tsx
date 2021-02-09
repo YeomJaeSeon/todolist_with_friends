@@ -14,6 +14,7 @@ import { RootType } from '../../modules/index';
 import { addCardAction } from '../../modules/todos';
 import { ReactComponent as LeftSVG } from '../../assets/svg/chevron-left-solid.svg';
 import { ReactComponent as RightSVG } from '../../assets/svg/chevron-right-solid.svg';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 const Editor: React.FC = () => {
   const [fold, setFold] = useState(true);
@@ -36,8 +37,8 @@ const Editor: React.FC = () => {
             {Object.keys(cards).map((key) => (
               <Card key={key} cardId={key} todos={cards[key].todos} />
             ))}
-            <CardAddBtn onClick={addCard}>➕</CardAddBtn>
           </CardListContainer>
+          <CardAddBtn onClick={addCard}>➕</CardAddBtn>
         </EditorContainer>
         <ArrowIcon as={fold ? LeftSVG : RightSVG} onClick={onFoldHandler} />
       </Container>
