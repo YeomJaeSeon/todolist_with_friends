@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { MainBackgroundColor } from '../../utils/css-utils';
 
-export const ReactContainer = styled.div`
+export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #c8e6c9;

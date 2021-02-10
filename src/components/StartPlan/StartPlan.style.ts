@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { MainBackgroundColor } from '../../utils/css-utils';
 
-export const TimerContainer = styled.div`
+export const StartPlanContainer = styled.div`
   flex: 1;
   position: relative;
   display: flex;

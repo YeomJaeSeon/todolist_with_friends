@@ -12,20 +12,34 @@ import {
 } from './Card.style';
 import { useDispatch } from 'react-redux';
 import { deleteCardAction, addTodoAction } from '../../modules/todos';
+import {
+  DraggableProvidedDraggableProps,
+  DraggableProvidedDragHandleProps,
+} from 'react-beautiful-dnd';
 
 type PropType = {
   cardId: string;
   todos: { id: number; thing: string }[];
+  innerRef: (element?: HTMLElement | null | undefined) => any;
+  dragHandle?: DraggableProvidedDragHandleProps;
+  dragProp: DraggableProvidedDraggableProps;
 };
 
-const Card: React.FC<PropType> = ({ cardId, todos }) => {
+const Card: React.FC<PropType> = ({
+  cardId,
+  todos,
+  innerRef,
+  dragHandle,
+  dragProp,
+}) => {
+  console.log('나님 생성');
   const inputRef = useRef<HTMLInputElement>(null);
   const calendarRef = useRef<RefType>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    formRef.current?.scrollIntoView({ behavior: 'smooth' });
+    buttonRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
   const deleteCard = () => {
@@ -41,9 +55,14 @@ const Card: React.FC<PropType> = ({ cardId, todos }) => {
   };
 
   return (
-    <CardContainer ref={formRef} onSubmit={(e) => e.preventDefault()}>
+    <CardContainer
+      ref={innerRef}
+      {...dragHandle}
+      {...dragProp}
+      onSubmit={(e) => e.preventDefault()}
+    >
       <Calendar ref={calendarRef} />
-      <CardDeleteBtn type="button" onClick={deleteCard}>
+      <CardDeleteBtn ref={buttonRef} type="button" onClick={deleteCard}>
         <TrashIcon />
       </CardDeleteBtn>
       <AddContainer>

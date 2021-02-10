@@ -1,20 +1,20 @@
 import React from 'react';
 import CurrentPlan from '../CurrentPlan/CurrentPlan';
 import PlanTimer from '../PlanTimer/PlanTimer';
-import { TimerContainer, TimerTitle, LogoutBtn } from './Timer.style';
+import { StartPlanContainer, TimerTitle, LogoutBtn } from './StartPlan.style';
 
 type PropType = {
   logout: () => void;
 };
-const Timer: React.FC<PropType> = ({ logout }) => {
+const StartPlan: React.FC<PropType> = ({ logout }) => {
   return (
-    <TimerContainer>
+    <StartPlanContainer>
       <TimerTitle>Start Planning</TimerTitle>
       <LogoutBtn onClick={logout}>Logout</LogoutBtn>
       <PlanTimer />
       <CurrentPlan />
-    </TimerContainer>
+    </StartPlanContainer>
   );
 };
 
-export default Timer;
+export default StartPlan;
