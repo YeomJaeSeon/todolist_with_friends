@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory, useLocation } from 'react-router-dom';
 import { MainContainer } from './Main.style';
