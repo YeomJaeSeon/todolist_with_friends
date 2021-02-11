@@ -4,6 +4,9 @@ import Todo from '../TodoForm/Todo';
 import {
   CardContainer,
   CardDeleteBtn,
+  MetaDataContainer,
+  DragElement,
+  DragIcon,
   TrashIcon,
   AddContainer,
   AddInput,
@@ -12,26 +15,16 @@ import {
 } from './Card.style';
 import { useDispatch } from 'react-redux';
 import { deleteCardAction, addTodoAction } from '../../modules/todos';
-import {
-  DraggableProvidedDraggableProps,
-  DraggableProvidedDragHandleProps,
-} from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 
 type PropType = {
   cardId: string;
   todos: { id: number; thing: string }[];
-  innerRef: (element?: HTMLElement | null | undefined) => any;
-  dragHandle?: DraggableProvidedDragHandleProps;
-  dragProp: DraggableProvidedDraggableProps;
+  current: boolean;
+  index: number;
 };
 
-const Card: React.FC<PropType> = ({
-  cardId,
-  todos,
-  innerRef,
-  dragHandle,
-  dragProp,
-}) => {
+const Card: React.FC<PropType> = ({ cardId, todos, current, index }) => {
   console.log('나님 생성');
   const inputRef = useRef<HTMLInputElement>(null);
   const calendarRef = useRef<RefType>(null);
@@ -55,26 +48,45 @@ const Card: React.FC<PropType> = ({
   };
 
   return (
-    <CardContainer
-      ref={innerRef}
-      {...dragHandle}
-      {...dragProp}
-      onSubmit={(e) => e.preventDefault()}
-    >
-      <Calendar ref={calendarRef} />
-      <CardDeleteBtn ref={buttonRef} type="button" onClick={deleteCard}>
-        <TrashIcon />
-      </CardDeleteBtn>
-      <AddContainer>
-        <AddInput ref={inputRef} type="text" />
-        <AddBtn onClick={addTodo}>➕</AddBtn>
-      </AddContainer>
-      <TodoContainer>
-        {todos.map((item) => (
-          <Todo key={item.id} cardId={cardId} todo={item} />
-        ))}
-      </TodoContainer>
-    </CardContainer>
+    <>
+      {!current ? (
+        <Draggable key={cardId} draggableId={cardId} index={index}>
+          {(provided, snapshot) => (
+            <CardContainer
+              {...provided.draggableProps}
+              ref={provided.innerRef}
+              isDragging={snapshot.isDragging}
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <MetaDataContainer>
+                <Calendar ref={calendarRef} />
+                <CardDeleteBtn
+                  ref={buttonRef}
+                  type="button"
+                  onClick={deleteCard}
+                >
+                  <TrashIcon />
+                </CardDeleteBtn>
+                <DragElement {...provided.dragHandleProps}>
+                  <DragIcon />
+                </DragElement>
+              </MetaDataContainer>
+              <AddContainer>
+                <AddInput ref={inputRef} type="text" />
+                <AddBtn onClick={addTodo}>➕</AddBtn>
+              </AddContainer>
+              <TodoContainer>
+                {todos.map((item) => (
+                  <Todo key={item.id} cardId={cardId} todo={item} />
+                ))}
+              </TodoContainer>
+            </CardContainer>
+          )}
+        </Draggable>
+      ) : (
+        <div style={{ width: '10px', height: '10px' }}></div>
+      )}
+    </>
   );
 };
 

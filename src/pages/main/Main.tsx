@@ -6,7 +6,7 @@ import List from 'src/components/List/List';
 import StartPlan from 'src/components/StartPlan/StartPlan';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useDispatch } from 'react-redux';
-import { sameChangeCardAction } from 'src/modules/todos';
+import { sameChangeCardAction, diffChangeCardAction } from 'src/modules/todos';
 
 type PropType = {
   authService: AuthServiceType;
@@ -39,6 +39,14 @@ const Main = ({ authService }: PropType) => {
     }
     if (source.droppableId === destination.droppableId) {
       dispatch(sameChangeCardAction(source.index, destination.index));
+    } else {
+      dispatch(
+        diffChangeCardAction(
+          result.draggableId,
+          source.index,
+          destination.index
+        )
+      );
     }
   };
 

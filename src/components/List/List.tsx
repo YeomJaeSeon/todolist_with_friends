@@ -35,26 +35,20 @@ const List: React.FC = () => {
       <Container>
         <EditorContainer fold={fold}>
           <Droppable droppableId="cards">
-            {(provided) => (
+            {(provided, snapshot) => (
               <CardListContainer
                 className="cards"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
+                // isDraggingOver={snapshot.isDraggingOver} 이런식으로 css줄수있음
               >
                 {cards.map((card, index) => (
-                  <Draggable key={card.id} draggableId={card.id} index={index}>
-                    {(provided) => {
-                      return (
-                        <Card
-                          innerRef={provided.innerRef}
-                          dragHandle={provided.dragHandleProps}
-                          dragProp={provided.draggableProps}
-                          cardId={card.id}
-                          todos={card.todos}
-                        />
-                      );
-                    }}
-                  </Draggable>
+                  <Card
+                    cardId={card.id}
+                    todos={card.todos}
+                    current={card.current}
+                    index={index}
+                  />
                 ))}
                 {provided.placeholder}
               </CardListContainer>

@@ -1,6 +1,9 @@
+import Card from 'src/components/Card/Card';
+
 const ADD_CARD = 'todo/ADD_CARD' as const;
 const DELETE_CARD = 'todo/DELETE_CARD' as const;
 const SAME_CHANGE_CARD = 'todo/SAME_CHANGE_CARD' as const;
+const DIFF_CHANGE_CARD = 'todo/DIFF_CHANGE_CARD' as const;
 const ADD_TODO = 'todo/ADD_TODO' as const;
 const DELETE_TODO = 'todo/DELETE_TODO' as const;
 const UPDATE_TODO = 'todo/UPDATE_TODO' as const;
@@ -23,6 +26,21 @@ export const sameChangeCardAction = (sIndex: number, dIndex: number) => {
   return {
     type: SAME_CHANGE_CARD,
     payload: {
+      sIndex: sIndex,
+      dIndex: dIndex,
+    },
+  };
+};
+
+export const diffChangeCardAction = (
+  id: string,
+  sIndex: number,
+  dIndex: number
+) => {
+  return {
+    type: DIFF_CHANGE_CARD,
+    payload: {
+      id: id,
       sIndex: sIndex,
       dIndex: dIndex,
     },
@@ -67,10 +85,12 @@ type ActionType =
   | ReturnType<typeof addTodoAction>
   | ReturnType<typeof deleteTodoAction>
   | ReturnType<typeof updateTodoAction>
-  | ReturnType<typeof sameChangeCardAction>;
+  | ReturnType<typeof sameChangeCardAction>
+  | ReturnType<typeof diffChangeCardAction>;
 
 type StateType = {
   id: string;
+  current: boolean;
   todos: TodoType;
 }[];
 
@@ -84,9 +104,28 @@ const initialState: StateType = [];
 const todoReducer = (state: StateType = initialState, action: ActionType) => {
   switch (action.type) {
     case ADD_CARD:
-      return [...state, { id: action.payload.id, todos: [] }];
+      return [...state, { id: action.payload.id, current: false, todos: [] }];
     case DELETE_CARD:
       return state.filter((card) => card.id !== action.payload.id);
+    case SAME_CHANGE_CARD:
+      const newCards = [...state];
+      const [reorderedItem] = newCards.splice(action.payload.sIndex, 1);
+      newCards.splice(action.payload.dIndex, 0, reorderedItem);
+      return newCards;
+
+    case DIFF_CHANGE_CARD:
+      const addingCard = state.find((card) => card.current === true);
+      const originCard = state.filter((card) => card.current === false);
+
+      addingCard && originCard.splice(action.payload.dIndex - 1, 0, addingCard);
+
+      return originCard.map((card) => {
+        if (card.id === action.payload.id) {
+          return { ...card, current: !card.current };
+        }
+        return { ...card, current: false };
+      });
+
     case ADD_TODO:
       return state.map((card) => {
         if (card.id === action.payload.cardId) {
@@ -125,11 +164,6 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
         }
         return card;
       });
-    case SAME_CHANGE_CARD:
-      const newCards = [...state];
-      const [reorderedItem] = newCards.splice(action.payload.sIndex, 1);
-      newCards.splice(action.payload.dIndex, 0, reorderedItem);
-      return newCards;
     default:
       return state;
   }

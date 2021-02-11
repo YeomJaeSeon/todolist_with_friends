@@ -5,4 +5,5 @@ export const CurrentPlanContainer = styled.div`
   margin-top: 60px;
   width: 265px;
   height: 250px;
+  overflow: hidden;
 `;

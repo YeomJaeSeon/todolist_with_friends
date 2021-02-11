@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { WhiteColor, BoxShadow } from '../../utils/css-utils';
 import { ReactComponent as TrashSVG } from '../../assets/svg/trash-solid.svg';
+import { ReactComponent as DragSVG } from '../../assets/svg/bars-solid.svg';
 
-export const CardContainer = styled.form`
+export const CardContainer = styled.form<{ isDragging: boolean }>`
   position: relative;
   width: 245px;
   height: 230px;
@@ -13,11 +14,9 @@ export const CardContainer = styled.form`
   border-radius: 10px;
   padding: 10px;
   box-shadow: ${BoxShadow};
+  opacity: ${(props) => (props.isDragging ? '0.5' : '1')};
 `;
 export const CardDeleteBtn = styled.button`
-  position: absolute;
-  right: 15px;
-  top: 12px;
   background-color: transparent;
   cursor: pointer;
   border: none;
@@ -26,10 +25,24 @@ export const CardDeleteBtn = styled.button`
   }
 `;
 
-export const TrashIcon = styled(TrashSVG)`
-  width: 15px;
-  height: 15px;
+export const MetaDataContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
 `;
+
+export const DragElement = styled.span``;
+
+export const DragIcon = styled(DragSVG)`
+  width: 20px;
+  height: 20px;
+`;
+
+export const TrashIcon = styled(TrashSVG)`
+  width: 20px;
+  height: 20px;
+`;
+
 export const AddContainer = styled.div`
   display: flex;
   align-items: center;
