@@ -59,7 +59,7 @@ const Card: React.FC<PropType> = ({ cardId, todos, current, index }) => {
               onSubmit={(e) => e.preventDefault()}
             >
               <MetaDataContainer>
-                <Calendar ref={calendarRef} />
+                <Calendar cardId={cardId} ref={calendarRef} />
                 <CardDeleteBtn
                   ref={buttonRef}
                   type="button"

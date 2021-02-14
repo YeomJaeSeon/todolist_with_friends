@@ -1,5 +1,5 @@
 import React from 'react';
-import { CurrentPlanContainer } from './CurrentPlan.style';
+import { CurrentPlanContainer, DragText } from './CurrentPlan.style';
 import { Droppable } from 'react-beautiful-dnd';
 import ReadCard from '../ReadCard/ReadCard';
 
@@ -13,16 +13,21 @@ const CurrentPlan: React.FC = () => {
 
   return (
     <Droppable droppableId="card">
-      {(provided) => (
+      {(provided, snapshot) => (
         <CurrentPlanContainer
           className="card"
           {...provided.droppableProps}
           ref={provided.innerRef}
+          isDragging={snapshot.isDraggingOver}
         >
           {currentCard ? (
-            <ReadCard currentId={currentCard.id} todos={currentCard.todos} />
+            <ReadCard
+              currentId={currentCard.id}
+              today={currentCard.today}
+              todos={currentCard.todos}
+            />
           ) : (
-            'Drag Please'
+            <DragText>Drag Please!!!</DragText>
           )}
           {provided.placeholder}
         </CurrentPlanContainer>

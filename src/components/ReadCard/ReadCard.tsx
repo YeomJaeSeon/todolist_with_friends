@@ -4,27 +4,33 @@ import * as S from './ReadCard.style';
 
 type PropType = {
   currentId: string;
+  today: string;
   todos: {
     id: number;
     thing: string;
   }[];
 };
 
-const ReadCard: React.FC<PropType> = ({ currentId, todos }) => {
+const ReadCard: React.FC<PropType> = ({ currentId, today, todos }) => {
   return (
     <Draggable key={currentId} draggableId={currentId} index={0}>
-      {(provided) => (
+      {(provided, snapshot) => (
         <S.ReadCardContainer
           ref={provided.innerRef}
-          {...provided.dragHandleProps}
           {...provided.draggableProps}
+          isDragging={snapshot.isDragging}
         >
-          <span>2020.3.2</span>
-          <ul>
+          <S.ReadCardHeader>
+            <S.ReadCardTitle>{today}의 할일목록</S.ReadCardTitle>
+            <S.DragElement {...provided.dragHandleProps}>
+              <S.DragIcon />
+            </S.DragElement>
+          </S.ReadCardHeader>
+          <S.ReadCardListContainer>
             {todos.map((todo) => (
-              <li key={todo.id}>{todo.thing}</li>
+              <S.ReadCardList key={todo.id}>{todo.thing}</S.ReadCardList>
             ))}
-          </ul>
+          </S.ReadCardListContainer>
         </S.ReadCardContainer>
       )}
     </Draggable>

@@ -7,11 +7,12 @@ const DIFF_CHANGE_CARD = 'todo/DIFF_CHANGE_CARD' as const;
 const ADD_TODO = 'todo/ADD_TODO' as const;
 const DELETE_TODO = 'todo/DELETE_TODO' as const;
 const UPDATE_TODO = 'todo/UPDATE_TODO' as const;
+const UPDATE_DATE = 'todo/UPDATE_DATE' as const;
 
-export const addCardAction = (id: string) => {
+export const addCardAction = (id: string, today: string) => {
   return {
     type: ADD_CARD,
-    payload: { id: id },
+    payload: { id: id, today: today },
   };
 };
 
@@ -79,6 +80,16 @@ export const updateTodoAction = (cardId: string, id: number, todo: string) => {
   };
 };
 
+export const updateDateAction = (cardId: string, today: string) => {
+  return {
+    type: UPDATE_DATE,
+    payload: {
+      cardId: cardId,
+      today: today,
+    },
+  };
+};
+
 type ActionType =
   | ReturnType<typeof addCardAction>
   | ReturnType<typeof deleteCardAction>
@@ -86,11 +97,13 @@ type ActionType =
   | ReturnType<typeof deleteTodoAction>
   | ReturnType<typeof updateTodoAction>
   | ReturnType<typeof sameChangeCardAction>
-  | ReturnType<typeof diffChangeCardAction>;
+  | ReturnType<typeof diffChangeCardAction>
+  | ReturnType<typeof updateDateAction>;
 
 type StateType = {
   id: string;
   current: boolean;
+  today: string;
   todos: TodoType;
 }[];
 
@@ -104,9 +117,18 @@ const initialState: StateType = [];
 const todoReducer = (state: StateType = initialState, action: ActionType) => {
   switch (action.type) {
     case ADD_CARD:
-      return [...state, { id: action.payload.id, current: false, todos: [] }];
+      return [
+        ...state,
+        {
+          id: action.payload.id,
+          current: false,
+          today: action.payload.today,
+          todos: [],
+        },
+      ];
     case DELETE_CARD:
       return state.filter((card) => card.id !== action.payload.id);
+
     case SAME_CHANGE_CARD:
       const newCards = [...state];
       const [reorderedItem] = newCards.splice(action.payload.sIndex, 1);
@@ -161,6 +183,13 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
               return todo;
             }),
           };
+        }
+        return card;
+      });
+    case UPDATE_DATE:
+      return state.map((card) => {
+        if (card.id === action.payload.cardId) {
+          return { ...card, today: action.payload.today };
         }
         return card;
       });
