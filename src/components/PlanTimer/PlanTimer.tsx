@@ -6,6 +6,17 @@ import { ReactComponent as PauseSVG } from '../../assets/svg/pause-solid.svg';
 
 let TimerVal: NodeJS.Timeout;
 
+const hours = (time: number): string | number =>
+  Math.floor(time / 3600) > 9
+    ? Math.floor(time / 3600)
+    : `0${Math.floor(time / 3600)}`;
+const minutes = (time: number): string | number =>
+  Math.floor(time / 60) % 60 > 9
+    ? Math.floor(time / 60) % 60
+    : `0${Math.floor(time / 60) % 60}`;
+const seconds = (time: number): string | number =>
+  time % 60 > 9 ? time % 60 : `0${time % 60}`;
+
 const PlanTimer = () => {
   const [time, setTime] = useState(0);
   const [state, setState] = useState(false);
@@ -43,7 +54,7 @@ const PlanTimer = () => {
   return (
     <PlanTimerContainer>
       <TimeSection>
-        {Math.floor(time / 3600)} : {Math.floor(time / 60) % 60} : {time % 60}
+        {hours(time)} : {minutes(time)} : {seconds(time)}
       </TimeSection>
       <Btns onClick={startOrStop}>
         {!state ? <Icon as={PlaySVG} /> : <Icon as={PauseSVG} />}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MainBackgroundColor } from '../../utils/css-utils';
+import { MainBackgroundColor, NotiColor } from '../../utils/css-utils';
 
 export const StartPlanContainer = styled.div`
   flex: 1;
@@ -16,5 +16,13 @@ export const LogoutBtn = styled.button`
   position: absolute;
   top: 10px;
   right: 10px;
+  font-size: 15px;
+  font-weight: bold;
+  color: ${NotiColor};
+  background-color: transparent;
+  border: none;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;

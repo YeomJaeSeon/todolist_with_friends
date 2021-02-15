@@ -48,7 +48,7 @@ const List: React.FC = () => {
                 className="cards"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
-                // isDraggingOver={snapshot.isDraggingOver} 이런식으로 css줄수있음
+                isDraggingOver={snapshot.isDraggingOver}
               >
                 {cards.map((card, index) => (
                   <Card

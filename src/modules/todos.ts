@@ -7,6 +7,7 @@ const DIFF_CHANGE_CARD = 'todo/DIFF_CHANGE_CARD' as const;
 const ADD_TODO = 'todo/ADD_TODO' as const;
 const DELETE_TODO = 'todo/DELETE_TODO' as const;
 const UPDATE_TODO = 'todo/UPDATE_TODO' as const;
+const TOGGLE_TODO = 'todo/TOGGLE_TODO' as const;
 const UPDATE_DATE = 'todo/UPDATE_DATE' as const;
 
 export const addCardAction = (id: string, today: string) => {
@@ -80,6 +81,16 @@ export const updateTodoAction = (cardId: string, id: number, todo: string) => {
   };
 };
 
+export const toggleTodoAction = (cardId : string, id : number) => {
+  return {
+    type : TOGGLE_TODO,
+    payload : {
+      cardId : cardId,
+      id : id,
+    }
+  }
+}
+
 export const updateDateAction = (cardId: string, today: string) => {
   return {
     type: UPDATE_DATE,
@@ -96,9 +107,10 @@ type ActionType =
   | ReturnType<typeof addTodoAction>
   | ReturnType<typeof deleteTodoAction>
   | ReturnType<typeof updateTodoAction>
+  | ReturnType<typeof toggleTodoAction>
   | ReturnType<typeof sameChangeCardAction>
   | ReturnType<typeof diffChangeCardAction>
-  | ReturnType<typeof updateDateAction>;
+  | ReturnType<typeof updateDateAction>
 
 type StateType = {
   id: string;
@@ -110,6 +122,7 @@ type StateType = {
 type TodoType = {
   id: number;
   thing: string;
+  checked : boolean;
 }[];
 
 const initialState: StateType = [];
@@ -155,7 +168,7 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
             ...card,
             todos: [
               ...card.todos,
-              { id: action.payload.id, thing: action.payload.thing },
+              { id: action.payload.id, thing: action.payload.thing, checked: false },
             ],
           };
         }
@@ -186,6 +199,21 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
         }
         return card;
       });
+    case TOGGLE_TODO:
+      return state.map(card => {
+        if(card.id === action.payload.cardId){
+          return {
+            ...card,
+            todos : card.todos.map(todo => {
+              if(todo.id === action.payload.id){
+                return {...todo, checked : !todo.checked};
+              }
+              return todo
+            })
+          }
+        }
+        return card
+      })
     case UPDATE_DATE:
       return state.map((card) => {
         if (card.id === action.payload.cardId) {

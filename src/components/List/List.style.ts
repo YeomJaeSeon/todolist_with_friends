@@ -18,7 +18,7 @@ export const EditorTitle = styled.h1<{ fold: boolean }>`
   text-align: center;
 `;
 
-export const CardListContainer = styled.ul`
+export const CardListContainer = styled.ul<{isDraggingOver : boolean}>`
   padding-left: 0;
   display: flex;
   flex-direction: column;

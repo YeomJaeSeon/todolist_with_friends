@@ -9,7 +9,7 @@ type PropType = {
 const StartPlan: React.FC<PropType> = ({ logout }) => {
   return (
     <StartPlanContainer>
-      <TimerTitle>Start Planning</TimerTitle>
+      <TimerTitle>Start Planning 🏃‍♀️🏃‍♂️</TimerTitle>
       <LogoutBtn onClick={logout}>Logout</LogoutBtn>
       <PlanTimer />
       <CurrentPlan />

@@ -56,6 +56,7 @@ const Card: React.FC<PropType> = ({ cardId, todos, current, index }) => {
               {...provided.draggableProps}
               ref={provided.innerRef}
               isDragging={snapshot.isDragging}
+              isDropAnimating={snapshot.isDropAnimating}
               onSubmit={(e) => e.preventDefault()}
             >
               <MetaDataContainer>

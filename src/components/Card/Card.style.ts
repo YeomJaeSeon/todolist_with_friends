@@ -3,7 +3,7 @@ import { WhiteColor, BoxShadow } from '../../utils/css-utils';
 import { ReactComponent as TrashSVG } from '../../assets/svg/trash-solid.svg';
 import { ReactComponent as DragSVG } from '../../assets/svg/bars-solid.svg';
 
-export const CardContainer = styled.form<{ isDragging: boolean }>`
+export const CardContainer = styled.form<{ isDragging: boolean, isDropAnimating : boolean }>`
   position: relative;
   width: 245px;
   height: 230px;

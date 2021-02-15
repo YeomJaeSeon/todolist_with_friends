@@ -1,13 +1,15 @@
 import styled, { keyframes } from 'styled-components';
+import { BoxShadow } from '../../utils/css-utils';
 
 export const CurrentPlanContainer = styled.div<{ isDragging: boolean }>`
   opacity: ${(props) => (props.isDragging ? '0.5' : '1')};
   margin-top: 60px;
-  width: 60%;
-  height: 30%;
+  width: 265px;
+  height: 250px;
   overflow: hidden;
   background-color: white;
   border-radius: 10px;
+  box-shadow: ${BoxShadow};
 `;
 
 const spakle = keyframes`
