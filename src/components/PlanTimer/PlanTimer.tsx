@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PlanTimerContainer, TimeSection, Btns, Icon } from './PlanTimer.style';
+import * as S from './PlanTimer.style';
 import { ReactComponent as PlaySVG } from '../../assets/svg/play-solid.svg';
 import { ReactComponent as StopSVG } from '../../assets/svg/stop-solid.svg';
 import { ReactComponent as PauseSVG } from '../../assets/svg/pause-solid.svg';
@@ -52,17 +52,20 @@ const PlanTimer = () => {
   };
 
   return (
-    <PlanTimerContainer>
-      <TimeSection>
-        {hours(time)} : {minutes(time)} : {seconds(time)}
-      </TimeSection>
-      <Btns onClick={startOrStop}>
-        {!state ? <Icon as={PlaySVG} /> : <Icon as={PauseSVG} />}
-      </Btns>
-      <Btns onClick={reset}>
-        <Icon as={StopSVG} />
-      </Btns>
-    </PlanTimerContainer>
+    <S.PlanTimerContainer>
+      <S.TimerTitleContainer>TIMER 🕒</S.TimerTitleContainer>
+      <S.TimerContainer>
+        <S.TimeSection>
+          {hours(time)} : {minutes(time)} : {seconds(time)}
+        </S.TimeSection>
+        <S.Btns onClick={startOrStop}>
+          {!state ? <S.Icon as={PlaySVG} /> : <S.Icon as={PauseSVG} />}
+        </S.Btns>
+        <S.Btns onClick={reset}>
+          <S.Icon as={StopSVG} />
+        </S.Btns>
+      </S.TimerContainer>
+    </S.PlanTimerContainer>
   );
 };
 

@@ -5,12 +5,19 @@ export const PlanTimerContainer = styled.div`
   width: 60%;
   height: 30%;
   background-color: ${WhiteColor};
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+  text-align: center;
   font-size: 50px;
   border-radius: 15px;
   box-shadow: ${BoxShadow};
+`;
+
+export const TimerTitleContainer = styled.span``;
+
+export const TimerContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 export const TimeSection = styled.section``;
