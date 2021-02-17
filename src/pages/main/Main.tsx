@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { AuthServiceType } from '../../services/auth_service';
+import { DatabaseType } from '../../services/data_service';
 import { useHistory, useLocation } from 'react-router-dom';
 import { MainContainer } from './Main.style';
 import List from 'src/components/List/List';
@@ -9,16 +10,23 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootType } from '../../modules/index';
 import { sameChangeCardAction, diffChangeCardAction } from 'src/modules/todos';
 
-type PropType = {
-  authService: AuthServiceType;
+type LocationState = {
+  id: string;
 };
 
-const Main = ({ authService }: PropType) => {
+type PropType = {
+  authService: AuthServiceType;
+  databaseService: DatabaseType;
+};
+
+const Main = ({ authService, databaseService }: PropType) => {
   const cards = useSelector((state: RootType) => state.todoReducer);
 
   const dispatch = useDispatch();
-  const location = useLocation();
-  console.log(location.state);
+  const location = useLocation<LocationState>();
+
+  // const uid = location.state.id;
+  // console.log(uid);
   //  로그인한 사람의 uid를받음
 
   const history = useHistory();
@@ -60,7 +68,7 @@ const Main = ({ authService }: PropType) => {
   return (
     <MainContainer>
       <DragDropContext onDragEnd={cardChangeHandler}>
-        <List />
+        <List uid={location.state.id} databaseService={databaseService} />
         <StartPlan logout={logoutHandler} />
       </DragDropContext>
     </MainContainer>

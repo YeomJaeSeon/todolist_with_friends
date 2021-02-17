@@ -15,8 +15,14 @@ import { addCardAction } from '../../modules/todos';
 import { ReactComponent as LeftSVG } from '../../assets/svg/chevron-left-solid.svg';
 import { ReactComponent as RightSVG } from '../../assets/svg/chevron-right-solid.svg';
 import { Droppable } from 'react-beautiful-dnd';
+import { DatabaseType } from 'src/services/data_service';
 
-const List: React.FC = () => {
+type PropType = {
+  uid: string;
+  databaseService: DatabaseType;
+};
+
+const List: React.FC<PropType> = ({ uid, databaseService }) => {
   const [fold, setFold] = useState(true);
   const dispatch = useDispatch();
   const cards = useSelector((state: RootType) => state.todoReducer);
@@ -32,6 +38,7 @@ const List: React.FC = () => {
     const today = `${year}-${month}-${day}`;
 
     dispatch(addCardAction(String(newId), today));
+    databaseService.write(uid, String(newId), today);
   };
   const onFoldHandler = () => {
     setFold((fold) => !fold);
@@ -57,6 +64,8 @@ const List: React.FC = () => {
                     todos={card.todos}
                     current={card.current}
                     index={index}
+                    uid={uid}
+                    databaseService={databaseService}
                   />
                 ))}
                 {provided.placeholder}

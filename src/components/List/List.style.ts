@@ -6,6 +6,20 @@ export const ListContainer = styled.div`
   flex-direction: column;
   background-color: #c8e6c9;
   overflow: auto;
+  &::-webkit-scrollbar {
+    /* 세로 스크롤 넓이 */
+    width: 8px;
+
+    /* 가로 스크롤 높이 */
+    height: 8px;
+
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+  }
 `;
 
 export const Container = styled.div`
@@ -18,7 +32,7 @@ export const EditorTitle = styled.h1<{ fold: boolean }>`
   text-align: center;
 `;
 
-export const CardListContainer = styled.ul<{isDraggingOver : boolean}>`
+export const CardListContainer = styled.ul<{ isDraggingOver: boolean }>`
   padding-left: 0;
   display: flex;
   flex-direction: column;

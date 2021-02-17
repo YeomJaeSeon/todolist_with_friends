@@ -16,15 +16,25 @@ import {
 import { useDispatch } from 'react-redux';
 import { deleteCardAction, addTodoAction } from '../../modules/todos';
 import { Draggable } from 'react-beautiful-dnd';
+import { DatabaseType } from 'src/services/data_service';
 
 type PropType = {
   cardId: string;
   todos: { id: number; thing: string }[];
   current: boolean;
   index: number;
+  uid: string;
+  databaseService: DatabaseType;
 };
 
-const Card: React.FC<PropType> = ({ cardId, todos, current, index }) => {
+const Card: React.FC<PropType> = ({
+  cardId,
+  todos,
+  current,
+  index,
+  uid,
+  databaseService,
+}) => {
   console.log('나님 생성');
   const inputRef = useRef<HTMLInputElement>(null);
   const calendarRef = useRef<RefType>(null);
@@ -36,6 +46,7 @@ const Card: React.FC<PropType> = ({ cardId, todos, current, index }) => {
   }, []);
 
   const deleteCard = () => {
+    databaseService.remove(uid, cardId);
     dispatch(deleteCardAction(cardId));
   };
   const addTodo = () => {
