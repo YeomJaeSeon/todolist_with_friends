@@ -42,14 +42,21 @@ const Main = ({ authService, databaseService }: PropType) => {
   };
 
   const cardChangeHandler = (result: DropResult) => {
-    console.log(result);
-    const { source, destination } = result;
+    const { source, destination, draggableId } = result;
+    // console.log(`드래그한 id : ${draggableId}`);
+    // destination &&
+    //   console.log(`놓은 곳의 card id :${cards[destination?.index].id}`);
 
     if (!destination) {
       return;
     }
     if (source.droppableId === destination.droppableId) {
-      dispatch(sameChangeCardAction(source.index, destination.index));
+      const newCards = [...cards];
+      const [reorderedItem] = newCards.splice(source.index, 1);
+      newCards.splice(destination.index, 0, reorderedItem);
+
+      dispatch(sameChangeCardAction(newCards));
+      databaseService.changeCardSameId(location.state.id, newCards);
     } else {
       const selectedCard = cards.find((card) => card.id === result.draggableId);
       if (selectedCard)
@@ -69,7 +76,11 @@ const Main = ({ authService, databaseService }: PropType) => {
     <MainContainer>
       <DragDropContext onDragEnd={cardChangeHandler}>
         <List uid={location.state.id} databaseService={databaseService} />
-        <StartPlan logout={logoutHandler} />
+        <StartPlan
+          logout={logoutHandler}
+          uid={location.state.id}
+          databaseService={databaseService}
+        />
       </DragDropContext>
     </MainContainer>
   );

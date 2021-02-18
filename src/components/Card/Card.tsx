@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import Calendar, { RefType } from '../Calender/Calender';
+import Calendar from '../Calender/Calender';
 import Todo from '../TodoForm/Todo';
 import {
   CardContainer,
@@ -37,7 +37,6 @@ const Card: React.FC<PropType> = ({
 }) => {
   console.log('나님 생성');
   const inputRef = useRef<HTMLInputElement>(null);
-  const calendarRef = useRef<RefType>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dispatch = useDispatch();
 
@@ -54,6 +53,7 @@ const Card: React.FC<PropType> = ({
     const newId = Date.now();
     if (inputRef && inputRef.current) {
       dispatch(addTodoAction(cardId, newId, inputRef.current.value));
+      databaseService.writeTodo(uid, cardId, newId, inputRef.current.value);
       inputRef.current.value = '';
     }
   };
@@ -71,7 +71,11 @@ const Card: React.FC<PropType> = ({
               onSubmit={(e) => e.preventDefault()}
             >
               <MetaDataContainer>
-                <Calendar cardId={cardId} ref={calendarRef} />
+                <Calendar
+                  uid={uid}
+                  databaseService={databaseService}
+                  cardId={cardId}
+                />
                 <CardDeleteBtn
                   ref={buttonRef}
                   type="button"
@@ -89,7 +93,13 @@ const Card: React.FC<PropType> = ({
               </AddContainer>
               <TodoContainer>
                 {todos.map((item) => (
-                  <Todo key={item.id} cardId={cardId} todo={item} />
+                  <Todo
+                    key={item.id}
+                    cardId={cardId}
+                    todo={item}
+                    uid={uid}
+                    databaseService={databaseService}
+                  />
                 ))}
               </TodoContainer>
             </CardContainer>

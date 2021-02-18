@@ -24,12 +24,11 @@ export const deleteCardAction = (id: string) => {
   };
 };
 
-export const sameChangeCardAction = (sIndex: number, dIndex: number) => {
+export const sameChangeCardAction = (newCards: StateType) => {
   return {
     type: SAME_CHANGE_CARD,
     payload: {
-      sIndex: sIndex,
-      dIndex: dIndex,
+      newCards: newCards,
     },
   };
 };
@@ -81,12 +80,17 @@ export const updateTodoAction = (cardId: string, id: number, todo: string) => {
   };
 };
 
-export const toggleTodoAction = (cardId: string, id: number) => {
+export const toggleTodoAction = (
+  cardId: string,
+  id: number,
+  checked: boolean
+) => {
   return {
     type: TOGGLE_TODO,
     payload: {
       cardId: cardId,
       id: id,
+      checked: checked,
     },
   };
 };
@@ -143,10 +147,7 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
       return state.filter((card) => card.id !== action.payload.id);
 
     case SAME_CHANGE_CARD:
-      const newCards = [...state];
-      const [reorderedItem] = newCards.splice(action.payload.sIndex, 1);
-      newCards.splice(action.payload.dIndex, 0, reorderedItem);
-      return newCards;
+      return action.payload.newCards;
 
     case DIFF_CHANGE_CARD:
       const addingCard = state.find((card) => card.current === true);
@@ -210,7 +211,7 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
             ...card,
             todos: card.todos.map((todo) => {
               if (todo.id === action.payload.id) {
-                return { ...todo, checked: !todo.checked };
+                return { ...todo, checked: action.payload.checked };
               }
               return todo;
             }),

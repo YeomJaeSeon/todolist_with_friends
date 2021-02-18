@@ -1,33 +1,23 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, { useState, forwardRef } from 'react';
 import DatePicker from 'react-datepicker';
 import { CalendarBtn } from './Calender.style';
 import { useDispatch } from 'react-redux';
 import { updateDateAction } from '../../modules/todos';
 
 import 'react-datepicker/dist/react-datepicker.css';
+import { DatabaseType } from 'src/services/data_service';
 
 type PropType = {
+  uid: string;
+  databaseService: DatabaseType;
   cardId: string;
 };
 
-export type RefType = {
-  startDate: Date | null;
-};
-
-const Calendar = forwardRef<RefType, PropType>(({ cardId }, ref) => {
+const Calendar: React.FC<PropType> = ({ uid, databaseService, cardId }) => {
   const dispatch = useDispatch();
   const [startDate, setStartDate] = useState<Date | null>(new Date());
 
-  useImperativeHandle(
-    ref,
-    () => ({
-      startDate,
-    }),
-    [startDate]
-  );
-
   const changeHandler = (date: Date | null) => {
-    console.log(date);
     const year = date?.getFullYear();
     const month = date?.getMonth() && date.getMonth() + 1;
     const day = date?.getDate();
@@ -35,8 +25,8 @@ const Calendar = forwardRef<RefType, PropType>(({ cardId }, ref) => {
     const today = `${year}-${month}-${day}`;
 
     dispatch(updateDateAction(cardId, today));
+    databaseService.updateCalendar(uid, cardId, today);
 
-    console.log(`year : ${year} month : ${month} day : ${day}`);
     date && setStartDate(date);
   };
 
@@ -47,7 +37,7 @@ const Calendar = forwardRef<RefType, PropType>(({ cardId }, ref) => {
       customInput={<ExampleCustomInput />}
     />
   );
-});
+};
 
 export default Calendar;
 

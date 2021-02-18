@@ -3,6 +3,7 @@ import { Draggable } from 'react-beautiful-dnd';
 import * as S from './ReadCard.style';
 import { useDispatch } from 'react-redux';
 import { toggleTodoAction, deleteCardAction } from '../../modules/todos';
+import { DatabaseType } from 'src/services/data_service';
 
 type PropType = {
   currentId: string;
@@ -12,17 +13,27 @@ type PropType = {
     thing: string;
     checked: boolean;
   }[];
+  uid: string;
+  databaseService: DatabaseType;
 };
 
-const ReadCard: React.FC<PropType> = ({ currentId, today, todos }) => {
+const ReadCard: React.FC<PropType> = ({
+  currentId,
+  today,
+  todos,
+  uid,
+  databaseService,
+}) => {
   const dispatch = useDispatch();
 
-  const onToggleHandler = (id: number) => () => {
-    dispatch(toggleTodoAction(currentId, id));
+  const onToggleHandler = (id: number, checked: boolean) => () => {
+    dispatch(toggleTodoAction(currentId, id, !checked));
+    databaseService.toggleTodo(uid, currentId, id, !checked);
   };
 
   const deleteCardHandelr = () => {
     dispatch(deleteCardAction(currentId));
+    databaseService.remove(uid, currentId);
   };
   return (
     <Draggable key={currentId} draggableId={currentId} index={0}>
@@ -45,7 +56,7 @@ const ReadCard: React.FC<PropType> = ({ currentId, today, todos }) => {
             {todos.map((todo) => (
               <S.ReadCardList done={todo.checked} key={todo.id}>
                 <S.todoContent>{todo.thing}</S.todoContent>
-                <S.toggleBtn onClick={onToggleHandler(todo.id)}>
+                <S.toggleBtn onClick={onToggleHandler(todo.id, todo.checked)}>
                   {todo.checked ? 'uncheck' : 'check'}
                 </S.toggleBtn>
               </S.ReadCardList>
