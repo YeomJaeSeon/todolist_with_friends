@@ -1,5 +1,4 @@
-import Card from 'src/components/Card/Card';
-
+const INIT_CARD = 'todo/INIT_CARD' as const;
 const ADD_CARD = 'todo/ADD_CARD' as const;
 const DELETE_CARD = 'todo/DELETE_CARD' as const;
 const SAME_CHANGE_CARD = 'todo/SAME_CHANGE_CARD' as const;
@@ -9,6 +8,13 @@ const DELETE_TODO = 'todo/DELETE_TODO' as const;
 const UPDATE_TODO = 'todo/UPDATE_TODO' as const;
 const TOGGLE_TODO = 'todo/TOGGLE_TODO' as const;
 const UPDATE_DATE = 'todo/UPDATE_DATE' as const;
+
+export const initCardAction = (state: StateType) => {
+  return {
+    type: INIT_CARD,
+    payload: { initState: state },
+  };
+};
 
 export const addCardAction = (id: string, today: string) => {
   return {
@@ -106,6 +112,7 @@ export const updateDateAction = (cardId: string, today: string) => {
 };
 
 type ActionType =
+  | ReturnType<typeof initCardAction>
   | ReturnType<typeof addCardAction>
   | ReturnType<typeof deleteCardAction>
   | ReturnType<typeof addTodoAction>
@@ -133,6 +140,8 @@ const initialState: StateType = [];
 
 const todoReducer = (state: StateType = initialState, action: ActionType) => {
   switch (action.type) {
+    case INIT_CARD:
+      return action.payload.initState;
     case ADD_CARD:
       return [
         ...state,

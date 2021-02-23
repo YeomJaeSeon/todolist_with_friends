@@ -14,6 +14,12 @@ import { StateType } from '../modules/todos';
 //   todos: TodoType;
 // };
 
+type CallbackType = (value: any) => void;
+
+// export type SnapshotType = {
+
+// }
+
 export type DatabaseType = {
   write(uid: string, id: string, today: string): void;
   writeTodo(uid: string, id: string, todoId: number, todo: string): void;
@@ -22,8 +28,13 @@ export type DatabaseType = {
   updateTodo(uid: string, id: string, todoId: number, updateTodo: string): void;
   toggleTodo(uid: string, id: string, todoId: number, checked: boolean): void;
   updateCalendar(uid: string, id: string, today: string): void;
-  changeCardSameId(uid: string, newCards: StateType): void;
-  dataSync(callback: () => void): void;
+  changeToStart(
+    uid: string,
+    id: string,
+    current: boolean,
+    prevCardId?: string
+  ): void;
+  dataSync(uid: string, update: CallbackType): any;
 };
 
 export default class Database {
@@ -70,43 +81,28 @@ export default class Database {
     });
   }
 
-  changeCardSameId(uid: string, newCards: StateType) {
-    console.log('변경된 데이터dkdkdkdk');
-    console.log(newCards);
-    firebaseDatabase.ref(`users/${uid}`).remove();
-
-    newCards.forEach((card) =>
-      firebaseDatabase.ref(`users/${uid}/${card.id}`).update({
-        id: card.id,
-        current: card.current,
-        today: card.today,
-        todos: '',
-      })
-    );
-    // newCards.forEach((card, idx) => {
-    //   firebaseDatabase.ref(`users/${uid}/${card.id}`).set({
-    //     index: idx,
-    //     current: card.current,
-    //     id: card.id,
-    //     today: card.today,
-    //     todos: '',
-    //   });
-    //   // firebaseDatabase.ref(`users/`).orderByChild(uid);
-    //   // card.todos.forEach((todo) => {
-    //   //   firebaseDatabase.ref(`users/${uid}/${card.id}/todos/${todo.id}`).set({
-    //   //     id: todo.id,
-    //   //     thing: todo.thing,
-    //   //     checked: todo.checked,
-    //   //   });
-    //   // });
-    // });
-
-    // 카드 옮기면 fb에도 적용되야할텐데. .어떤식으로할까
+  changeToStart(
+    uid: string,
+    id: string,
+    current: boolean,
+    prevCardId?: string
+  ) {
+    prevCardId &&
+      firebaseDatabase.ref(`users/${uid}/${prevCardId}`).update({
+        current: !current,
+      });
+    firebaseDatabase.ref(`users/${uid}/${id}`).update({
+      current: current,
+    });
   }
-  dataSync(callback: () => void) {
-    const datasRef = firebaseDatabase.ref('users/');
-    datasRef.on('value', callback);
 
-    // return datasRef.off();
+  dataSync(uid: string, update: CallbackType) {
+    const datasRef = firebaseDatabase.ref(`users/${uid}`);
+    datasRef.on('value', (snapshot) => {
+      const value = snapshot.val();
+      update(value);
+    });
+
+    return () => datasRef.off();
   }
 }

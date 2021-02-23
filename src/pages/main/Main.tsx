@@ -8,7 +8,11 @@ import StartPlan from 'src/components/StartPlan/StartPlan';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootType } from '../../modules/index';
-import { sameChangeCardAction, diffChangeCardAction } from 'src/modules/todos';
+import {
+  initCardAction,
+  sameChangeCardAction,
+  diffChangeCardAction,
+} from 'src/modules/todos';
 
 type LocationState = {
   id: string;
@@ -25,28 +29,47 @@ const Main = ({ authService, databaseService }: PropType) => {
   const dispatch = useDispatch();
   const location = useLocation<LocationState>();
 
-  // const uid = location.state.id;
-  // console.log(uid);
-  //  로그인한 사람의 uid를받음
-
   const history = useHistory();
+
   useEffect(() => {
+    console.log('mounted');
+    const stopSync = databaseService.dataSync(
+      location.state.id,
+      (value: any) => {
+        console.log(value);
+        if (!value) dispatch(initCardAction([]));
+        else {
+          const initState = Object.keys(value).map((key: string) => ({
+            id: key,
+            current: value[key].current,
+            today: value[key].today,
+            todos: value[key].todos
+              ? Object.keys(value[key].todos).map((todoKey) => ({
+                  id: value[key].todos[todoKey].id,
+                  thing: value[key].todos[todoKey].thing,
+                  checked: value[key].todos[todoKey].checked,
+                }))
+              : [],
+          }));
+          dispatch(initCardAction(initState));
+        }
+      }
+    );
+
     authService.onAuthStatus((user) => {
       if (!user) {
         history.push('/');
       }
     });
-  }, []);
+    return () => stopSync();
+  }, [databaseService]);
+
   const logoutHandler = () => {
     authService.logout();
   };
 
   const cardChangeHandler = (result: DropResult) => {
-    const { source, destination, draggableId } = result;
-    // console.log(`드래그한 id : ${draggableId}`);
-    // destination &&
-    //   console.log(`놓은 곳의 card id :${cards[destination?.index].id}`);
-
+    const { source, destination } = result;
     if (!destination) {
       return;
     }
@@ -56,26 +79,43 @@ const Main = ({ authService, databaseService }: PropType) => {
       newCards.splice(destination.index, 0, reorderedItem);
 
       dispatch(sameChangeCardAction(newCards));
-      databaseService.changeCardSameId(location.state.id, newCards);
     } else {
       const selectedCard = cards.find((card) => card.id === result.draggableId);
-      if (selectedCard)
-        selectedCard?.todos.length === 0 && destination.droppableId === 'card'
-          ? alert('할일을 먼저 입력해주세요!')
-          : dispatch(
-              diffChangeCardAction(
-                result.draggableId,
-                source.index,
-                destination.index
-              )
-            );
+      const prevCard = cards.find((card) => card.current);
+
+      if (selectedCard) {
+        if (
+          selectedCard?.todos.length === 0 &&
+          destination.droppableId === 'card'
+        )
+          alert('할일을 먼저 입력해주세요!');
+        else {
+          dispatch(
+            diffChangeCardAction(
+              result.draggableId,
+              source.index,
+              destination.index
+            )
+          );
+          databaseService.changeToStart(
+            location.state.id,
+            result.draggableId,
+            !selectedCard.current,
+            prevCard && prevCard.id
+          );
+        }
+      }
     }
   };
 
   return (
     <MainContainer>
       <DragDropContext onDragEnd={cardChangeHandler}>
-        <List uid={location.state.id} databaseService={databaseService} />
+        <List
+          cards={cards}
+          uid={location.state.id}
+          databaseService={databaseService}
+        />
         <StartPlan
           logout={logoutHandler}
           uid={location.state.id}

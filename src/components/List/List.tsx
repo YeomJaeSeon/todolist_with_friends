@@ -11,21 +11,22 @@ import {
 } from './List.style';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootType } from '../../modules/index';
-import { addCardAction } from '../../modules/todos';
+import { addCardAction, StateType } from '../../modules/todos';
 import { ReactComponent as LeftSVG } from '../../assets/svg/chevron-left-solid.svg';
 import { ReactComponent as RightSVG } from '../../assets/svg/chevron-right-solid.svg';
 import { Droppable } from 'react-beautiful-dnd';
 import { DatabaseType } from 'src/services/data_service';
 
 type PropType = {
+  cards: StateType;
   uid: string;
   databaseService: DatabaseType;
 };
 
-const List: React.FC<PropType> = ({ uid, databaseService }) => {
+const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
   const [fold, setFold] = useState(true);
   const dispatch = useDispatch();
-  const cards = useSelector((state: RootType) => state.todoReducer);
+  // const cards = useSelector((state: RootType) => state.todoReducer);
   console.log(cards);
   const addCard = () => {
     const newId = Date.now();
