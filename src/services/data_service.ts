@@ -45,6 +45,7 @@ export type DatabaseType = {
   updateTime(uid: string | null, time: number): void;
   timeSync(uid: string | null, update: CallbackType): any;
   getUserDatas(show: CallbackType): any;
+  getLoginUserData(uid: string | null, get: CallbackType): void;
 };
 
 export default class Database {
@@ -150,5 +151,14 @@ export default class Database {
     });
 
     return () => datasRef.off();
+  }
+  getLoginUserData(uid: string | null, get: CallbackType) {
+    const datasRef = firebaseDatabase.ref(`times`);
+    datasRef.once('value', (snapshop) => {
+      if (uid) {
+        console.log(snapshop.val()[uid]);
+        get(snapshop.val()[uid].userName);
+      }
+    });
   }
 }
