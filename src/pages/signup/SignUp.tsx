@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SignUpForm,
   SignUpTitle,
@@ -23,6 +23,7 @@ type PropType = {
 };
 
 const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
+  const [isCharacterProper, setIsCharacterProper] = useState(false);
   const [isEmailProper, setIsEmailProper] = useState(false);
   const [isPwdProper, setIsPwdProper] = useState(false);
   const [isRePwdProper, setIsRePwdProper] = useState(false);
@@ -32,6 +33,23 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     pwd: '',
     rePwd: '',
   });
+  const [existedUsers, setExistedUsers] = useState<string[]>([]);
+
+  useEffect(() => {
+    const getUsers = databaseService.getUserDatas((datas) => {
+      if (!datas) setExistedUsers([]);
+      else {
+        const existedUsersList = Object.keys(datas).map(
+          (user) => datas[user].userName
+        );
+        console.log(existedUsersList);
+        setExistedUsers(existedUsersList);
+      }
+    });
+
+    return () => getUsers();
+  }, []);
+
   const history = useHistory();
   const goToLogin = () => {
     history.push('/');
@@ -40,6 +58,10 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     if (!isAllClear()) return;
+    if (!isCharacterProper) {
+      alert('이미 존재하는 이름입니다.');
+      return;
+    }
     authService
       .signUp(newUser.email, newUser.pwd)
       .then((user) => {
@@ -61,7 +83,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     const value = e.currentTarget.value;
     console.log(typeof value.length);
     if (id === 'character') {
-      //이미 존재하는지 안하는지 확인
+      existedUsers.some((characterName) => value === characterName)
+        ? setIsCharacterProper(false)
+        : setIsCharacterProper(true);
     } else if (id === 'email') {
       EmailReg.test(value) ? setIsEmailProper(true) : setIsEmailProper(false);
     } else if (id === 'pwd') {

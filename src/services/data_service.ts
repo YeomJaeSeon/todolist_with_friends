@@ -16,10 +16,6 @@ import { StateType } from '../modules/todos';
 
 type CallbackType = (value: any) => void;
 
-// export type SnapshotType = {
-
-// }
-
 export type DatabaseType = {
   write(uid: string, id: string, today: string): void;
   writeTodo(uid: string, id: string, todoId: number, todo: string): void;
@@ -38,6 +34,7 @@ export type DatabaseType = {
   createUser(uid: string, userName: string): void;
   updateTime(uid: string, time: number): void;
   timeSync(uid: string, update: CallbackType): any;
+  getUserDatas(show: CallbackType): any;
 };
 
 export default class Database {
@@ -115,6 +112,7 @@ export default class Database {
       time: 0,
     });
   }
+
   updateTime(uid: string, time: number) {
     firebaseDatabase.ref(`times/${uid}`).update({
       time: time,
@@ -125,6 +123,15 @@ export default class Database {
     datasRef.on('value', (snapshot) => {
       const time = snapshot.val().time;
       update(time);
+    });
+
+    return () => datasRef.off();
+  }
+  getUserDatas(show: CallbackType) {
+    const datasRef = firebaseDatabase.ref('times');
+    datasRef.on('value', (snapshot) => {
+      console.log(snapshot.val());
+      show(snapshot.val());
     });
 
     return () => datasRef.off();
