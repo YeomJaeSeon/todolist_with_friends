@@ -14,7 +14,7 @@ const StartPlan: React.FC<PropType> = ({ logout, uid, databaseService }) => {
     <StartPlanContainer>
       <TimerTitle>Start Planning 🏃‍♀️🏃‍♂️</TimerTitle>
       <LogoutBtn onClick={logout}>Logout</LogoutBtn>
-      <PlanTimer />
+      <PlanTimer uid={uid} databaseService={databaseService} />
       <CurrentPlan uid={uid} databaseService={databaseService} />
     </StartPlanContainer>
   );

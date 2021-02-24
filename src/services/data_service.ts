@@ -35,6 +35,9 @@ export type DatabaseType = {
     prevCardId?: string
   ): void;
   dataSync(uid: string, update: CallbackType): any;
+  createUser(uid: string, userName: string): void;
+  updateTime(uid: string, time: number): void;
+  timeSync(uid: string, update: CallbackType): any;
 };
 
 export default class Database {
@@ -101,6 +104,27 @@ export default class Database {
     datasRef.on('value', (snapshot) => {
       const value = snapshot.val();
       update(value);
+    });
+
+    return () => datasRef.off();
+  }
+
+  createUser(uid: string, userName: string) {
+    firebaseDatabase.ref(`times/${uid}`).set({
+      userName: userName,
+      time: 0,
+    });
+  }
+  updateTime(uid: string, time: number) {
+    firebaseDatabase.ref(`times/${uid}`).update({
+      time: time,
+    });
+  }
+  timeSync(uid: string, update: CallbackType) {
+    const datasRef = firebaseDatabase.ref(`times/${uid}`);
+    datasRef.on('value', (snapshot) => {
+      const time = snapshot.val().time;
+      update(time);
     });
 
     return () => datasRef.off();

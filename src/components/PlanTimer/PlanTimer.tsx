@@ -3,6 +3,7 @@ import * as S from './PlanTimer.style';
 import { ReactComponent as PlaySVG } from '../../assets/svg/play-solid.svg';
 import { ReactComponent as StopSVG } from '../../assets/svg/stop-solid.svg';
 import { ReactComponent as PauseSVG } from '../../assets/svg/pause-solid.svg';
+import { DatabaseType } from 'src/services/data_service';
 
 let TimerVal: NodeJS.Timeout;
 
@@ -17,9 +18,22 @@ const minutes = (time: number): string | number =>
 const seconds = (time: number): string | number =>
   time % 60 > 9 ? time % 60 : `0${time % 60}`;
 
-const PlanTimer = () => {
+type PropType = {
+  uid: string;
+  databaseService: DatabaseType;
+};
+
+const PlanTimer: React.FC<PropType> = ({ uid, databaseService }) => {
   const [time, setTime] = useState(0);
   const [state, setState] = useState(false);
+
+  useEffect(() => {
+    const timeSync = databaseService.timeSync(uid, (time) => {
+      if (time) setTime(+time);
+    });
+
+    return () => timeSync();
+  }, []);
 
   useEffect(() => {
     return () => stop();
@@ -29,7 +43,10 @@ const PlanTimer = () => {
   const start = () => {
     setState(true);
     TimerVal = setInterval(() => {
-      setTime((time) => time + 1);
+      setTime((time) => {
+        databaseService.updateTime(uid, time + 1);
+        return time + 1;
+      });
     }, 1000);
   };
 
@@ -49,6 +66,7 @@ const PlanTimer = () => {
   const reset = () => {
     stop();
     setTime(0);
+    databaseService.updateTime(uid, 0);
   };
 
   return (

@@ -21,7 +21,7 @@ const App = ({ authService, databaseService }: PropType) => (
         <Main authService={authService} databaseService={databaseService} />
       </Route>
       <Route path="/signup" exact>
-        <SignUp authService={authService} />
+        <SignUp authService={authService} databaseService={databaseService} />
       </Route>
     </Switch>
   </BrowserRouter>

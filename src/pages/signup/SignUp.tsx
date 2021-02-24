@@ -13,14 +13,16 @@ import {
 } from './SignUp.style';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
+import { DatabaseType } from 'src/services/data_service';
 
 const EmailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 
 type PropType = {
   authService: AuthServiceType;
+  databaseService: DatabaseType;
 };
 
-const SignUp: React.FC<PropType> = ({ authService }) => {
+const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
   const [isEmailProper, setIsEmailProper] = useState(false);
   const [isPwdProper, setIsPwdProper] = useState(false);
   const [isRePwdProper, setIsRePwdProper] = useState(false);
@@ -41,6 +43,9 @@ const SignUp: React.FC<PropType> = ({ authService }) => {
     authService
       .signUp(newUser.email, newUser.pwd)
       .then((user) => {
+        user &&
+          user.user &&
+          databaseService.createUser(user.user?.uid, newUser.character);
         alert('회원가입 성공!');
         authService.logout();
         goToLogin();
