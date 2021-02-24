@@ -23,7 +23,7 @@ type PropType = {
   todos: { id: number; thing: string }[];
   current: boolean;
   index: number;
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
 };
 

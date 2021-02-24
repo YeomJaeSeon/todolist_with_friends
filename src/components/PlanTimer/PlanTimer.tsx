@@ -19,7 +19,7 @@ const seconds = (time: number): string | number =>
   time % 60 > 9 ? time % 60 : `0${time % 60}`;
 
 type PropType = {
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
 };
 

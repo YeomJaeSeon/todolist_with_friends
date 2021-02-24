@@ -19,7 +19,7 @@ import { DatabaseType } from 'src/services/data_service';
 
 type PropType = {
   cards: StateType;
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
 };
 

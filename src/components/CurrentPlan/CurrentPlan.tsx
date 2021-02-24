@@ -8,7 +8,7 @@ import { RootType } from '../../modules/index';
 import { DatabaseType } from 'src/services/data_service';
 
 type PropType = {
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
 };
 

@@ -15,7 +15,7 @@ import {
 } from 'src/modules/todos';
 
 type LocationState = {
-  id: string;
+  id: string | null;
 };
 
 type PropType = {
@@ -25,42 +25,39 @@ type PropType = {
 
 const Main = ({ authService, databaseService }: PropType) => {
   const cards = useSelector((state: RootType) => state.todoReducer);
-
   const dispatch = useDispatch();
   const location = useLocation<LocationState>();
+  const uid = location.state ? location.state.id : null;
 
   const history = useHistory();
 
   useEffect(() => {
-    console.log('mounted');
-    const stopSync = databaseService.dataSync(
-      location.state.id,
-      (value: any) => {
-        console.log(value);
-        if (!value) dispatch(initCardAction([]));
-        else {
-          const initState = Object.keys(value).map((key: string) => ({
-            id: key,
-            current: value[key].current,
-            today: value[key].today,
-            todos: value[key].todos
-              ? Object.keys(value[key].todos).map((todoKey) => ({
-                  id: value[key].todos[todoKey].id,
-                  thing: value[key].todos[todoKey].thing,
-                  checked: value[key].todos[todoKey].checked,
-                }))
-              : [],
-          }));
-          dispatch(initCardAction(initState));
-        }
-      }
-    );
-
     authService.onAuthStatus((user) => {
       if (!user) {
         history.push('/');
       }
     });
+
+    const stopSync = databaseService.dataSync(uid, (value: any) => {
+      console.log(value);
+      if (!value) dispatch(initCardAction([]));
+      else {
+        const initState = Object.keys(value).map((key: string) => ({
+          id: key,
+          current: value[key].current,
+          today: value[key].today,
+          todos: value[key].todos
+            ? Object.keys(value[key].todos).map((todoKey) => ({
+                id: value[key].todos[todoKey].id,
+                thing: value[key].todos[todoKey].thing,
+                checked: value[key].todos[todoKey].checked,
+              }))
+            : [],
+        }));
+        dispatch(initCardAction(initState));
+      }
+    });
+
     return () => stopSync();
   }, [databaseService]);
 
@@ -98,7 +95,7 @@ const Main = ({ authService, databaseService }: PropType) => {
             )
           );
           databaseService.changeToStart(
-            location.state.id,
+            uid,
             result.draggableId,
             !selectedCard.current,
             prevCard && prevCard.id
@@ -111,14 +108,10 @@ const Main = ({ authService, databaseService }: PropType) => {
   return (
     <MainContainer>
       <DragDropContext onDragEnd={cardChangeHandler}>
-        <List
-          cards={cards}
-          uid={location.state.id}
-          databaseService={databaseService}
-        />
+        <List cards={cards} uid={uid} databaseService={databaseService} />
         <StartPlan
           logout={logoutHandler}
-          uid={location.state.id}
+          uid={uid}
           databaseService={databaseService}
         />
       </DragDropContext>

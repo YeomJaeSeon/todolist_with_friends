@@ -13,7 +13,7 @@ type PropType = {
     thing: string;
     checked: boolean;
   }[];
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
 };
 

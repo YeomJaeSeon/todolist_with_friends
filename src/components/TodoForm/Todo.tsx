@@ -10,7 +10,7 @@ type PropType = {
     id: number;
     thing: string;
   };
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
 };
 

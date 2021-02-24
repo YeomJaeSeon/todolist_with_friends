@@ -6,7 +6,7 @@ import { StartPlanContainer, TimerTitle, LogoutBtn } from './StartPlan.style';
 
 type PropType = {
   logout: () => void;
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
 };
 const StartPlan: React.FC<PropType> = ({ logout, uid, databaseService }) => {

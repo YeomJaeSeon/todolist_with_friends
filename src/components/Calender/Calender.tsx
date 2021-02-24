@@ -8,7 +8,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { DatabaseType } from 'src/services/data_service';
 
 type PropType = {
-  uid: string;
+  uid: string | null;
   databaseService: DatabaseType;
   cardId: string;
 };
