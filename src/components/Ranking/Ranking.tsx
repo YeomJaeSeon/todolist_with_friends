@@ -11,8 +11,12 @@ type StateType = {
   userName: string;
 }[];
 
+const hour = (time: number): number => Math.floor(time / 3600);
+const minute = (time: number): number => Math.floor(time / 60) % 60;
+
 const Ranking: React.FC<PropType> = ({ databaseService }) => {
   const [rankers, setRankers] = useState<StateType>([]);
+
   useEffect(() => {
     const datasSync = databaseService.getUserDatas((datas) => {
       if (datas) {
@@ -21,8 +25,11 @@ const Ranking: React.FC<PropType> = ({ databaseService }) => {
             time: +datas[key].time,
             userName: datas[key].userName,
           }))
-          .sort((item) => item.time);
-
+          .sort((a, b) => {
+            if (a.time > b.time) return -1;
+            if (a.time < b.time) return 1;
+            else return 0;
+          });
         setRankers(infos);
       } else {
         setRankers([]);
@@ -31,16 +38,19 @@ const Ranking: React.FC<PropType> = ({ databaseService }) => {
 
     return () => datasSync();
   }, []);
+
   return (
     <S.RankingContainer>
       <S.RankingTitle>랭킹</S.RankingTitle>
       <S.UserList>
         {rankers.map((user, idx) => {
           return (
-            <S.User key={user.userName}>
-              <span>{idx + 1}</span>
-              <span>{user.userName}</span>
-              <span>{user.time}</span>
+            <S.User rank={idx} key={user.userName}>
+              <S.rankNum>{idx + 1}등</S.rankNum>
+              <S.rankName>{user.userName}</S.rankName>
+              <S.rankTIme>{`${hour(user.time)}시간 ${minute(
+                user.time
+              )}분`}</S.rankTIme>
             </S.User>
           );
         })}

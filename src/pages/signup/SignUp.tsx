@@ -83,6 +83,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     const value = e.currentTarget.value;
     console.log(typeof value.length);
     if (id === 'character') {
+      if (value.length > 6) return;
       existedUsers.some((characterName) => value === characterName)
         ? setIsCharacterProper(false)
         : setIsCharacterProper(true);
@@ -115,7 +116,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           id="character"
           value={newUser.character}
           onChange={upDateUserInfo}
-          placeholder="별명 입력해주세요."
+          placeholder="별명 입력해주세요. (6자리 이하)"
         />
         {newUser.character && <CheckIcon>✔</CheckIcon>}
       </SignUpBox>
