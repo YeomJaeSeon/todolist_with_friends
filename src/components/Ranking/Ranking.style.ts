@@ -10,10 +10,7 @@ export const RankingContainer = styled.div`
   align-items: center;
   overflow-y: auto;
   &::-webkit-scrollbar {
-    /* 세로 스크롤 넓이 */
     width: 8px;
-
-    /* 가로 스크롤 높이 */
     height: 8px;
 
     border-radius: 6px;
@@ -45,7 +42,7 @@ export const NoRankerUser = styled.div`
 `;
 
 export const User = styled.li<{ rank: number }>`
-  font-size: 0.85rem;
+  font-size: 1rem;
   padding: 10px 0;
   display: flex;
 

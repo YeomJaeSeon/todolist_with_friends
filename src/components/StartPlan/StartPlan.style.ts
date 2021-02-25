@@ -12,14 +12,14 @@ export const TimerTitle = styled.h1`
 `;
 
 export const AllSection = styled.div`
-  flex: 1 1 80%;
+  flex: 1 1 70%;
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 export const RankingContainer = styled.div`
-  width: 200px;
+  width: 250px;
   display: flex;
   flex-direction: column;
 `;

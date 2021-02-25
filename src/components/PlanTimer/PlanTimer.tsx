@@ -72,6 +72,7 @@ const PlanTimer: React.FC<PropType> = ({
   };
 
   const reset = () => {
+    if (time === 0) return;
     const userResponse = window.confirm(
       '누르면 시간이 초기화 됩니다. 그래도 누르시겠습니까?'
     );

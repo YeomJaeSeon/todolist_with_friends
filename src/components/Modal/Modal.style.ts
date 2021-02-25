@@ -1,3 +1,4 @@
+import { NotiColor } from 'src/utils/css-utils';
 import styled from 'styled-components';
 
 export const ModalWrapper = styled.div<{ visible: boolean }>`
@@ -49,7 +50,6 @@ export const ModalTitle = styled.h1`
 `;
 
 export const ModalUserSection = styled.div`
-  background-color: gray;
   width: 100%;
   height: 100%;
   display: flex;
@@ -59,7 +59,7 @@ export const ModalSelectorSection = styled.div`
   position: relative;
   flex: 1;
 `;
-export const ModalUserBtn = styled.button`
+export const ModalUserBtn = styled.button<{ btnType: string }>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -70,11 +70,13 @@ export const ModalUserBtn = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: bolder;
+  color: ${(props) => (props.btnType === 'change' ? NotiColor : 'red')};
 `;
 export const ChangeSection = styled.div`
   position: absolute;
-  bottom: 10%;
+  bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
@@ -86,6 +88,7 @@ export const ChangeSection = styled.div`
 export const ChangeCharacterInput = styled.input`
   width: 80%;
   padding: 3px;
+  border: 1px solid gray;
 `;
 
 export const CheckBtn = styled.button`

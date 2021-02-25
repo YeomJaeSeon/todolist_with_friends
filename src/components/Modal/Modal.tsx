@@ -12,6 +12,7 @@ type PropType = {
   uid: string | null;
   databaseService: DatabaseType;
   authService: AuthServiceType;
+  notAuthorize: () => void;
 };
 
 const Modal: React.FC<PropType> = ({
@@ -23,10 +24,12 @@ const Modal: React.FC<PropType> = ({
   uid,
   databaseService,
   authService,
+  notAuthorize,
 }) => {
   const [characterChange, setCharacterChange] = useState(false);
   const [newUserName, setNewUserName] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
+
   const onMaskClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent> | null
   ) => {
@@ -64,17 +67,19 @@ const Modal: React.FC<PropType> = ({
     const userResponse = window.confirm(
       '다시는 복구할수 없습니다. 정말 삭제하시겠습니까?'
     );
-    console.log(userResponse);
     if (!userResponse) return;
-
+    onClose();
+    notAuthorize(); // 사용자 접근 아애막아버리기
+    authService.delete();
     // sync함수버리기 sync함수 버리고 dbdelete를해야함.
     databaseService.timeSync(uid)();
     databaseService.dataSync(uid)();
     databaseService.getLoginUserData(uid)();
     databaseService.getUserDatas()();
 
-    authService.delete();
     databaseService.deleteUser(uid);
+
+    alert('탈퇴 완료되었습니다.');
   };
 
   return (
@@ -91,7 +96,7 @@ const Modal: React.FC<PropType> = ({
           <S.ModalTitle>{children}</S.ModalTitle>
           <S.ModalUserSection>
             <S.ModalSelectorSection>
-              <S.ModalUserBtn onClick={changeCharacterClick}>
+              <S.ModalUserBtn btnType="change" onClick={changeCharacterClick}>
                 별명 수정
               </S.ModalUserBtn>
               {characterChange ? (
@@ -108,7 +113,9 @@ const Modal: React.FC<PropType> = ({
               ) : null}
             </S.ModalSelectorSection>
             <S.ModalSelectorSection>
-              <S.ModalUserBtn onClick={deleteUser}>회원 삭제</S.ModalUserBtn>
+              <S.ModalUserBtn btnType="delete" onClick={deleteUser}>
+                회원 탈퇴
+              </S.ModalUserBtn>
             </S.ModalSelectorSection>
           </S.ModalUserSection>
         </S.ModalInner>

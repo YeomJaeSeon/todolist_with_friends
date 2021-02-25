@@ -73,6 +73,10 @@ const Main = ({ authService, databaseService }: PropType) => {
     return () => datasRef();
   }, []);
 
+  const notAuthorize = () => {
+    setPending(true);
+  };
+
   const logoutHandler = () => {
     authService.logout();
   };
@@ -164,6 +168,7 @@ const Main = ({ authService, databaseService }: PropType) => {
           uid={uid}
           databaseService={databaseService}
           authService={authService}
+          notAuthorize={notAuthorize}
         >
           {currentUser}님 사용자 관리
         </Modal>

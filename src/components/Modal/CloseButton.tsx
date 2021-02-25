@@ -6,7 +6,11 @@ type PropType = {
 };
 
 const CloseButton: React.FC<PropType> = ({ onClick }) => {
-  return <S.CloseButton onClick={onClick}>X</S.CloseButton>;
+  return (
+    <S.CloseButton onClick={onClick}>
+      <S.CancelIcon />
+    </S.CloseButton>
+  );
 };
 
 export default CloseButton;
