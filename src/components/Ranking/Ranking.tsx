@@ -47,7 +47,10 @@ const Ranking: React.FC<PropType> = ({ databaseService }) => {
           return (
             <S.User rank={idx} key={user.userName}>
               <S.rankNum>{idx + 1}등</S.rankNum>
-              <S.rankName>{user.userName}</S.rankName>
+              <S.rankName>
+                {idx <= 2 ? <S.CrwonIcon /> : <S.NoRankerUser></S.NoRankerUser>}
+                {user.userName}
+              </S.rankName>
               <S.rankTIme>{`${hour(user.time)}시간 ${minute(
                 user.time
               )}분`}</S.rankTIme>

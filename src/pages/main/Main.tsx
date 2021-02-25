@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthServiceType } from '../../services/auth_service';
 import { DatabaseType } from '../../services/data_service';
 import { useHistory, useLocation } from 'react-router-dom';
-import { MainContainer } from './Main.style';
+import * as S from './Main.style';
 import List from 'src/components/List/List';
 import StartPlan from 'src/components/StartPlan/StartPlan';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
@@ -24,6 +24,7 @@ type PropType = {
 };
 
 const Main = ({ authService, databaseService }: PropType) => {
+  const [pending, setPending] = useState(true);
   const cards = useSelector((state: RootType) => state.todoReducer);
   const dispatch = useDispatch();
   const location = useLocation<LocationState>();
@@ -39,7 +40,6 @@ const Main = ({ authService, databaseService }: PropType) => {
     });
 
     const stopSync = databaseService.dataSync(uid, (value: any) => {
-      console.log(value);
       if (!value) dispatch(initCardAction([]));
       else {
         const initState = Object.keys(value).map((key: string) => ({
@@ -55,6 +55,7 @@ const Main = ({ authService, databaseService }: PropType) => {
             : [],
         }));
         dispatch(initCardAction(initState));
+        setPending(false);
       }
     });
 
@@ -106,16 +107,24 @@ const Main = ({ authService, databaseService }: PropType) => {
   };
 
   return (
-    <MainContainer>
+    <S.MainContainer>
       <DragDropContext onDragEnd={cardChangeHandler}>
-        <List cards={cards} uid={uid} databaseService={databaseService} />
-        <StartPlan
-          logout={logoutHandler}
-          uid={uid}
-          databaseService={databaseService}
-        />
+        {pending ? (
+          <S.PendingBackground>
+            <S.LoadingSpinner></S.LoadingSpinner>
+          </S.PendingBackground>
+        ) : (
+          <>
+            <List cards={cards} uid={uid} databaseService={databaseService} />
+            <StartPlan
+              logout={logoutHandler}
+              uid={uid}
+              databaseService={databaseService}
+            />
+          </>
+        )}
       </DragDropContext>
-    </MainContainer>
+    </S.MainContainer>
   );
 };
 

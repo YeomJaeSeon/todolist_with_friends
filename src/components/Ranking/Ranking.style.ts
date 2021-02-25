@@ -33,31 +33,42 @@ export const UserList = styled.ul`
   width: 100%;
 `;
 
-export const CrwonIcon = styled(CrownSVG)``;
-
-export const rankNum = styled.span`
-  margin-left: 10px;
-  flex-basis: 20%;
+export const CrwonIcon = styled(CrownSVG)`
+  width: 15px;
+  height: 15px;
 `;
 
-export const rankName = styled.span`
-  flex-basis: 45%;
+export const NoRankerUser = styled.div`
+  display: inline-block;
+  width: 15px;
+  height: 15px;
 `;
+
 export const User = styled.li<{ rank: number }>`
   font-size: 0.9rem;
   padding: 10px 0;
   display: flex;
-  ${rankName} {
+
+  ${CrwonIcon} {
     color: ${(props) => {
       if (props.rank === 0) {
-        return 'red';
+        return 'gold';
       } else if (props.rank === 1) {
-        return 'blue';
+        return 'silver';
       } else if (props.rank === 2) {
-        return 'yellow';
+        return '#4b2c20';
       }
     }};
   }
+`;
+
+export const rankNum = styled.span`
+  margin-left: 10px;
+  flex-basis: 15%;
+`;
+
+export const rankName = styled.span`
+  flex-basis: 50%;
 `;
 
 export const rankTIme = styled.span`
