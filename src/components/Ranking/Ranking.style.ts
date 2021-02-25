@@ -3,8 +3,8 @@ import { ReactComponent as CrownSVG } from '../../assets/svg/crown-solid.svg';
 
 export const RankingContainer = styled.div`
   flex: 1;
-  border-radius: 5px;
-  background-color: #c8e6c9;
+  border-radius: 10px 0 0 0;
+  border: 2px solid black;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -45,7 +45,7 @@ export const NoRankerUser = styled.div`
 `;
 
 export const User = styled.li<{ rank: number }>`
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   padding: 10px 0;
   display: flex;
 
@@ -68,6 +68,8 @@ export const rankNum = styled.span`
 `;
 
 export const rankName = styled.span`
+  display: flex;
+  align-items: center;
   flex-basis: 50%;
 `;
 

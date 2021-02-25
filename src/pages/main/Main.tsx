@@ -13,6 +13,7 @@ import {
   sameChangeCardAction,
   diffChangeCardAction,
 } from 'src/modules/todos';
+import Modal from 'src/components/Modal/Modal';
 
 type LocationState = {
   id: string | null;
@@ -25,6 +26,8 @@ type PropType = {
 
 const Main = ({ authService, databaseService }: PropType) => {
   const [pending, setPending] = useState(true);
+  const [currentUser, setCurrentUser] = useState('');
+  const [modalDisplay, setModalDisplay] = useState(false);
   const cards = useSelector((state: RootType) => state.todoReducer);
   const dispatch = useDispatch();
   const location = useLocation<LocationState>();
@@ -55,12 +58,20 @@ const Main = ({ authService, databaseService }: PropType) => {
             : [],
         }));
         dispatch(initCardAction(initState));
-        setPending(false);
       }
+      setPending(false);
     });
 
     return () => stopSync();
   }, [databaseService]);
+
+  useEffect(() => {
+    const datasRef = databaseService.getLoginUserData(uid, (character) => {
+      setCurrentUser(character);
+    });
+
+    return () => datasRef();
+  }, []);
 
   const logoutHandler = () => {
     authService.logout();
@@ -105,6 +116,12 @@ const Main = ({ authService, databaseService }: PropType) => {
       }
     }
   };
+  const openModal = () => {
+    setModalDisplay(true);
+  };
+  const closeModal = () => {
+    setModalDisplay(false);
+  };
 
   return (
     <S.MainContainer>
@@ -117,13 +134,40 @@ const Main = ({ authService, databaseService }: PropType) => {
           <>
             <List cards={cards} uid={uid} databaseService={databaseService} />
             <StartPlan
-              logout={logoutHandler}
               uid={uid}
               databaseService={databaseService}
+              modalDisplay={modalDisplay}
             />
+            <S.UserInfoSection>
+              <S.CurrentUserInfo>
+                {currentUser && (
+                  <S.UserInfoContainer>
+                    <S.UserCharacterName>{currentUser}</S.UserCharacterName>님
+                    접속 중
+                  </S.UserInfoContainer>
+                )}
+                <S.LogoutBtn onClick={logoutHandler}>Logout</S.LogoutBtn>
+              </S.CurrentUserInfo>
+              <S.UserChangeInfo onClick={openModal}>
+                사용자 관리
+              </S.UserChangeInfo>
+            </S.UserInfoSection>
           </>
         )}
       </DragDropContext>
+      {modalDisplay && (
+        <Modal
+          visible={modalDisplay}
+          closable={true}
+          onClose={closeModal}
+          className="modal"
+          uid={uid}
+          databaseService={databaseService}
+          authService={authService}
+        >
+          {currentUser}님 사용자 관리
+        </Modal>
+      )}
     </S.MainContainer>
   );
 };

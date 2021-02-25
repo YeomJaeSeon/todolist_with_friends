@@ -21,9 +21,14 @@ const seconds = (time: number): string | number =>
 type PropType = {
   uid: string | null;
   databaseService: DatabaseType;
+  modalDisplay: boolean;
 };
 
-const PlanTimer: React.FC<PropType> = ({ uid, databaseService }) => {
+const PlanTimer: React.FC<PropType> = ({
+  uid,
+  databaseService,
+  modalDisplay,
+}) => {
   const [time, setTime] = useState(0);
   const [state, setState] = useState(false);
 
@@ -37,8 +42,11 @@ const PlanTimer: React.FC<PropType> = ({ uid, databaseService }) => {
 
   useEffect(() => {
     return () => stop();
-    // clean up함수로 메모리 누수방지
   }, []);
+
+  useEffect(() => {
+    stop();
+  }, [modalDisplay]);
 
   const start = () => {
     setState(true);
@@ -64,6 +72,10 @@ const PlanTimer: React.FC<PropType> = ({ uid, databaseService }) => {
   };
 
   const reset = () => {
+    const userResponse = window.confirm(
+      '누르면 시간이 초기화 됩니다. 그래도 누르시겠습니까?'
+    );
+    if (!userResponse) return;
     stop();
     setTime(0);
     databaseService.updateTime(uid, 0);

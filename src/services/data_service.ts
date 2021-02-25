@@ -40,12 +40,14 @@ export type DatabaseType = {
     current: boolean,
     prevCardId?: string
   ): void;
-  dataSync(uid: string | null, update: CallbackType): any;
+  dataSync(uid: string | null, update?: CallbackType): any;
   createUser(uid: string | null, userName: string): void;
   updateTime(uid: string | null, time: number): void;
-  timeSync(uid: string | null, update: CallbackType): any;
-  getUserDatas(show: CallbackType): any;
-  getLoginUserData(uid: string | null, get: CallbackType): void;
+  timeSync(uid: string | null, update?: CallbackType): any;
+  getUserDatas(show?: CallbackType): any;
+  getLoginUserData(uid: string | null, get?: CallbackType): any;
+  changeCharacterName(uid: string | null, newUserName: string): void;
+  deleteUser(uid: string | null): void;
 };
 
 export default class Database {
@@ -112,11 +114,10 @@ export default class Database {
     });
   }
 
-  dataSync(uid: string | null, update: CallbackType) {
+  dataSync(uid: string | null, update?: CallbackType) {
     const datasRef = firebaseDatabase.ref(`users/${uid}`);
     datasRef.on('value', (snapshot) => {
-      const value = snapshot.val();
-      update(value);
+      update && update(snapshot.val());
     });
 
     return () => datasRef.off();
@@ -134,31 +135,41 @@ export default class Database {
       time: time,
     });
   }
-  timeSync(uid: string | null, update: CallbackType) {
+  timeSync(uid: string | null, update?: CallbackType) {
     const datasRef = firebaseDatabase.ref(`times/${uid}`);
     datasRef.on('value', (snapshot) => {
-      const time = snapshot.val().time;
-      update(time);
+      update && update(snapshot.val().time);
     });
 
     return () => datasRef.off();
   }
-  getUserDatas(show: CallbackType) {
+  getUserDatas(show?: CallbackType) {
     const datasRef = firebaseDatabase.ref('times');
     datasRef.on('value', (snapshot) => {
-      console.log(snapshot.val());
-      show(snapshot.val());
+      // console.log(snapshot.val());
+      show && show(snapshot.val());
     });
 
     return () => datasRef.off();
   }
-  getLoginUserData(uid: string | null, get: CallbackType) {
+  getLoginUserData(uid: string | null, get?: CallbackType) {
     const datasRef = firebaseDatabase.ref(`times`);
-    datasRef.once('value', (snapshop) => {
+    datasRef.on('value', (snapshop) => {
       if (uid) {
-        console.log(snapshop.val()[uid]);
-        get(snapshop.val()[uid].userName);
+        get && get(snapshop.val()[uid].userName);
       }
     });
+
+    return () => datasRef;
+  }
+
+  changeCharacterName(uid: string | null, newUserName: string) {
+    firebaseDatabase.ref(`times/${uid}`).update({
+      userName: newUserName,
+    });
+  }
+  deleteUser(uid: string | null) {
+    firebaseDatabase.ref(`times/${uid}`).remove();
+    firebaseDatabase.ref(`users/${uid}`).remove();
   }
 }

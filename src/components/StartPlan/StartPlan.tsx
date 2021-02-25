@@ -6,42 +6,30 @@ import Ranking from '../Ranking/Ranking';
 import {
   StartPlanContainer,
   TimerTitle,
-  UserInfoSection,
-  UserInfoContainer,
-  UserCharacterName,
-  LogoutBtn,
   RankingContainer,
   EmptySection,
   AllSection,
 } from './StartPlan.style';
 
 type PropType = {
-  logout: () => void;
   uid: string | null;
   databaseService: DatabaseType;
+  modalDisplay: boolean;
 };
-const StartPlan: React.FC<PropType> = ({ logout, uid, databaseService }) => {
-  const [currentUser, setCurrentUser] = useState('');
-
-  useEffect(() => {
-    databaseService.getLoginUserData(uid, (character) => {
-      setCurrentUser(character);
-    });
-  }, []);
-
+const StartPlan: React.FC<PropType> = ({
+  uid,
+  databaseService,
+  modalDisplay,
+}) => {
   return (
     <StartPlanContainer>
       <AllSection>
         <TimerTitle>Start Planning 🏃‍♀️🏃‍♂️</TimerTitle>
-        <UserInfoSection>
-          {currentUser && (
-            <UserInfoContainer>
-              <UserCharacterName>{currentUser}</UserCharacterName>님 접속 중
-            </UserInfoContainer>
-          )}
-          <LogoutBtn onClick={logout}>Logout</LogoutBtn>
-        </UserInfoSection>
-        <PlanTimer uid={uid} databaseService={databaseService} />
+        <PlanTimer
+          uid={uid}
+          databaseService={databaseService}
+          modalDisplay={modalDisplay}
+        />
         <CurrentPlan uid={uid} databaseService={databaseService} />
       </AllSection>
       <RankingContainer>

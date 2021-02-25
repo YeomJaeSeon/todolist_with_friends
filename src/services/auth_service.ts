@@ -5,6 +5,7 @@ export type AuthServiceType = {
   login(email: string, password: string): SinUpType;
   onAuthStatus(callback: (user: AuthType) => void): void;
   logout(): void;
+  delete(): void;
 };
 
 export default class AuthService {
@@ -32,5 +33,9 @@ export default class AuthService {
   }
   logout() {
     firebaseAuth.signOut();
+  }
+  delete() {
+    const deleteUser = firebaseAuth.currentUser;
+    deleteUser?.delete();
   }
 }
