@@ -67,9 +67,9 @@ const Modal: React.FC<PropType> = ({
     );
     if (!userResponse) return;
     onClose();
-    notAuthorize(); // 사용자 접근 아애막아버리기
+    notAuthorize();
     authService.delete();
-    // sync함수버리기 sync함수 버리고 dbdelete를해야함.
+
     databaseService.timeSync(uid)();
     databaseService.dataSync(uid)();
     databaseService.getLoginUserData(uid)();

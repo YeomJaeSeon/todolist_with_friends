@@ -170,7 +170,7 @@ const Main = ({ authService, databaseService }: PropType) => {
           authService={authService}
           notAuthorize={notAuthorize}
         >
-          {currentUser}님 사용자 관리
+          {currentUser}님의 사용자 관리
         </Modal>
       )}
     </S.MainContainer>

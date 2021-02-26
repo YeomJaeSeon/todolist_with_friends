@@ -4,6 +4,9 @@ import { ReactComponent as PlaySVG } from '../../assets/svg/play-solid.svg';
 import { ReactComponent as StopSVG } from '../../assets/svg/stop-solid.svg';
 import { ReactComponent as PauseSVG } from '../../assets/svg/pause-solid.svg';
 import { UserStateType } from '../StartPlan/StartPlan';
+import { ReactComponent as MusicSVG } from '../../assets/svg/music-solid.svg';
+import { ReactComponent as MusicStopSVG } from '../../assets/svg/volume-mute-solid.svg';
+import * as Music from 'src/services/music_service';
 
 let TimerVal: NodeJS.Timeout;
 
@@ -49,6 +52,7 @@ const PlanTimer: React.FC<PropType> = ({
   resetTime,
 }) => {
   const [state, setState] = useState(false);
+  const [musicState, setMusicState] = useState(false);
 
   const time = userInfo.find((user) => user.uid === uid)?.time;
 
@@ -90,9 +94,26 @@ const PlanTimer: React.FC<PropType> = ({
     resetTime();
   };
 
+  const musicPlayOrStop = () => {
+    setMusicState((musicState) => {
+      if (!musicState === true) Music.music1Play();
+      else Music.music1Stop();
+      return !musicState;
+    });
+  };
+
   return (
     <S.PlanTimerContainer>
-      <S.TimerTitleContainer>TIMER 🕒</S.TimerTitleContainer>
+      <S.TimerTitleContainer>
+        <S.TimerTitle>TIMER 🕒</S.TimerTitle>
+        <S.MusicBtn onClick={musicPlayOrStop}>
+          {!musicState ? (
+            <S.MusicIcon as={MusicSVG} />
+          ) : (
+            <S.MusicIcon as={MusicStopSVG} />
+          )}
+        </S.MusicBtn>
+      </S.TimerTitleContainer>
       <S.TimerContainer>
         <S.TimeSection>
           {hours(time)} : {minutes(time)} : {seconds(time)}

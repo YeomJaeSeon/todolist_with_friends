@@ -73,6 +73,7 @@ export const ModalUserBtn = styled.button<{ btnType: string }>`
   font-size: 1.3rem;
   font-weight: bolder;
   color: ${(props) => (props.btnType === 'change' ? NotiColor : 'red')};
+  outline: none;
 `;
 export const ChangeSection = styled.div<{ isChange: boolean }>`
   position: absolute;
@@ -89,6 +90,7 @@ export const ChangeCharacterInput = styled.input`
   width: 80%;
   padding: 3px;
   border: 1px solid gray;
+  outline: none;
 `;
 
 export const CheckBtn = styled.button`
@@ -96,4 +98,5 @@ export const CheckBtn = styled.button`
   border: none;
   cursor: pointer;
   font-size: 1.2em;
+  outline: none;
 `;
