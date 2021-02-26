@@ -4,6 +4,7 @@ import { ReactComponent as XSVG } from '../../assets/svg/times-solid.svg';
 export const CloseButton = styled.button`
   background-color: transparent;
   border: none;
+  outline: none;
   font-weight: bolder;
   font-size: 1.2em;
   position: absolute;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { MainBackgroundColor, NotiColor } from '../../utils/css-utils';
+import { MainBackgroundColor } from '../../utils/css-utils';
 
 export const StartPlanContainer = styled.div`
   flex: 1;
@@ -19,7 +19,7 @@ export const AllSection = styled.div`
 `;
 
 export const RankingContainer = styled.div`
-  width: 250px;
+  width: 280px;
   display: flex;
   flex-direction: column;
 `;

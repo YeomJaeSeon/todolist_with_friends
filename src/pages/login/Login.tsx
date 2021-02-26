@@ -54,21 +54,22 @@ const Login = ({ authService }: PropType) => {
     }
   };
 
-  const goToMain = (uid: string) => {
-    history.push({
-      pathname: '/main',
-      state: { id: uid },
-    });
-  };
-
   const goToSignUp = () => {
     history.push('/signup');
   };
   useEffect(() => {
+    const goToMain = (uid: string) => {
+      history.push({
+        pathname: '/main',
+        state: { id: uid },
+      });
+    };
+
     authService.onAuthStatus((user: AuthType) => {
       user && goToMain(user.uid);
     });
-  }, []);
+  }, [authService, history]);
+
   return (
     <LoginContainer>
       <ContentContainer>

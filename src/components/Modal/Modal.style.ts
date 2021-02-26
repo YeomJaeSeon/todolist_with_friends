@@ -74,13 +74,13 @@ export const ModalUserBtn = styled.button<{ btnType: string }>`
   font-weight: bolder;
   color: ${(props) => (props.btnType === 'change' ? NotiColor : 'red')};
 `;
-export const ChangeSection = styled.div`
+export const ChangeSection = styled.div<{ isChange: boolean }>`
   position: absolute;
   bottom: 5%;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  display: flex;
+  display: ${(props) => (props.isChange ? 'flex' : 'none')};
   align-items: center;
   justify-content: center;
 `;

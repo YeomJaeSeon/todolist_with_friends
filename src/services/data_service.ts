@@ -1,18 +1,4 @@
 import { firebaseDatabase } from './firebase';
-import { StateType } from '../modules/todos';
-
-// type TodoType = {
-//   id: number;
-//   thing: string;
-//   checked: boolean;
-// }[];
-
-// type CardType = {
-//   id: string;
-//   current: boolean;
-//   today: string;
-//   todos: TodoType;
-// };
 
 type CallbackType = (value: any) => void;
 
@@ -146,7 +132,6 @@ export default class Database {
   getUserDatas(show?: CallbackType) {
     const datasRef = firebaseDatabase.ref('times');
     datasRef.on('value', (snapshot) => {
-      // console.log(snapshot.val());
       show && show(snapshot.val());
     });
 

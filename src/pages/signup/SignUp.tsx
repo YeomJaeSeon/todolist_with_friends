@@ -42,13 +42,12 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         const existedUsersList = Object.keys(datas).map(
           (user) => datas[user].userName
         );
-        console.log(existedUsersList);
         setExistedUsers(existedUsersList);
       }
     });
 
     return () => getUsers();
-  }, []);
+  }, [databaseService]);
 
   const history = useHistory();
   const goToLogin = () => {

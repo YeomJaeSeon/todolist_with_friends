@@ -28,9 +28,6 @@ export default class AuthService {
       callback(user);
     });
   }
-  isUser() {
-    const user = firebaseAuth.currentUser;
-  }
   logout() {
     firebaseAuth.signOut();
   }

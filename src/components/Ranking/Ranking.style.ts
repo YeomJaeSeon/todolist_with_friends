@@ -59,17 +59,17 @@ export const User = styled.li<{ rank: number }>`
   }
 `;
 
-export const rankNum = styled.span`
+export const RankNum = styled.span`
   margin-left: 10px;
   flex-basis: 15%;
 `;
 
-export const rankName = styled.span`
+export const RankName = styled.span`
   display: flex;
   align-items: center;
   flex-basis: 50%;
 `;
 
-export const rankTIme = styled.span`
+export const RankTIme = styled.span`
   flex-basis: 35%;
 `;

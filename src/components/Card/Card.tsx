@@ -35,7 +35,6 @@ const Card: React.FC<PropType> = ({
   uid,
   databaseService,
 }) => {
-  console.log('나님 생성');
   const inputRef = useRef<HTMLInputElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dispatch = useDispatch();

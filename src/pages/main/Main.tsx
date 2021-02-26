@@ -63,7 +63,7 @@ const Main = ({ authService, databaseService }: PropType) => {
     });
 
     return () => stopSync();
-  }, [databaseService]);
+  }, [databaseService, authService, dispatch, uid, history]);
 
   useEffect(() => {
     const datasRef = databaseService.getLoginUserData(uid, (character) => {
@@ -71,7 +71,7 @@ const Main = ({ authService, databaseService }: PropType) => {
     });
 
     return () => datasRef();
-  }, []);
+  }, [databaseService, uid]);
 
   const notAuthorize = () => {
     setPending(true);

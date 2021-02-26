@@ -55,10 +55,10 @@ const ReadCard: React.FC<PropType> = ({
           <S.ReadCardListContainer>
             {todos.map((todo) => (
               <S.ReadCardList done={todo.checked} key={todo.id}>
-                <S.todoContent>{todo.thing}</S.todoContent>
-                <S.toggleBtn onClick={onToggleHandler(todo.id, todo.checked)}>
+                <S.TodoContent>{todo.thing}</S.TodoContent>
+                <S.ToggleBtn onClick={onToggleHandler(todo.id, todo.checked)}>
                   {todo.checked ? 'uncheck' : 'check'}
-                </S.toggleBtn>
+                </S.ToggleBtn>
               </S.ReadCardList>
             ))}
           </S.ReadCardListContainer>

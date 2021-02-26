@@ -26,12 +26,12 @@ export const CardDeleteBtn = styled.button`
   &:hover {
     transform: scale(1.1);
   }
+  margin: 0 20px;
 `;
 
 export const MetaDataContainer = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
 `;
 
 export const DragElement = styled.span``;

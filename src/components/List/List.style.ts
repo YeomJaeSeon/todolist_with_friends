@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { MainBackgroundColor } from '../../utils/css-utils';
 
 export const ListContainer = styled.div`
   display: flex;
@@ -7,10 +6,7 @@ export const ListContainer = styled.div`
   background-color: #c8e6c9;
   overflow: auto;
   &::-webkit-scrollbar {
-    /* 세로 스크롤 넓이 */
     width: 8px;
-
-    /* 가로 스크롤 높이 */
     height: 8px;
 
     border-radius: 6px;

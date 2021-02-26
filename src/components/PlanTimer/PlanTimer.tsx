@@ -3,42 +3,54 @@ import * as S from './PlanTimer.style';
 import { ReactComponent as PlaySVG } from '../../assets/svg/play-solid.svg';
 import { ReactComponent as StopSVG } from '../../assets/svg/stop-solid.svg';
 import { ReactComponent as PauseSVG } from '../../assets/svg/pause-solid.svg';
-import { DatabaseType } from 'src/services/data_service';
+import { UserStateType } from '../StartPlan/StartPlan';
 
 let TimerVal: NodeJS.Timeout;
 
-const hours = (time: number): string | number =>
-  Math.floor(time / 3600) > 9
-    ? Math.floor(time / 3600)
-    : `0${Math.floor(time / 3600)}`;
-const minutes = (time: number): string | number =>
-  Math.floor(time / 60) % 60 > 9
-    ? Math.floor(time / 60) % 60
-    : `0${Math.floor(time / 60) % 60}`;
-const seconds = (time: number): string | number =>
-  time % 60 > 9 ? time % 60 : `0${time % 60}`;
+const hours = (time: number | undefined): string | number | undefined => {
+  if (time)
+    return time && Math.floor(time / 3600) > 9
+      ? time && Math.floor(time / 3600)
+      : time && `0${Math.floor(time / 3600)}`;
+  else {
+    return '00';
+  }
+};
+const minutes = (time: number | undefined): string | number | undefined => {
+  if (time)
+    return time && Math.floor(time / 60) % 60 > 9
+      ? time && Math.floor(time / 60) % 60
+      : time && `0${Math.floor(time / 60) % 60}`;
+  else {
+    return '00';
+  }
+};
+const seconds = (time: number | undefined): string | number | undefined => {
+  if (time)
+    return time && time % 60 > 9 ? time && time % 60 : time && `0${time % 60}`;
+  else {
+    return '00';
+  }
+};
 
 type PropType = {
   uid: string | null;
-  databaseService: DatabaseType;
+  userInfo: UserStateType;
   modalDisplay: boolean;
+  increaseTime: () => void;
+  resetTime: () => void;
 };
 
 const PlanTimer: React.FC<PropType> = ({
   uid,
-  databaseService,
+  userInfo,
   modalDisplay,
+  increaseTime,
+  resetTime,
 }) => {
-  const [time, setTime] = useState(0);
   const [state, setState] = useState(false);
 
-  useEffect(() => {
-    const timeSync = databaseService.timeSync(uid, (time) => {
-      if (time) setTime(+time);
-    });
-
-    return () => timeSync();
-  }, []);
+  const time = userInfo.find((user) => user.uid === uid)?.time;
 
   useEffect(() => {
     return () => stop();
@@ -51,10 +63,7 @@ const PlanTimer: React.FC<PropType> = ({
   const start = () => {
     setState(true);
     TimerVal = setInterval(() => {
-      setTime((time) => {
-        databaseService.updateTime(uid, time + 1);
-        return time + 1;
-      });
+      increaseTime();
     }, 1000);
   };
 
@@ -78,8 +87,7 @@ const PlanTimer: React.FC<PropType> = ({
     );
     if (!userResponse) return;
     stop();
-    setTime(0);
-    databaseService.updateTime(uid, 0);
+    resetTime();
   };
 
   return (

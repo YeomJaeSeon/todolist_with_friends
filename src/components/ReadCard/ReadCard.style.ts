@@ -14,13 +14,14 @@ export const ReadCardContainer = styled.div<{ isDragging: boolean }>`
 `;
 
 export const ReadCardHeader = styled.div`
-  margin-top: 10px;
+  margin-top: 15px;
   display: flex;
   align-items: center;
-  justify-content: space-around;
 `;
 
-export const ReadCardTitle = styled.span``;
+export const ReadCardTitle = styled.span`
+  padding-left: 13px;
+`;
 
 export const ReadCardListContainer = styled.ul`
   list-style: none;
@@ -29,7 +30,6 @@ export const ReadCardListContainer = styled.ul`
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.4);
   }
@@ -39,9 +39,9 @@ export const ReadCardListContainer = styled.ul`
   }
 `;
 
-export const todoContent = styled.span``;
+export const TodoContent = styled.span``;
 
-export const toggleBtn = styled.button`
+export const ToggleBtn = styled.button`
   background-color: transparent;
   border: none;
   cursor: pointer;
@@ -52,10 +52,10 @@ export const ReadCardList = styled.li<{ done: boolean }>`
   display: flex;
   justify-content: space-between;
   color: ${(props) => props.done && 'gray'};
-  ${todoContent} {
+  ${TodoContent} {
     text-decoration: ${(props) => props.done && 'line-through'};
   }
-  ${toggleBtn} {
+  ${ToggleBtn} {
     color: ${(props) => props.done && 'gray'};
   }
 `;
@@ -74,6 +74,7 @@ export const CardDeleteBtn = styled.button`
   &:hover {
     transform: scale(1.1);
   }
+  margin: 0 20px;
 `;
 
 export const TrashIcon = styled(TrashSVG)`

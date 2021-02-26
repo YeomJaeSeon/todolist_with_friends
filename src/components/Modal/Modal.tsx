@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import * as S from './Modal.style';
 import CloseButton from './CloseButton';
 import { DatabaseType } from 'src/services/data_service';
@@ -28,7 +28,6 @@ const Modal: React.FC<PropType> = ({
 }) => {
   const [characterChange, setCharacterChange] = useState(false);
   const [newUserName, setNewUserName] = useState('');
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const onMaskClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent> | null
@@ -45,7 +44,6 @@ const Modal: React.FC<PropType> = ({
   };
 
   const changeCharacterClick = () => {
-    inputRef.current && inputRef.current.focus(); // focus 왜안되징.
     setCharacterChange((characterChange) => !characterChange);
   };
 
@@ -99,18 +97,15 @@ const Modal: React.FC<PropType> = ({
               <S.ModalUserBtn btnType="change" onClick={changeCharacterClick}>
                 별명 수정
               </S.ModalUserBtn>
-              {characterChange ? (
-                <S.ChangeSection>
-                  <S.ChangeCharacterInput
-                    ref={inputRef}
-                    type="text"
-                    placeholder="수정할 별명 입력해주세요"
-                    value={newUserName}
-                    onChange={changeName}
-                  />
-                  <S.CheckBtn onClick={completeChange}>✔</S.CheckBtn>
-                </S.ChangeSection>
-              ) : null}
+              <S.ChangeSection isChange={characterChange}>
+                <S.ChangeCharacterInput
+                  type="text"
+                  placeholder="수정할 별명 입력해주세요"
+                  value={newUserName}
+                  onChange={changeName}
+                />
+                <S.CheckBtn onClick={completeChange}>✔</S.CheckBtn>
+              </S.ChangeSection>
             </S.ModalSelectorSection>
             <S.ModalSelectorSection>
               <S.ModalUserBtn btnType="delete" onClick={deleteUser}>
