@@ -26,7 +26,7 @@ export type DatabaseType = {
     current: boolean,
     prevCardId?: string
   ): void;
-  dataSync(uid: string | null, update?: CallbackType): any;
+  dataSync(uid: string | null, update?: CallbackType): void;
   createUser(uid: string | null, userName: string): void;
   updateTime(uid: string | null, time: number): void;
   timeSync(uid: string | null, update?: CallbackType): any;
@@ -102,11 +102,9 @@ export default class Database {
 
   dataSync(uid: string | null, update?: CallbackType) {
     const datasRef = firebaseDatabase.ref(`users/${uid}`);
-    datasRef.on('value', (snapshot) => {
+    datasRef.once('value', (snapshot) => {
       update && update(snapshot.val());
     });
-
-    return () => datasRef.off();
   }
 
   createUser(uid: string | null, userName: string) {

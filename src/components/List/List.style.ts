@@ -1,14 +1,14 @@
+import { mobileQuery } from 'src/utils/css-utils';
 import styled from 'styled-components';
 
-export const ListContainer = styled.div`
+export const ListContainer = styled.div<{ fold: boolean }>`
   display: flex;
   flex-direction: column;
   background-color: #c8e6c9;
-  overflow: auto;
+  overflow-y: auto;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
-
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.4);
   }
@@ -16,16 +16,27 @@ export const ListContainer = styled.div`
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
   }
+  ${mobileQuery} {
+    width: 100%;
+    overflow-y: visible;
+    flex: 1 1 30%;
+  }
 `;
 
 export const Container = styled.div`
   flex: 1;
   display: flex;
   padding-bottom: 20px;
+  ${mobileQuery} {
+    overflow-x: auto;
+  }
 `;
 export const EditorTitle = styled.h1<{ fold: boolean }>`
   display: ${(props) => (props.fold ? 'inline' : 'none')};
   text-align: center;
+  ${mobileQuery} {
+    margin-top: 60px;
+  }
 `;
 
 export const CardListContainer = styled.ul<{ isDraggingOver: boolean }>`
@@ -33,6 +44,9 @@ export const CardListContainer = styled.ul<{ isDraggingOver: boolean }>`
   display: flex;
   flex-direction: column;
   align-items: center;
+  ${mobileQuery} {
+    flex-direction: row;
+  }
 `;
 
 export const CardAddBtn = styled.button`
@@ -61,6 +75,9 @@ export const EditorContainer = styled.div<{ fold: boolean }>`
   ${CardAddBtn} {
     display: ${(props) => (props.fold ? 'flex' : 'none')};
   }
+  ${mobileQuery} {
+    flex-direction: row;
+  }
 `;
 export const ArrowIcon = styled.svg`
   position: sticky;
@@ -69,4 +86,7 @@ export const ArrowIcon = styled.svg`
   height: 40px;
   cursor: pointer;
   padding: 0 10px;
+  ${mobileQuery} {
+    display: none;
+  }
 `;

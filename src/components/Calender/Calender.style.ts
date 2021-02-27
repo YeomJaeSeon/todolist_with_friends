@@ -5,6 +5,9 @@ export const CalendarBtn = styled.button`
   cursor: pointer;
   margin-bottom: 8px;
   background-color: transparent;
+  border-radius: 5px;
+  border: none;
+  outline: none;
   &:hover {
     background-color: #c8e6c9;
   }

@@ -89,9 +89,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     } else if (id === 'email') {
       EmailReg.test(value) ? setIsEmailProper(true) : setIsEmailProper(false);
     } else if (id === 'pwd') {
-      value.length >= 6 ? setIsPwdProper(true) : setIsPwdProper(false);
+      value.length <= 6 ? setIsPwdProper(true) : setIsPwdProper(false);
     } else if (id === 'rePwd') {
-      newUser.pwd === value && value.length >= 6
+      newUser.pwd === value && value.length <= 6
         ? setIsRePwdProper(true)
         : setIsRePwdProper(false);
     }
@@ -108,14 +108,16 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
       }}
     >
       <SignUpTitle>회원가입</SignUpTitle>
-      <SignUpLabel htmlFor="character">사용할 별명 입력하세요</SignUpLabel>
+      <SignUpLabel htmlFor="character">
+        사용할 별명 입력하세요(6자리 이하)
+      </SignUpLabel>
       <SignUpBox>
         <SinUpInput
           type="text"
           id="character"
           value={newUser.character}
           onChange={upDateUserInfo}
-          placeholder="별명 입력해주세요. (6자리 이하)"
+          placeholder="별명 입력해주세요."
         />
         {newUser.character && <CheckIcon>✔</CheckIcon>}
       </SignUpBox>

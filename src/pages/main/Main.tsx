@@ -42,7 +42,7 @@ const Main = ({ authService, databaseService }: PropType) => {
       }
     });
 
-    const stopSync = databaseService.dataSync(uid, (value: any) => {
+    databaseService.dataSync(uid, (value: any) => {
       if (!value) dispatch(initCardAction([]));
       else {
         const initState = Object.keys(value).map((key: string) => ({
@@ -61,8 +61,6 @@ const Main = ({ authService, databaseService }: PropType) => {
       }
       setPending(false);
     });
-
-    return () => stopSync();
   }, [databaseService, authService, dispatch, uid, history]);
 
   useEffect(() => {
@@ -103,19 +101,48 @@ const Main = ({ authService, databaseService }: PropType) => {
         )
           alert('할일을 먼저 입력해주세요!');
         else {
-          dispatch(
-            diffChangeCardAction(
+          if (result.destination?.droppableId === 'card') {
+            const newCards = cards.map((card) => {
+              if (card.id === result.draggableId) {
+                return { ...card, current: true };
+              } else {
+                if (card.current === true) {
+                  return { ...card, current: false };
+                }
+                return card;
+              }
+            });
+            dispatch(diffChangeCardAction(newCards));
+            databaseService.changeToStart(
+              uid,
               result.draggableId,
-              source.index,
-              destination.index
-            )
-          );
-          databaseService.changeToStart(
-            uid,
-            result.draggableId,
-            !selectedCard.current,
-            prevCard && prevCard.id
-          );
+              true,
+              prevCard && prevCard.id
+            );
+          } else {
+            const originIndex = cards.findIndex(
+              (card) => card.id === result.draggableId
+            );
+            const newCards = cards.map((card) => {
+              if (card.id === result.draggableId) {
+                return { ...card, current: false };
+              }
+              return card;
+            });
+
+            const [reorderedItem] = newCards.splice(originIndex, 1);
+            if (destination.index > originIndex)
+              newCards.splice(destination.index - 1, 0, reorderedItem);
+            else newCards.splice(destination.index, 0, reorderedItem);
+
+            dispatch(diffChangeCardAction(newCards));
+            databaseService.changeToStart(
+              uid,
+              result.draggableId,
+              false,
+              prevCard && prevCard.id
+            );
+          }
         }
       }
     }

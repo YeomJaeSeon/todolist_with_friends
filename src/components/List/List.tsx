@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Card from '../Card/Card';
 import {
   ListContainer,
@@ -23,8 +23,19 @@ type PropType = {
 };
 
 const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
+  const [width, setWidth] = useState(window.innerWidth);
   const [fold, setFold] = useState(true);
   const dispatch = useDispatch();
+
+  const updateWidth = () => {
+    setWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', updateWidth);
+
+    return () => window.removeEventListener('resize', updateWidth);
+  });
 
   const addCard = () => {
     const newId = Date.now();
@@ -44,11 +55,14 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
   };
 
   return (
-    <ListContainer>
+    <ListContainer fold={fold}>
       <EditorTitle fold={fold}>Plan your todos</EditorTitle>
       <Container>
         <EditorContainer fold={fold}>
-          <Droppable droppableId="cards">
+          <Droppable
+            droppableId="cards"
+            direction={width <= 576 ? 'horizontal' : 'vertical'}
+          >
             {(provided, snapshot) => (
               <CardListContainer
                 className="cards"

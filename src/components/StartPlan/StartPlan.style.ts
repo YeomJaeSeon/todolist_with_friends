@@ -1,10 +1,16 @@
 import styled from 'styled-components';
-import { MainBackgroundColor } from '../../utils/css-utils';
+import { MainBackgroundColor, mobileQuery } from '../../utils/css-utils';
 
 export const StartPlanContainer = styled.div`
-  flex: 1;
+  flex: 1 1 70%;
   display: flex;
   background-color: ${MainBackgroundColor};
+  ${mobileQuery} {
+    flex: 1 1 70%;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
 `;
 
 export const TimerTitle = styled.h1`

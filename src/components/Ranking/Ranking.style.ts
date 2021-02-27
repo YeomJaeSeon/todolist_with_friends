@@ -1,3 +1,4 @@
+import { mobileQuery } from 'src/utils/css-utils';
 import styled from 'styled-components';
 import { ReactComponent as CrownSVG } from '../../assets/svg/crown-solid.svg';
 
@@ -19,6 +20,11 @@ export const RankingContainer = styled.div`
   &::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 6px;
+  }
+  ${mobileQuery} {
+    width: 100%;
+    border-radius: 10px;
+    max-height: 300px;
   }
 `;
 

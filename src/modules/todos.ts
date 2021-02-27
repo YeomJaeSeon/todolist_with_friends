@@ -39,17 +39,11 @@ export const sameChangeCardAction = (newCards: StateType) => {
   };
 };
 
-export const diffChangeCardAction = (
-  id: string,
-  sIndex: number,
-  dIndex: number
-) => {
+export const diffChangeCardAction = (newCards: StateType) => {
   return {
     type: DIFF_CHANGE_CARD,
     payload: {
-      id: id,
-      sIndex: sIndex,
-      dIndex: dIndex,
+      newCards: newCards,
     },
   };
 };
@@ -159,17 +153,20 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
       return action.payload.newCards;
 
     case DIFF_CHANGE_CARD:
-      const addingCard = state.find((card) => card.current === true);
-      const originCard = state.filter((card) => card.current === false);
+      // const addingCard = state.find((card) => card.current === true);
+      // const originCard = state.filter((card) => card.current === false);
+      // if (addingCard) {
+      //   if (action.payload.dIndex !== action.payload.dIndex)
+      //     originCard.splice(action.payload.dIndex, 0, addingCard);
+      // }
 
-      addingCard && originCard.splice(action.payload.dIndex - 1, 0, addingCard);
-
-      return originCard.map((card) => {
-        if (card.id === action.payload.id) {
-          return { ...card, current: !card.current };
-        }
-        return { ...card, current: false };
-      });
+      // return originCard.map((card) => {
+      //   if (card.id === action.payload.id) {
+      //     return { ...card, current: !card.current };
+      //   }
+      //   return { ...card, current: false };
+      // });
+      return action.payload.newCards;
 
     case ADD_TODO:
       return state.map((card) => {

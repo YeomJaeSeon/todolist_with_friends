@@ -40,7 +40,11 @@ const Card: React.FC<PropType> = ({
   const dispatch = useDispatch();
 
   useEffect(() => {
-    buttonRef.current?.scrollIntoView({ behavior: 'smooth' });
+    buttonRef.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'center',
+      inline: 'center',
+    });
   }, []);
 
   const deleteCard = () => {

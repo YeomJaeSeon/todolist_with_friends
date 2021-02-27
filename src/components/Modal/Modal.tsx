@@ -71,7 +71,7 @@ const Modal: React.FC<PropType> = ({
     authService.delete();
 
     databaseService.timeSync(uid)();
-    databaseService.dataSync(uid)();
+    // databaseService.dataSync(uid)();
     databaseService.getLoginUserData(uid)();
     databaseService.getUserDatas()();
 

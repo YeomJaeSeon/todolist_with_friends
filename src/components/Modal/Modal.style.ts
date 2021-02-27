@@ -1,4 +1,4 @@
-import { NotiColor } from 'src/utils/css-utils';
+import { mobileQuery, NotiColor } from 'src/utils/css-utils';
 import styled from 'styled-components';
 
 export const ModalWrapper = styled.div<{ visible: boolean }>`
@@ -43,6 +43,9 @@ export const ModalInner = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  ${mobileQuery} {
+    width: 300px;
+  }
 `;
 
 export const ModalTitle = styled.h1`

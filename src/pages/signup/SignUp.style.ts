@@ -3,6 +3,7 @@ import {
   MainBackgroundColor,
   NotiColor,
   BoxShadow,
+  mobileQuery,
 } from '../../utils/css-utils';
 
 export const SignUpForm = styled.form`
@@ -15,6 +16,10 @@ export const SignUpForm = styled.form`
   flex-direction: column;
   align-items: center;
   box-shadow: ${BoxShadow};
+  ${mobileQuery} {
+    width: 80%;
+    height: 600px;
+  }
 `;
 
 export const SignUpTitle = styled.h1`

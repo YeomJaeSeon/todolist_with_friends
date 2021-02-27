@@ -22,6 +22,7 @@ let selectedMusic: HTMLAudioElement;
 export function musicPlay() {
   const selectedNum = Math.floor(Math.random() * 7);
   selectedMusic = musics[selectedNum];
+  console.log(selectedMusic);
   playSound(selectedMusic);
 }
 
@@ -33,5 +34,7 @@ function playSound(sound: HTMLAudioElement) {
   sound.play();
 }
 function stopSound() {
-  musics.forEach((music) => music.pause());
+  musics.forEach((music) => {
+    music.pause();
+  });
 }

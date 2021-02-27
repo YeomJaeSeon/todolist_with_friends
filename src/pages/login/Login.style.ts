@@ -1,3 +1,4 @@
+import { mobileQuery } from './../../utils/css-utils';
 import styled, { keyframes } from 'styled-components';
 import {
   MainBackgroundColor,
@@ -16,10 +17,17 @@ export const LoginContainer = styled.div`
   background-color: ${MainBackgroundColor};
   border-radius: 10px;
   box-shadow: ${BoxShadow};
+  ${mobileQuery} {
+    width: 400px;
+    height: 100%;
+  }
 `;
 export const ContentContainer = styled.div`
   display: flex;
   flex-basis: 80%;
+  ${mobileQuery} {
+    flex-direction: column;
+  }
 `;
 
 export const TextContainer = styled.div`
@@ -31,6 +39,10 @@ export const TextContainer = styled.div`
   border-right: 3px solid ${BlackColor};
   padding: 0 15px;
   flex-basis: 50%;
+  ${mobileQuery} {
+    border-right: 0;
+    border-bottom: 3px solid ${BlackColor};
+  }
 `;
 
 export const Title = styled.h1`
@@ -67,6 +79,9 @@ export const InputText = styled.input`
   margin-bottom: 10px;
   font-size: 1.2rem;
   padding: 5px 10px;
+  ${mobileQuery} {
+    max-width: 60%;
+  }
 `;
 
 export const Button = styled.button`
@@ -83,11 +98,17 @@ export const Button = styled.button`
     background-color: ${StrongMainColor};
     color: ${WhiteColor};
   }
+  ${mobileQuery} {
+    max-width: 60%;
+  }
 `;
 
 export const SignUpContainer = styled.div`
   display: flex;
   align-items: center;
+  ${mobileQuery} {
+    margin-bottom: 15px;
+  }
 `;
 
 export const SignUpText = styled.span`

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { WhiteColor, BoxShadow } from '../../utils/css-utils';
+import { WhiteColor, BoxShadow, mobileQuery } from '../../utils/css-utils';
 import { ReactComponent as TrashSVG } from '../../assets/svg/trash-solid.svg';
 import { ReactComponent as DragSVG } from '../../assets/svg/bars-solid.svg';
 
@@ -18,7 +18,12 @@ export const CardContainer = styled.form<{
   padding: 10px;
   box-shadow: ${BoxShadow};
   opacity: ${(props) => (props.isDragging ? '0.5' : '1')};
+  ${mobileQuery} {
+    margin-right: 20px;
+    margin-left: 10px;
+  }
 `;
+
 export const CardDeleteBtn = styled.button`
   background-color: transparent;
   cursor: pointer;

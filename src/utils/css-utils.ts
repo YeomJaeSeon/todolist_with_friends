@@ -1,3 +1,5 @@
+export const mobileQuery = '@media only screen and (max-width: 576px)';
+
 export const MainBackgroundColor = '#80c683';
 export const StrongMainColor = '#4c8c4a';
 

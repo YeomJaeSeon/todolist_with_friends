@@ -1,11 +1,19 @@
 import styled, { keyframes } from 'styled-components';
-import { MainBackgroundColor, NotiColor } from '../../utils/css-utils';
+import {
+  MainBackgroundColor,
+  NotiColor,
+  mobileQuery,
+} from '../../utils/css-utils';
 
 export const MainContainer = styled.div`
   position: relative;
   flex-basis: 100%;
   height: 100%;
   display: flex;
+  ${mobileQuery} {
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 export const UserInfoSection = styled.div`
