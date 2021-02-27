@@ -96,8 +96,9 @@ const PlanTimer: React.FC<PropType> = ({
 
   const musicPlayOrStop = () => {
     setMusicState((musicState) => {
-      if (!musicState === true) Music.music1Play();
-      else Music.music1Stop();
+      if (!musicState === true) Music.musicPlay();
+      else Music.musicStop();
+
       return !musicState;
     });
   };
