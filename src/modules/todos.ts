@@ -153,19 +153,6 @@ const todoReducer = (state: StateType = initialState, action: ActionType) => {
       return action.payload.newCards;
 
     case DIFF_CHANGE_CARD:
-      // const addingCard = state.find((card) => card.current === true);
-      // const originCard = state.filter((card) => card.current === false);
-      // if (addingCard) {
-      //   if (action.payload.dIndex !== action.payload.dIndex)
-      //     originCard.splice(action.payload.dIndex, 0, addingCard);
-      // }
-
-      // return originCard.map((card) => {
-      //   if (card.id === action.payload.id) {
-      //     return { ...card, current: !card.current };
-      //   }
-      //   return { ...card, current: false };
-      // });
       return action.payload.newCards;
 
     case ADD_TODO:

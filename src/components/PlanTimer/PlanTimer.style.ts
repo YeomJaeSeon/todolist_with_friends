@@ -12,7 +12,7 @@ export const PlanTimerContainer = styled.div`
   box-shadow: ${BoxShadow};
   ${mobileQuery} {
     width: 340px;
-    height: 200px;
+    height: 180px;
   }
 `;
 
