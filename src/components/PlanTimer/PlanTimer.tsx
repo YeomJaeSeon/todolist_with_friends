@@ -57,12 +57,18 @@ const PlanTimer: React.FC<PropType> = ({
   const time = userInfo.find((user) => user.uid === uid)?.time;
 
   useEffect(() => {
-    return () => stop();
+    return () => logout();
   }, []);
 
   useEffect(() => {
     stop();
   }, [modalDisplay]);
+
+  const logout = () => {
+    stop();
+    setMusicState(false);
+    Music.musicStop();
+  };
 
   const start = () => {
     setState(true);
