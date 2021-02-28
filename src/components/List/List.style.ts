@@ -29,6 +29,7 @@ export const Container = styled.div`
   padding-bottom: 20px;
   ${mobileQuery} {
     overflow-x: auto;
+    height: 332px;
   }
 `;
 export const EditorTitle = styled.h1<{ fold: boolean }>`

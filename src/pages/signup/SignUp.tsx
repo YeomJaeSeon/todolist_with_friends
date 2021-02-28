@@ -26,7 +26,6 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
   const [isCharacterProper, setIsCharacterProper] = useState(false);
   const [isEmailProper, setIsEmailProper] = useState(false);
   const [isPwdProper, setIsPwdProper] = useState(false);
-  const [isRePwdProper, setIsRePwdProper] = useState(false);
   const [newUser, setNewUser] = useState({
     character: '',
     email: '',
@@ -45,7 +44,6 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         setExistedUsers(existedUsersList);
       }
     });
-
     return () => getUsers();
   }, [databaseService]);
 
@@ -53,9 +51,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
   const goToLogin = () => {
     history.push('/');
   };
-  const signUpHandler = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const signUpHandler = () => {
     if (!isAllClear()) return;
     if (!isCharacterProper) {
       alert('이미 존재하는 이름입니다.');
@@ -86,26 +82,29 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         ? setIsCharacterProper(false)
         : setIsCharacterProper(true);
     } else if (id === 'email') {
-      EmailReg.test(value) ? setIsEmailProper(true) : setIsEmailProper(false);
+      value.match(EmailReg) ? setIsEmailProper(true) : setIsEmailProper(false);
     } else if (id === 'pwd') {
-      value.length >= 6 && value.length <= 8
-        ? setIsPwdProper(true)
-        : setIsPwdProper(false);
+      if (newUser.rePwd)
+        newUser.rePwd === value && value.length >= 6 && value.length <= 8
+          ? setIsPwdProper(true)
+          : setIsPwdProper(false);
     } else if (id === 'rePwd') {
-      newUser.pwd === value && value.length >= 6 && value.length <= 8
-        ? setIsRePwdProper(true)
-        : setIsRePwdProper(false);
+      if (newUser.pwd)
+        newUser.pwd === value && value.length >= 6 && value.length <= 8
+          ? setIsPwdProper(true)
+          : setIsPwdProper(false);
     }
     setNewUser((user) => ({ ...user, [id]: value }));
   };
   const isAllClear = () => {
-    if (isEmailProper && isRePwdProper && newUser.character) return true;
+    if (isEmailProper && isPwdProper && newUser.character) return true;
     else return false;
   };
   return (
     <SignUpForm
       onSubmit={(e) => {
         e.preventDefault();
+        signUpHandler();
       }}
     >
       <SignUpTitle>회원가입</SignUpTitle>
@@ -139,7 +138,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           )
         ) : null}
       </SignUpBox>
-      <SignUpLabel htmlFor="pwd"> 비밀번호 입력하세요</SignUpLabel>
+      <SignUpLabel htmlFor="pwd"> 비밀번호 입력하세요(6 ~ 8자리)</SignUpLabel>
       <SignUpBox>
         <SinUpInput
           type="password"
@@ -156,7 +155,10 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           )
         ) : null}
       </SignUpBox>
-      <SignUpLabel htmlFor="rePwd"> 비밀번호 다시 입력하세요</SignUpLabel>
+      <SignUpLabel htmlFor="rePwd">
+        {' '}
+        비밀번호 다시 입력하세요(6 ~ 8자리)
+      </SignUpLabel>
       <SignUpBox>
         <SinUpInput
           type="password"
@@ -166,19 +168,21 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           placeholder="최소 6자리, 최대 8자리입니다."
         />
         {newUser.rePwd ? (
-          isRePwdProper ? (
+          isPwdProper ? (
             <CheckIcon>✔</CheckIcon>
           ) : (
             <CheckIcon>❕</CheckIcon>
           )
         ) : null}
       </SignUpBox>
-      <SignUpBtn isComplete={isAllClear()} onClick={signUpHandler}>
+      <SignUpBtn type="submit" isComplete={isAllClear()}>
         가입하기
       </SignUpBtn>
       <BackLoginContainer>
         <BackLoginText>회원이신가요?</BackLoginText>
-        <BackLoginBtn onClick={goToLogin}>로그인</BackLoginBtn>
+        <BackLoginBtn type="button" onClick={goToLogin}>
+          로그인
+        </BackLoginBtn>
         <BackLoginText>으로 돌아가기</BackLoginText>
       </BackLoginContainer>
     </SignUpForm>

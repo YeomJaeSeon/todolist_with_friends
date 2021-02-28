@@ -25,7 +25,7 @@ export default class AuthService {
   }
   onAuthStatus(callback?: (user: AuthType) => void) {
     firebaseAuth.onAuthStateChanged((user: AuthType) => {
-      callback(user);
+      callback && callback(user);
     });
   }
   logout() {

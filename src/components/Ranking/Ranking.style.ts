@@ -48,7 +48,7 @@ export const NoRankerUser = styled.div`
 `;
 
 export const User = styled.li<{ rank: number }>`
-  font-size: 1rem;
+  font-size: 0.9rem;
   padding: 10px 0;
   display: flex;
 
@@ -62,6 +62,9 @@ export const User = styled.li<{ rank: number }>`
         return '#4b2c20';
       }
     }};
+  }
+  ${mobileQuery} {
+    font-size: 1.2rem;
   }
 `;
 

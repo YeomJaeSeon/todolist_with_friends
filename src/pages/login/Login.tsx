@@ -68,6 +68,7 @@ const Login = ({ authService }: PropType) => {
     authService.onAuthStatus((user: AuthType) => {
       user && goToMain(user.uid);
     });
+    return authService.onAuthStatus();
   }, [authService, history]);
 
   return (
