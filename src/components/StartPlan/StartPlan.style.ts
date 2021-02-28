@@ -1,15 +1,16 @@
 import styled from 'styled-components';
-import { MainBackgroundColor, mobileQuery } from '../../utils/css-utils';
+import { mobileQuery } from '../../utils/css-utils';
 
 export const StartPlanContainer = styled.div`
   flex: 1 1 70%;
   display: flex;
-  background-color: ${MainBackgroundColor};
   ${mobileQuery} {
     flex: 1 1 70%;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    background: url('/background.jpg') center/cover no-repeat;
+    opacity: 0.9;
   }
 `;
 
@@ -28,9 +29,10 @@ export const RankingContainer = styled.div`
   width: 280px;
   display: flex;
   flex-direction: column;
-`;
-
-export const EmptySection = styled.div`
-  height: 70px;
-  width: 100%;
+  ${mobileQuery} {
+    margin-top: 50px;
+    width: 100%;
+    height: 500px;
+    overflow-y: auto;
+  }
 `;

@@ -80,7 +80,6 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
   const upDateUserInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.currentTarget.id;
     const value = e.currentTarget.value;
-    console.log(typeof value.length);
     if (id === 'character') {
       if (value.length > 6) return;
       existedUsers.some((characterName) => value === characterName)
@@ -89,9 +88,11 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     } else if (id === 'email') {
       EmailReg.test(value) ? setIsEmailProper(true) : setIsEmailProper(false);
     } else if (id === 'pwd') {
-      value.length <= 6 ? setIsPwdProper(true) : setIsPwdProper(false);
+      value.length >= 6 && value.length <= 8
+        ? setIsPwdProper(true)
+        : setIsPwdProper(false);
     } else if (id === 'rePwd') {
-      newUser.pwd === value && value.length <= 6
+      newUser.pwd === value && value.length >= 6 && value.length <= 8
         ? setIsRePwdProper(true)
         : setIsRePwdProper(false);
     }
@@ -145,7 +146,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           id="pwd"
           value={newUser.pwd}
           onChange={upDateUserInfo}
-          placeholder="최소 6자리입니다."
+          placeholder="최소 6자리, 최대 8자리입니다."
         />
         {newUser.pwd ? (
           isPwdProper ? (
@@ -162,7 +163,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           id="rePwd"
           value={newUser.rePwd}
           onChange={upDateUserInfo}
-          placeholder="최소 6자리입니다."
+          placeholder="최소 6자리, 최대 8자리입니다."
         />
         {newUser.rePwd ? (
           isRePwdProper ? (

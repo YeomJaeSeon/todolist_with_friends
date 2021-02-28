@@ -29,13 +29,14 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
 
   const updateWidth = () => {
     setWidth(window.innerWidth);
+    setFold(true);
   };
 
   useEffect(() => {
     window.addEventListener('resize', updateWidth);
 
     return () => window.removeEventListener('resize', updateWidth);
-  });
+  }, []);
 
   const addCard = () => {
     const newId = Date.now();

@@ -7,7 +7,6 @@ import {
   StartPlanContainer,
   TimerTitle,
   RankingContainer,
-  EmptySection,
   AllSection,
 } from './StartPlan.style';
 
@@ -90,7 +89,6 @@ const StartPlan: React.FC<PropType> = ({
         <CurrentPlan uid={uid} databaseService={databaseService} />
       </AllSection>
       <RankingContainer>
-        <EmptySection></EmptySection>
         <Ranking userInfo={usersInfo}></Ranking>
       </RankingContainer>
     </StartPlanContainer>

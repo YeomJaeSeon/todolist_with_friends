@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const ListContainer = styled.div<{ fold: boolean }>`
   display: flex;
   flex-direction: column;
-  background-color: #c8e6c9;
+  background-color: #eeeeee;
   overflow-y: auto;
   &::-webkit-scrollbar {
     width: 8px;

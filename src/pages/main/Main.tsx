@@ -61,6 +61,10 @@ const Main = ({ authService, databaseService }: PropType) => {
       }
       setPending(false);
     });
+
+    return () => {
+      authService.onAuthStatus() = undefined;
+    };
   }, [databaseService, authService, dispatch, uid, history]);
 
   useEffect(() => {

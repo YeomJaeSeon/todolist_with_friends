@@ -8,18 +8,28 @@ import {
 export const MainContainer = styled.div`
   position: relative;
   flex-basis: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
+  background: url('/background.jpg') no-repeat center/cover;
+  opacity: 0.9;
   ${mobileQuery} {
     flex-direction: column;
     align-items: center;
+    background: none;
   }
 `;
 
 export const UserInfoSection = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  font-weight: bolder;
+  ${mobileQuery} {
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+  }
 `;
 
 export const CurrentUserInfo = styled.div`

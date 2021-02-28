@@ -4,12 +4,13 @@ import { ReactComponent as CrownSVG } from '../../assets/svg/crown-solid.svg';
 
 export const RankingContainer = styled.div`
   flex: 1;
-  border-radius: 10px 0 0 0;
-  border: 2px solid black;
+  color: black;
+  background-color: #eeeeee;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+  padding-top: 50px;
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -23,8 +24,7 @@ export const RankingContainer = styled.div`
   }
   ${mobileQuery} {
     width: 100%;
-    border-radius: 10px;
-    max-height: 300px;
+    padding: 0;
   }
 `;
 
@@ -66,7 +66,7 @@ export const User = styled.li<{ rank: number }>`
 `;
 
 export const RankNum = styled.span`
-  margin-left: 10px;
+  margin-left: 20px;
   flex-basis: 15%;
 `;
 

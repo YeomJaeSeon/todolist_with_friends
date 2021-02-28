@@ -3,7 +3,7 @@ import { AuthType, SinUpType, firebaseAuth, GoogleProvider } from './firebase';
 export type AuthServiceType = {
   signUp(email: string, password: string): SinUpType;
   login(email: string, password: string): SinUpType;
-  onAuthStatus(callback: (user: AuthType) => void): void;
+  onAuthStatus(callback?: (user: AuthType) => void): void;
   logout(): void;
   delete(): void;
 };
@@ -23,7 +23,7 @@ export default class AuthService {
         throw new Error(`${provider}: 적절치 못한 로그인 시도입니다.`);
     }
   }
-  onAuthStatus(callback: (user: AuthType) => void) {
+  onAuthStatus(callback?: (user: AuthType) => void) {
     firebaseAuth.onAuthStateChanged((user: AuthType) => {
       callback(user);
     });
