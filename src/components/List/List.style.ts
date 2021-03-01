@@ -1,7 +1,7 @@
 import { mobileQuery } from 'src/utils/css-utils';
 import styled from 'styled-components';
 
-export const ListContainer = styled.div<{ fold: boolean }>`
+export const ListContainer = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #eeeeee;
@@ -29,7 +29,17 @@ export const Container = styled.div`
   padding-bottom: 20px;
   ${mobileQuery} {
     overflow-x: auto;
-    height: 332px;
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.4);
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.3);
+      border-radius: 6px;
+    }
+    padding-left: 50px;
   }
 `;
 export const EditorTitle = styled.h1<{ fold: boolean }>`
@@ -79,15 +89,26 @@ export const EditorContainer = styled.div<{ fold: boolean }>`
   ${mobileQuery} {
     flex-direction: row;
   }
+  ${mobileQuery} {
+    width: 100vw;
+    height: ${(props) => (props.fold ? '332px' : '150px')};
+    transition: height 100ms ease;
+  }
 `;
-export const ArrowIcon = styled.svg`
+export const ArrowIcon = styled.div`
   position: sticky;
   top: 45%;
+  right: 0;
   width: 20px;
   height: 40px;
   cursor: pointer;
   padding: 0 10px;
   ${mobileQuery} {
-    display: none;
+    top: 95%;
+    left: 45%;
+    right: 45%;
+    width: 40px;
+    height: 20px;
+    padding: 10px 0;
   }
 `;

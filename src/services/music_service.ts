@@ -1,5 +1,5 @@
 const Music = new Audio('/music/raining.mp3');
-Music.volume = 0.7;
+Music.volume = 0.5;
 Music.loop = true;
 
 export function musicPlay() {
