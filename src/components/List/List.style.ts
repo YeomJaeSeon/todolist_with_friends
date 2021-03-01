@@ -39,7 +39,7 @@ export const Container = styled.div`
       background-color: rgba(0, 0, 0, 0.3);
       border-radius: 6px;
     }
-    padding-left: 50px;
+    padding-left: 30px;
   }
 `;
 export const EditorTitle = styled.h1<{ fold: boolean }>`
@@ -103,12 +103,4 @@ export const ArrowIcon = styled.div`
   height: 40px;
   cursor: pointer;
   padding: 0 10px;
-  ${mobileQuery} {
-    top: 95%;
-    left: 45%;
-    right: 45%;
-    width: 40px;
-    height: 20px;
-    padding: 10px 0;
-  }
 `;

@@ -70,10 +70,12 @@ const Login = ({ authService }: PropType) => {
       });
     };
 
-    authService.onAuthStatus((user: AuthType) => {
+    const unscribe = authService.onAuthStatus((user: AuthType) => {
       user && goToMain(user.uid);
     });
-    return authService.onAuthStatus();
+    return () => {
+      unscribe();
+    };
   }, [authService, history]);
 
   return (

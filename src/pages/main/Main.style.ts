@@ -7,7 +7,7 @@ import {
 
 export const MainContainer = styled.div`
   position: relative;
-  flex-basis: 100%;
+  width: 100%;
   height: 100vh;
   display: flex;
   background: url('/background.jpg') no-repeat center/cover;

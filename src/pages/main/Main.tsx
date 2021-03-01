@@ -36,7 +36,7 @@ const Main = ({ authService, databaseService }: PropType) => {
   const history = useHistory();
 
   useEffect(() => {
-    authService.onAuthStatus((user) => {
+    const unscribe = authService.onAuthStatus((user) => {
       if (!user) {
         history.push('/');
       }
@@ -62,7 +62,9 @@ const Main = ({ authService, databaseService }: PropType) => {
       setPending(false);
     });
 
-    return authService.onAuthStatus();
+    return () => {
+      unscribe();
+    };
   }, [databaseService, authService, dispatch, uid, history]);
 
   useEffect(() => {

@@ -13,8 +13,6 @@ import { useDispatch } from 'react-redux';
 import { addCardAction, StateType } from '../../modules/todos';
 import { ReactComponent as LeftSVG } from '../../assets/svg/chevron-left-solid.svg';
 import { ReactComponent as RightSVG } from '../../assets/svg/chevron-right-solid.svg';
-import { ReactComponent as DownSVG } from '../../assets/svg/chevron-down-solid.svg';
-import { ReactComponent as UpSVG } from '../../assets/svg/chevron-up-solid.svg';
 
 import { Droppable } from 'react-beautiful-dnd';
 import { DatabaseType } from 'src/services/data_service';
@@ -58,15 +56,9 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
     setFold((fold) => !fold);
   };
 
-  const svg = useCallback(
-    (fold: boolean) => {
-      if (width > 800) {
-        return fold ? LeftSVG : RightSVG;
-      }
-      return fold ? UpSVG : DownSVG;
-    },
-    [width]
-  );
+  const svg = useCallback((fold: boolean) => {
+    return fold ? LeftSVG : RightSVG;
+  }, []);
 
   return (
     <ListContainer>
@@ -101,7 +93,7 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
           </Droppable>
           <CardAddBtn onClick={addCard}>➕</CardAddBtn>
         </EditorContainer>
-        <ArrowIcon as={svg(fold)} onClick={onFoldHandler} />
+        {width > 800 && <ArrowIcon as={svg(fold)} onClick={onFoldHandler} />}
       </Container>
     </ListContainer>
   );
