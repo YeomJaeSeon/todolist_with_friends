@@ -8,6 +8,8 @@ import {
   NotiColor,
   BoxShadow,
 } from '../../utils/css-utils';
+import { ReactComponent as GithubSVG } from '../../assets/svg/github-brands.svg';
+import { ReactComponent as MailSVG } from '../../assets/svg/envelope-solid.svg';
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -128,6 +130,7 @@ export const SignUpButton = styled.button`
 `;
 
 export const Footer = styled.footer`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -136,4 +139,48 @@ export const Footer = styled.footer`
   color: ${WhiteColor};
   border-radius: 0 0 10px 10px;
   font-size: 25px;
+`;
+
+export const Contact = styled.span`
+  position: absolute;
+  right: 0;
+  ${mobileQuery} {
+    bottom: 0;
+    left: 40%;
+  }
+`;
+
+export const GithubBtn = styled.a`
+  background-color: transparent;
+  border: none;
+  outline: none;
+  cursor: pointer;
+`;
+
+export const GithubIcon = styled(GithubSVG)`
+  width: 30px;
+  height: 30px;
+  color: white;
+  &:hover {
+    color: ${MainBackgroundColor};
+  }
+  transition: color 200ms ease-in;
+`;
+
+export const MailBtn = styled.a`
+  margin: 0 20px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  text-decoration: none;
+`;
+
+export const MailIcon = styled(MailSVG)`
+  width: 30px;
+  height: 30px;
+  color: white;
+  &:hover {
+    color: ${MainBackgroundColor};
+  }
+  transition: color 200ms ease-in;
 `;

@@ -13,6 +13,11 @@ import {
   SignUpText,
   SignUpButton,
   Footer,
+  GithubIcon,
+  MailIcon,
+  Contact,
+  GithubBtn,
+  MailBtn,
 } from './Login.style';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
@@ -75,7 +80,7 @@ const Login = ({ authService }: PropType) => {
     <LoginContainer>
       <ContentContainer>
         <TextContainer>
-          <Title>todo list 🏃‍♂️🏃‍♀️🏃‍♂🏃‍♀️</Title>
+          <Title>Todo List 🏃‍♂️🏃‍♀️🏃‍♂🏃‍♀️</Title>
           <Description>What is your first small step🦶?</Description>
         </TextContainer>
         <FormContainer onSubmit={(e) => e.preventDefault()}>
@@ -97,7 +102,17 @@ const Login = ({ authService }: PropType) => {
           </SignUpContainer>
         </FormContainer>
       </ContentContainer>
-      <Footer>Show your passion!!🥇🥇🥇</Footer>
+      <Footer>
+        Show your passion!!🥇🥇🥇
+        <Contact>
+          <GithubBtn href="https://github.com/YeomJaeSeon" target="_blank">
+            <GithubIcon />
+          </GithubBtn>
+          <MailBtn href="mailto:a89541457@gmail.com">
+            <MailIcon />
+          </MailBtn>
+        </Contact>
+      </Footer>
     </LoginContainer>
   );
 };

@@ -33,6 +33,8 @@ export default class AuthService {
   }
   delete() {
     const deleteUser = firebaseAuth.currentUser;
-    deleteUser?.delete();
+    deleteUser?.delete().catch((err) => {
+      this.logout();
+    });
   }
 }

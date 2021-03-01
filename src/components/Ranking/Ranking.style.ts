@@ -9,7 +9,7 @@ export const RankingContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  overflow-y: auto;
+  overflow: auto;
   padding-top: 50px;
   &::-webkit-scrollbar {
     width: 8px;
@@ -23,6 +23,7 @@ export const RankingContainer = styled.div`
     border-radius: 6px;
   }
   ${mobileQuery} {
+    text-align: center;
     width: 100%;
     padding: 0;
   }

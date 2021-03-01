@@ -15,7 +15,7 @@ import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
 import { DatabaseType } from 'src/services/data_service';
 
-const EmailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+const EmailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.com/i;
 
 type PropType = {
   authService: AuthServiceType;
@@ -121,7 +121,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         />
         {newUser.character && <CheckIcon>✔</CheckIcon>}
       </SignUpBox>
-      <SignUpLabel htmlFor="email">이메일 입력하세요</SignUpLabel>
+      <SignUpLabel htmlFor="email">
+        이메일 입력하세요(.com으로 끝나야함)
+      </SignUpLabel>
       <SignUpBox>
         <SinUpInput
           type="text"

@@ -20,6 +20,7 @@ export const TimerTitle = styled.h1`
 
 export const AllSection = styled.div`
   flex: 1 1 70%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
