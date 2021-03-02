@@ -23,18 +23,23 @@ https://jaeseonsite.netlify.app/
 ## UI
 
 ### 로그인 화면
+---
 ![스크린샷(1037)](https://user-images.githubusercontent.com/67785334/109589527-cc95ce00-7b4d-11eb-891f-9e3a95e24d34.png)
 
 #### 모바일 버전
+---
 ![스크린샷(1038)](https://user-images.githubusercontent.com/67785334/109589855-59d92280-7b4e-11eb-917c-ea138289a778.png)
 
 ### 회원가입 화면
+---
 ![스크린샷(1039)](https://user-images.githubusercontent.com/67785334/109589948-7bd2a500-7b4e-11eb-8d58-b31f8edd39d5.png)
 
 ### 메인 화면
+---
 ![스크린샷(1040)](https://user-images.githubusercontent.com/67785334/109589993-8f7e0b80-7b4e-11eb-9141-5fb07421af4c.png)
 
 #### 모바일 버전
+---
 ![스크린샷(1041)](https://user-images.githubusercontent.com/67785334/109590082-b3d9e800-7b4e-11eb-8354-d0304cb9a481.png)
 
 ## 기능
