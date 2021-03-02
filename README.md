@@ -11,7 +11,7 @@ https://jaeseonsite.netlify.app/
 ## stacks
 - React(CRA)
 - Typescript
-- Firebase
+- Firebase (realtime Database, firebase authentication)
 
 ## libraries
 - react-router-dom
@@ -65,4 +65,4 @@ https://jaeseonsite.netlify.app/
 
 8. 랭킹 기능
 - 타이머로 측정한 시간을 기준으로 사용자들끼리 등수를 정할수 있습니다.
-
+- realtime database에 실시간으로 저장된 타이머 시간을 가져옴으로써 실시간으로 랭킹에 반영됩니다.
