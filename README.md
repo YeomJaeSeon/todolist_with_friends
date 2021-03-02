@@ -5,6 +5,9 @@
 - 공부를 시작하면 타이머를 킬수 있고 타이머 시간에 따라서 사용자들의 등수를 보여줄수 있습니다.
 - 반응형을 통해 모바일 지원이 가능합니다.
 
+## URL
+https://jaeseonsite.netlify.app/
+
 ## stacks
 - React(CRA)
 - Typescript
