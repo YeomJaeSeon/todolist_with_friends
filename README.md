@@ -1,5 +1,4 @@
 # 친구들과 함께하는 투두리스트
----
 - 계획을 세워서 오늘할 일정을 체크할수있는 할일 계획서 어플리케이션 입니다.
 - DND이 가능해 계획한 일정들 중 오늘할 일정을 DND를 할수 있습니다.
 - 로그인, 회원가입, 회원탈퇴, 별명 수정등 사용자 관리를 할수 있습니다.
@@ -7,13 +6,11 @@
 - 반응형을 통해 모바일 지원이 가능합니다.
 
 ## stacks
----
 - React(CRA)
 - Typescript
 - Firebase
 
 ## libraries
----
 - react-router-dom
 - redux
 - styled-components
@@ -21,24 +18,20 @@
 - react-beautiful-dnd
 
 ## UI
----
 
 ### 로그인 화면
----
 ![스크린샷(1037)](https://user-images.githubusercontent.com/67785334/109589527-cc95ce00-7b4d-11eb-891f-9e3a95e24d34.png)
 
-**모바일 버전**
+#### 모바일 버전
 ![스크린샷(1038)](https://user-images.githubusercontent.com/67785334/109589855-59d92280-7b4e-11eb-917c-ea138289a778.png)
 
 ### 회원가입 화면
----
 ![스크린샷(1039)](https://user-images.githubusercontent.com/67785334/109589948-7bd2a500-7b4e-11eb-8d58-b31f8edd39d5.png)
 
 ### 메인 화면
----
 ![스크린샷(1040)](https://user-images.githubusercontent.com/67785334/109589993-8f7e0b80-7b4e-11eb-9141-5fb07421af4c.png)
 
-**모바일 버전**
+#### 모바일 버전
 ![스크린샷(1041)](https://user-images.githubusercontent.com/67785334/109590082-b3d9e800-7b4e-11eb-8354-d0304cb9a481.png)
 
 ## 기능
