@@ -1,24 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import {
-  LoginContainer,
-  ContentContainer,
-  TextContainer,
-  Title,
-  Description,
-  FormContainer,
-  FormTitle,
-  InputText,
-  Button,
-  SignUpContainer,
-  SignUpText,
-  SignUpButton,
-  Footer,
-  GithubIcon,
-  MailIcon,
-  Contact,
-  GithubBtn,
-  MailBtn,
-} from './Login.style';
+import * as S from './Login.style';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
 import { AuthType } from '../../services/firebase';
@@ -79,43 +60,23 @@ const Login = ({ authService }: PropType) => {
   }, [authService, history]);
 
   return (
-    <LoginContainer>
-      <ContentContainer>
-        <TextContainer>
-          <Title>Todo List 🏃‍♂️🏃‍♀️🏃‍♂🏃‍♀️</Title>
-          <Description>What is your first small step🦶?</Description>
-        </TextContainer>
-        <FormContainer onSubmit={(e) => e.preventDefault()}>
-          <FormTitle>Please Login</FormTitle>
-          <InputText
-            ref={emailRef}
-            type="text"
-            placeholder="이메일 입력해주세요."
-          />
-          <InputText
-            ref={pwdRef}
-            type="password"
-            placeholder="비밀번호 입력해주세요."
-          />
-          <Button onClick={loginHandler}>Login</Button>
-          <SignUpContainer>
-            <SignUpText>처음 방문하셨나요?</SignUpText>
-            <SignUpButton onClick={goToSignUp}>Sign Up</SignUpButton>
-          </SignUpContainer>
-        </FormContainer>
-      </ContentContainer>
-      <Footer>
-        Show your passion!!🥇🥇🥇
-        <Contact>
-          <GithubBtn href="https://github.com/YeomJaeSeon" target="_blank">
-            <GithubIcon />
-          </GithubBtn>
-          <MailBtn href="mailto:a89541457@gmail.com">
-            <MailIcon />
-          </MailBtn>
-        </Contact>
-      </Footer>
-    </LoginContainer>
+    <S.LoginContainer>
+      <S.ContentContainer>
+        <S.Logo src="/main.png" alt="logo" />
+        <S.Title>TodoList</S.Title>
+        <S.Description>What is your first small step?</S.Description>
+        <S.FormContainer onSubmit={(e) => e.preventDefault()}>
+          <S.FormTitle>Login to your account</S.FormTitle>
+          <S.InputText ref={emailRef} type="text" placeholder="Email address" />
+          <S.InputText ref={pwdRef} type="password" placeholder="Password" />
+          <S.Button onClick={loginHandler}>Login</S.Button>
+          <S.SignUpContainer>
+            <S.SignUpText>처음 방문하셨나요?</S.SignUpText>
+            <S.SignUpButton onClick={goToSignUp}>Sign Up</S.SignUpButton>
+          </S.SignUpContainer>
+        </S.FormContainer>
+      </S.ContentContainer>
+    </S.LoginContainer>
   );
 };
 

@@ -14,41 +14,34 @@ import { ReactComponent as MailSVG } from '../../assets/svg/envelope-solid.svg';
 export const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 700px;
+  width: 400px;
   height: 500px;
   background-color: ${MainBackgroundColor};
   border-radius: 10px;
   box-shadow: ${BoxShadow};
-  ${mobileQuery} {
-    width: 400px;
-    height: 100%;
-  }
 `;
 export const ContentContainer = styled.div`
   display: flex;
+  flex-direction: column;
+  align-items: center;
   flex-basis: 80%;
   ${mobileQuery} {
     flex-direction: column;
   }
 `;
 
-export const TextContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  border-right: 3px solid ${BlackColor};
-  padding: 0 15px;
-  flex-basis: 50%;
-  ${mobileQuery} {
-    border-right: 0;
-    border-bottom: 3px solid ${BlackColor};
-  }
+export const Logo = styled.img`
+  width: 100px;
+  margin: 0;
+  margin-top: 20px;
+  margin-bottom: 15px;
 `;
 
 export const Title = styled.h1`
-  font-size: 35px;
+  font-size: 40px;
+  margin: 0;
+  margin-bottom: 3px;
+  color: ${StrongMainColor};
 `;
 
 const flow = keyframes`
@@ -63,24 +56,29 @@ const flow = keyframes`
 export const Description = styled.p`
   font-size: 20px;
   animation: ${flow} 3s linear infinite;
+  margin: 0;
 `;
 export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   flex: 1;
 `;
 export const FormTitle = styled.p`
   font-weight: bold;
   font-size: 20px;
+  margin: 0;
+  margin: 20px 0;
 `;
 
 export const InputText = styled.input`
-  width: 80%;
+  width: 300px;
   margin-bottom: 10px;
   font-size: 1.2rem;
   padding: 5px 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 0.5px gray solid;
   ${mobileQuery} {
     max-width: 60%;
   }
@@ -89,11 +87,14 @@ export const InputText = styled.input`
 export const Button = styled.button`
   font-size: 20px;
   background-color: white;
-  width: 80%;
+  width: 100px;
   padding: 5px 10px;
-  border-radius: 15px;
+  border-radius: 5px;
+  margin: 0;
+  margin-top: 15px;
   margin-bottom: 20px;
   outline: none;
+  border: 0.5px gray solid;
   cursor: pointer;
   transition: all 300ms ease;
   &:hover {
