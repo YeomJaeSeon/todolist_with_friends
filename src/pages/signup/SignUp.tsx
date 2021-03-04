@@ -107,30 +107,28 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         signUpHandler();
       }}
     >
-      <SignUpTitle>회원가입</SignUpTitle>
-      <SignUpLabel htmlFor="character">
-        사용할 별명 입력하세요(6자리 이하)
-      </SignUpLabel>
+      <SignUpTitle>Sign Up</SignUpTitle>
       <SignUpBox>
+        <SignUpLabel htmlFor="character">
+          사용할 별명 입력하세요(6자리 이하)
+        </SignUpLabel>
         <SinUpInput
           type="text"
           id="character"
           value={newUser.character}
           onChange={upDateUserInfo}
-          placeholder="별명 입력해주세요."
+          placeholder="별명 입력해주세요"
         />
         {newUser.character && <CheckIcon>✔</CheckIcon>}
       </SignUpBox>
-      <SignUpLabel htmlFor="email">
-        이메일 입력하세요(.com으로 끝나야함)
-      </SignUpLabel>
       <SignUpBox>
+        <SignUpLabel htmlFor="email">이메일 입력하세요</SignUpLabel>
         <SinUpInput
           type="text"
           id="email"
           value={newUser.email}
           onChange={upDateUserInfo}
-          placeholder="이메일입력해주세요."
+          placeholder="이메일입력해주세요"
         />
         {newUser.email ? (
           isEmailProper ? (
@@ -140,14 +138,14 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           )
         ) : null}
       </SignUpBox>
-      <SignUpLabel htmlFor="pwd"> 비밀번호 입력하세요(6 ~ 8자리)</SignUpLabel>
       <SignUpBox>
+        <SignUpLabel htmlFor="pwd"> 비밀번호 입력하세요(6 ~ 8자리)</SignUpLabel>
         <SinUpInput
           type="password"
           id="pwd"
           value={newUser.pwd}
           onChange={upDateUserInfo}
-          placeholder="최소 6자리, 최대 8자리입니다."
+          placeholder="비밀번호 입력해주세요"
         />
         {newUser.pwd ? (
           isPwdProper ? (
@@ -157,17 +155,16 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           )
         ) : null}
       </SignUpBox>
-      <SignUpLabel htmlFor="rePwd">
-        {' '}
-        비밀번호 다시 입력하세요(6 ~ 8자리)
-      </SignUpLabel>
       <SignUpBox>
+        <SignUpLabel htmlFor="rePwd">
+          비밀번호 다시 입력하세요(6 ~ 8자리)
+        </SignUpLabel>
         <SinUpInput
           type="password"
           id="rePwd"
           value={newUser.rePwd}
           onChange={upDateUserInfo}
-          placeholder="최소 6자리, 최대 8자리입니다."
+          placeholder="비밀번호 다시 입력해주세요"
         />
         {newUser.rePwd ? (
           isPwdProper ? (
@@ -178,7 +175,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         ) : null}
       </SignUpBox>
       <SignUpBtn type="submit" isComplete={isAllClear()}>
-        가입하기
+        Sign up
       </SignUpBtn>
       <BackLoginContainer>
         <BackLoginText>회원이신가요?</BackLoginText>

@@ -4,12 +4,14 @@ import {
   NotiColor,
   BoxShadow,
   mobileQuery,
+  StrongMainColor,
+  WhiteColor,
 } from '../../utils/css-utils';
 
 export const SignUpForm = styled.form`
   position: relative;
-  width: 500px;
-  height: 600px;
+  width: 400px;
+  height: 500px;
   background-color: ${MainBackgroundColor};
   border-radius: 10px;
   display: flex;
@@ -23,30 +25,37 @@ export const SignUpForm = styled.form`
 `;
 
 export const SignUpTitle = styled.h1`
-  font-size: 3rem;
+  font-size: 2rem;
 `;
 
 export const SignUpLabel = styled.label`
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 5px;
 `;
 export const SignUpBox = styled.div`
-  width: 60%;
+  width: 280px;
   margin-bottom: 15px;
   display: flex;
+  flex-direction: column;
   position: relative;
 `;
 
 export const SinUpInput = styled.input`
-  width: 100%;
+  width: 250px;
   font-size: 1.2rem;
-  padding: 5px 10px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  outline: none;
+  border: 0.5px gray solid;
 `;
 
 export const CheckIcon = styled.span`
   position: absolute;
-  line-height: 36px;
-  right: -20px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  right: -30px;
+  top: 30px;
 `;
 
 type SignUpButtonType = {
@@ -54,15 +63,22 @@ type SignUpButtonType = {
 };
 
 export const SignUpBtn = styled.button`
-  border-radius: 10px;
-  margin-top: 15px;
+  border-radius: 5px;
   padding: 5px 8px;
   font-size: 20px;
   outline: none;
-  border: none;
+  background-color: white;
+  border: 0.5px gray solid;
   opacity: ${(props: SignUpButtonType) => (props.isComplete ? '1' : '0.3')};
   cursor: ${(props: SignUpButtonType) =>
     props.isComplete ? 'pointer' : 'default'};
+  &:hover {
+    background-color: ${(props: SignUpButtonType) =>
+      props.isComplete ? StrongMainColor : 'white'};
+    color: ${(props: SignUpButtonType) =>
+      props.isComplete ? WhiteColor : 'black'};
+  }
+  transition: all 300ms ease;
 `;
 
 export const BackLoginContainer = styled.div`
