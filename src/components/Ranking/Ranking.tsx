@@ -23,7 +23,7 @@ const Ranking: React.FC<PropType> = ({ userInfo }) => {
 
   return (
     <S.RankingContainer>
-      <S.RankingTitle>랭킹</S.RankingTitle>
+      <S.RankingTitle>Ranking</S.RankingTitle>
       <S.UserList>
         {rankers.map((user, idx) => {
           return (

@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { WhiteColor, BoxShadow } from '../../utils/css-utils';
-import { ReactComponent as DragSVG } from '../../assets/svg/bars-solid.svg';
+import { ReactComponent as DragSVG } from '../../assets/svg/hand-paper-solid.svg';
 import { ReactComponent as TrashSVG } from '../../assets/svg/trash-solid.svg';
 
-export const ReadCardContainer = styled.div<{ isDragging: boolean }>`
+export const ReadCardContainer = styled.div<{
+  isDragging: boolean;
+}>`
   background-color: ${WhiteColor};
   height: 100%;
   opacity: ${(props) => (props.isDragging ? '0.5' : '1')};

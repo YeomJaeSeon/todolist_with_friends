@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { AuthServiceType } from '../../services/auth_service';
 import { DatabaseType } from '../../services/data_service';
 import { useHistory, useLocation } from 'react-router-dom';
 import * as S from './Main.style';
 import List from 'src/components/List/List';
-import StartPlan from 'src/components/StartPlan/StartPlan';
+import StartPlan, { RefType } from 'src/components/StartPlan/StartPlan';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootType } from '../../modules/index';
@@ -14,6 +14,7 @@ import {
   diffChangeCardAction,
 } from 'src/modules/todos';
 import Modal from 'src/components/Modal/Modal';
+import Header from 'src/components/Header/Header';
 
 type LocationState = {
   id: string | null;
@@ -32,6 +33,7 @@ const Main = ({ authService, databaseService }: PropType) => {
   const dispatch = useDispatch();
   const location = useLocation<LocationState>();
   const uid = location.state ? location.state.id : null;
+  const moveRef = useRef<RefType>(null);
 
   const history = useHistory();
 
@@ -158,38 +160,40 @@ const Main = ({ authService, databaseService }: PropType) => {
     setModalDisplay(false);
   };
 
+  const goToSection = (id: string) => {
+    if (id === 'timer') {
+      moveRef.current?.timer();
+    } else {
+      console.log('clicked');
+      moveRef.current?.ranking();
+    }
+  };
+
   return (
-    <S.MainContainer>
-      <DragDropContext onDragEnd={cardChangeHandler}>
-        {pending ? (
-          <S.PendingBackground>
-            <S.LoadingSpinner></S.LoadingSpinner>
-          </S.PendingBackground>
-        ) : (
-          <>
+    <S.Main>
+      <Header
+        logout={logoutHandler}
+        currentUser={currentUser}
+        openModal={openModal}
+        goToSection={goToSection}
+      />
+      {pending ? (
+        <S.PendingBackground>
+          <S.LoadingSpinner></S.LoadingSpinner>
+        </S.PendingBackground>
+      ) : (
+        <S.MainContainer>
+          <DragDropContext onDragEnd={cardChangeHandler}>
             <List cards={cards} uid={uid} databaseService={databaseService} />
             <StartPlan
               uid={uid}
               databaseService={databaseService}
               modalDisplay={modalDisplay}
+              ref={moveRef}
             />
-            <S.UserInfoSection>
-              <S.CurrentUserInfo>
-                {currentUser && (
-                  <S.UserInfoContainer>
-                    <S.UserCharacterName>{currentUser}</S.UserCharacterName>님
-                    접속 중
-                  </S.UserInfoContainer>
-                )}
-                <S.LogoutBtn onClick={logoutHandler}>Logout</S.LogoutBtn>
-              </S.CurrentUserInfo>
-              <S.UserChangeInfo onClick={openModal}>
-                사용자 관리
-              </S.UserChangeInfo>
-            </S.UserInfoSection>
-          </>
-        )}
-      </DragDropContext>
+          </DragDropContext>
+        </S.MainContainer>
+      )}
       {modalDisplay && (
         <Modal
           visible={modalDisplay}
@@ -204,7 +208,7 @@ const Main = ({ authService, databaseService }: PropType) => {
           {currentUser}님의 사용자 관리
         </Modal>
       )}
-    </S.MainContainer>
+    </S.Main>
   );
 };
 

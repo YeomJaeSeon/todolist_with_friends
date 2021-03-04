@@ -1,4 +1,9 @@
-import { mobileQuery, NotiColor } from 'src/utils/css-utils';
+import {
+  mobileQuery,
+  NotiColor,
+  StrongMainColor,
+  WhiteColor,
+} from 'src/utils/css-utils';
 import styled from 'styled-components';
 
 export const ModalWrapper = styled.div<{ visible: boolean }>`
@@ -69,14 +74,21 @@ export const ModalUserBtn = styled.button<{ btnType: string }>`
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   margin: 0;
-  padding: 0;
+  padding: 5px 10px;
   background-color: transparent;
-  border: none;
+  border: 0.5px gray solid;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 1.3rem;
   font-weight: bolder;
-  color: ${(props) => (props.btnType === 'change' ? NotiColor : 'red')};
+  color: ${(props) => (props.btnType === 'change' ? StrongMainColor : 'red')};
   outline: none;
+  &:hover {
+    background-color: ${(props) =>
+      props.btnType === 'change' ? StrongMainColor : 'red'};
+    color: ${WhiteColor};
+  }
+  transition: all 300ms ease;
 `;
 export const ChangeSection = styled.div<{ isChange: boolean }>`
   position: absolute;
@@ -91,12 +103,15 @@ export const ChangeSection = styled.div<{ isChange: boolean }>`
 
 export const ChangeCharacterInput = styled.input`
   width: 80%;
-  padding: 3px;
+  padding: 5px;
   border: 1px solid gray;
   outline: none;
+  border-radius: 5px;
 `;
 
 export const CheckBtn = styled.button`
+  position: absolute;
+  right: -15px;
   background-color: transparent;
   border: none;
   cursor: pointer;

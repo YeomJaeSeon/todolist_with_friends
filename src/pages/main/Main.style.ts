@@ -3,13 +3,20 @@ import {
   MainBackgroundColor,
   NotiColor,
   mobileQuery,
+  StrongMainColor,
 } from '../../utils/css-utils';
 
-export const MainContainer = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100vh;
+export const Main = styled.div`
   display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+`;
+
+export const MainContainer = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
   background: url('/background.jpg') no-repeat center/cover;
   opacity: 0.9;
   ${mobileQuery} {
@@ -74,7 +81,7 @@ export const LogoutBtn = styled.button`
 export const PendingBackground = styled.div`
   width: 100vw;
   height: 100vh;
-  background-color: ${MainBackgroundColor};
+  background-color: #bdbdbd;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -94,6 +101,6 @@ export const LoadingSpinner = styled.div`
   height: 300px;
   border-radius: 50%;
   border: 15px solid white;
-  border-top: 15px solid ${NotiColor};
+  border-top: 15px solid ${StrongMainColor};
   animation: ${spin} 2s infinite linear;
 `;

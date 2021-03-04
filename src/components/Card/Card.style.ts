@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 import { WhiteColor, BoxShadow, mobileQuery } from '../../utils/css-utils';
 import { ReactComponent as TrashSVG } from '../../assets/svg/trash-solid.svg';
-import { ReactComponent as DragSVG } from '../../assets/svg/bars-solid.svg';
+import { ReactComponent as DragSVG } from '../../assets/svg/hand-paper-solid.svg';
 
 export const CardContainer = styled.form<{
   isDragging: boolean;
   isDropAnimating: boolean;
 }>`
-  position: relative;
   width: 245px;
   height: 230px;
   background-color: ${WhiteColor};
-  margin-bottom: 50px;
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -66,6 +65,7 @@ export const AddInput = styled.input.attrs({
 
 export const AddBtn = styled.button`
   background-color: transparent;
+  font-size: 35px;
   border: none;
   outline: none;
   cursor: pointer;

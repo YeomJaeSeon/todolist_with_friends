@@ -180,7 +180,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
       <BackLoginContainer>
         <BackLoginText>회원이신가요?</BackLoginText>
         <BackLoginBtn type="button" onClick={goToLogin}>
-          로그인
+          Sign In
         </BackLoginBtn>
         <BackLoginText>으로 돌아가기</BackLoginText>
       </BackLoginContainer>

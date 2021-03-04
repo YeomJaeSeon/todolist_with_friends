@@ -1,9 +1,24 @@
 import styled from 'styled-components';
-import { mobileQuery } from '../../utils/css-utils';
+import { mobileQuery, StrongMainColor } from '../../utils/css-utils';
 
 export const StartPlanContainer = styled.div`
+  margin-top: 70px;
+  width: 100%;
   flex: 1 1 70%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+  }
   ${mobileQuery} {
     flex: 1 1 70%;
     flex-direction: column;
@@ -15,7 +30,8 @@ export const StartPlanContainer = styled.div`
 `;
 
 export const TimerTitle = styled.h1`
-  margin-bottom: 50px;
+  font-size: 50px;
+  margin: 20px 0;
 `;
 
 export const AllSection = styled.div`
@@ -24,10 +40,13 @@ export const AllSection = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
+  background-color: #bdbdbd;
 `;
 
 export const RankingContainer = styled.div`
-  width: 280px;
+  width: 100%;
+  height: 680px;
   display: flex;
   flex-direction: column;
   ${mobileQuery} {

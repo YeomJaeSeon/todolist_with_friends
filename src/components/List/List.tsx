@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Card from '../Card/Card';
 import {
-  ListContainer,
   Container,
   EditorContainer,
   ArrowIcon,
@@ -40,6 +39,8 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
   }, []);
 
   const addCard = () => {
+    // moveRef.current?.focusBtn();
+    // window.scroll(0, 0);
     const newId = Date.now();
 
     const date = new Date();
@@ -61,41 +62,39 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
   }, []);
 
   return (
-    <ListContainer>
-      <EditorTitle fold={fold}>Plan your todos</EditorTitle>
-      <Container>
-        <EditorContainer fold={fold}>
-          <Droppable
-            droppableId="cards"
-            direction={width <= 800 ? 'horizontal' : 'vertical'}
-          >
-            {(provided, snapshot) => (
-              <CardListContainer
-                className="cards"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-                isDraggingOver={snapshot.isDraggingOver}
-              >
-                {cards.map((card, index) => (
-                  <Card
-                    key={card.id}
-                    cardId={card.id}
-                    todos={card.todos}
-                    current={card.current}
-                    index={index}
-                    uid={uid}
-                    databaseService={databaseService}
-                  />
-                ))}
-                {provided.placeholder}
-              </CardListContainer>
-            )}
-          </Droppable>
-          <CardAddBtn onClick={addCard}>➕</CardAddBtn>
-        </EditorContainer>
-        {width > 800 && <ArrowIcon as={svg(fold)} onClick={onFoldHandler} />}
-      </Container>
-    </ListContainer>
+    <Container fold={fold}>
+      <EditorContainer fold={fold}>
+        <EditorTitle fold={fold}>Plan your todos</EditorTitle>
+        <Droppable
+          droppableId="cards"
+          direction={width <= 800 ? 'horizontal' : 'vertical'}
+        >
+          {(provided, snapshot) => (
+            <CardListContainer
+              className="cards"
+              {...provided.droppableProps}
+              ref={provided.innerRef}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
+              {cards.map((card, index) => (
+                <Card
+                  key={card.id}
+                  cardId={card.id}
+                  todos={card.todos}
+                  current={card.current}
+                  index={index}
+                  uid={uid}
+                  databaseService={databaseService}
+                />
+              ))}
+              {provided.placeholder}
+            </CardListContainer>
+          )}
+        </Droppable>
+        <CardAddBtn onClick={addCard}>+</CardAddBtn>
+      </EditorContainer>
+      {width > 800 && <ArrowIcon as={svg(fold)} onClick={onFoldHandler} />}
+    </Container>
   );
 };
 

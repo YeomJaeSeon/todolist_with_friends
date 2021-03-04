@@ -92,7 +92,7 @@ const Card: React.FC<PropType> = ({
               </MetaDataContainer>
               <AddContainer>
                 <AddInput ref={inputRef} type="text" />
-                <AddBtn onClick={addTodo}>➕</AddBtn>
+                <AddBtn onClick={addTodo}>+</AddBtn>
               </AddContainer>
               <TodoContainer>
                 {todos.map((item) => (

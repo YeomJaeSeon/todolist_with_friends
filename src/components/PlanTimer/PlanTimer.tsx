@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as S from './PlanTimer.style';
 import { ReactComponent as PlaySVG } from '../../assets/svg/play-solid.svg';
-import { ReactComponent as StopSVG } from '../../assets/svg/stop-solid.svg';
+import { ReactComponent as StopSVG } from '../../assets/svg/undo-alt-solid.svg';
 import { ReactComponent as PauseSVG } from '../../assets/svg/pause-solid.svg';
 import { UserStateType } from '../StartPlan/StartPlan';
 import { ReactComponent as MusicSVG } from '../../assets/svg/music-solid.svg';
@@ -59,7 +59,6 @@ const PlanTimer: React.FC<PropType> = ({
   useEffect(() => {
     const logout = () => {
       stop();
-      setMusicState(false);
       Music.musicStop();
     };
     return () => logout();
@@ -100,18 +99,19 @@ const PlanTimer: React.FC<PropType> = ({
   };
 
   const musicPlayOrStop = () => {
-    setMusicState((musicState) => {
-      if (!musicState === true) Music.musicPlay();
-      else Music.musicStop();
-
-      return !musicState;
+    setMusicState((music) => {
+      if (music) {
+        Music.musicStop();
+      } else {
+        Music.musicPlay();
+      }
+      return !music;
     });
   };
 
   return (
     <S.PlanTimerContainer>
-      <S.TimerTitleContainer>
-        <S.TimerTitle>TIMER 🕒</S.TimerTitle>
+      <S.TimerContainer>
         <S.MusicBtn onClick={musicPlayOrStop}>
           {!musicState ? (
             <S.MusicIcon as={MusicSVG} />
@@ -119,18 +119,26 @@ const PlanTimer: React.FC<PropType> = ({
             <S.MusicIcon as={MusicStopSVG} />
           )}
         </S.MusicBtn>
-      </S.TimerTitleContainer>
-      <S.TimerContainer>
         <S.TimeSection>
           {hours(time)} : {minutes(time)} : {seconds(time)}
         </S.TimeSection>
-        <S.Btns onClick={startOrStop}>
-          {!state ? <S.Icon as={PlaySVG} /> : <S.Icon as={PauseSVG} />}
-        </S.Btns>
-        <S.Btns onClick={reset}>
+        <S.Btns onClick={reset} btnType="reset">
           <S.Icon as={StopSVG} />
         </S.Btns>
       </S.TimerContainer>
+      <S.TimerTitleContainer>
+        <S.StatusComment type={state}>
+          <S.RunningIcon />
+          Running
+        </S.StatusComment>
+        <S.Btns onClick={startOrStop} btnType="start">
+          {!state ? <S.Icon as={PlaySVG} /> : <S.Icon as={PauseSVG} />}
+        </S.Btns>
+        <S.StatusComment type={!state}>
+          <S.BreakIcon />
+          break
+        </S.StatusComment>
+      </S.TimerTitleContainer>
     </S.PlanTimerContainer>
   );
 };

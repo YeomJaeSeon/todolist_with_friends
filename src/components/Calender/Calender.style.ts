@@ -1,3 +1,4 @@
+import { StrongMainColor, WhiteColor } from 'src/utils/css-utils';
 import styled from 'styled-components';
 
 export const CalendarBtn = styled.button`
@@ -9,7 +10,8 @@ export const CalendarBtn = styled.button`
   border: none;
   outline: none;
   &:hover {
-    background-color: #c8e6c9;
+    background-color: ${StrongMainColor};
+    color: ${WhiteColor};
   }
   transition: all 300ms ease;
 `;
