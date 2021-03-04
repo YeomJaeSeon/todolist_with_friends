@@ -62,14 +62,14 @@ const Login = ({ authService }: PropType) => {
   return (
     <S.LoginContainer>
       <S.ContentContainer>
-        <S.Logo src="/main.png" alt="logo" />
+        <S.Logo src="/logo.png" alt="logo" />
         <S.Title>TodoList</S.Title>
         <S.Description>What is your first small step?</S.Description>
         <S.FormContainer onSubmit={(e) => e.preventDefault()}>
           <S.FormTitle>Login to your account</S.FormTitle>
           <S.InputText ref={emailRef} type="text" placeholder="Email address" />
           <S.InputText ref={pwdRef} type="password" placeholder="Password" />
-          <S.Button onClick={loginHandler}>Login</S.Button>
+          <S.Button onClick={loginHandler}>Sign in</S.Button>
           <S.SignUpContainer>
             <S.SignUpText>처음 방문하셨나요?</S.SignUpText>
             <S.SignUpButton onClick={goToSignUp}>Sign Up</S.SignUpButton>

@@ -57,25 +57,28 @@ export const Description = styled.p`
   font-size: 20px;
   animation: ${flow} 3s linear infinite;
   margin: 0;
+  margin-top: 5px;
 `;
 export const FormContainer = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
   flex: 1;
+  margin: 0;
 `;
 export const FormTitle = styled.p`
   font-weight: bold;
   font-size: 20px;
   margin: 0;
-  margin: 20px 0;
+  margin-top: 11px;
+  margin-bottom: 18px;
 `;
 
 export const InputText = styled.input`
-  width: 300px;
+  width: 250px;
   margin-bottom: 10px;
   font-size: 1.2rem;
-  padding: 5px 10px;
+  padding: 8px 10px;
   border-radius: 5px;
   outline: none;
   border: 0.5px gray solid;
@@ -87,12 +90,12 @@ export const InputText = styled.input`
 export const Button = styled.button`
   font-size: 20px;
   background-color: white;
-  width: 100px;
+  width: 90px;
   padding: 5px 10px;
   border-radius: 5px;
   margin: 0;
   margin-top: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   outline: none;
   border: 0.5px gray solid;
   cursor: pointer;
