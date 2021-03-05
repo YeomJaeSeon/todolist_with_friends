@@ -3,22 +3,34 @@ import * as S from './Login.style';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
 import { AuthType } from '../../services/firebase';
+import { CookieSetOptions } from 'universal-cookie';
 
 type PropType = {
   authService: AuthServiceType;
+  cookies: {
+    [name: string]: any;
+  };
+  setCookie: (
+    name: string,
+    value: any,
+    options?: CookieSetOptions | undefined
+  ) => void;
 };
-const Login = ({ authService }: PropType) => {
+const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const pwdRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
 
   const loginHandler = () => {
+    // 로그인 상태유지를위한 쿠키 설정 (로그인하면)
     const email = emailRef.current && emailRef.current.value;
     const pwd = pwdRef.current && pwdRef.current.value;
     if (email && pwd) {
       authService
         .login(email, pwd)
-        .then((value) => {
+        .then(() => {
+          // if(cookies.login)
+          setCookie('login', true, { maxAge: 3 });
           alert('로그인 성공');
         })
         .catch((err) => {
