@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { mobileQuery, StrongMainColor } from '../../utils/css-utils';
+import { ReactComponent as ArrowSVG } from '../../assets/svg/arrow-up-solid.svg';
 
 export const StartPlanContainer = styled.div`
   margin-top: 70px;
@@ -26,6 +27,34 @@ export const StartPlanContainer = styled.div`
     width: 100%;
     background: url('/background.jpg') center/cover no-repeat;
     opacity: 0.9;
+  }
+`;
+export const ArrowBtn = styled.button<{
+  opacityType: 'show' | undefined;
+  isVisible: 'show' | undefined;
+}>`
+  border-radius: 50%;
+  cursor: pointer;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  outline: none;
+  border: 3px solid ${StrongMainColor};
+  opacity: ${(props) => (props.opacityType ? 1 : 0)};
+  display: ${(props) => (props.isVisible ? 'inline' : 'none')};
+  transition: opacity 600ms ease;
+  transition: backgroud-color border 300ms ease;
+  &:hover {
+    background-color: ${StrongMainColor};
+  }
+`;
+export const ArrowIcon = styled(ArrowSVG)`
+  width: 50px;
+  height: 55px;
+  color: ${StrongMainColor};
+  transition: all 300ms ease;
+  &:hover {
+    color: white;
   }
 `;
 

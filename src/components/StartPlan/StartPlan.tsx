@@ -14,6 +14,8 @@ import {
   TimerTitle,
   RankingContainer,
   AllSection,
+  ArrowBtn,
+  ArrowIcon,
 } from './StartPlan.style';
 
 type PropType = {
@@ -36,6 +38,7 @@ export type RefType = {
 const StartPlan = forwardRef<RefType, PropType>(
   ({ uid, databaseService, modalDisplay }, ref) => {
     const [usersInfo, setUsersInfo] = useState<UserStateType>([]);
+    const [topArrow, setTopArrow] = useState(0);
     const timerRef = useRef<HTMLDivElement>(null);
     const rankingRef = useRef<HTMLDivElement>(null);
 
@@ -81,6 +84,11 @@ const StartPlan = forwardRef<RefType, PropType>(
       return () => datasSync();
     }, [databaseService]);
 
+    const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
+      const scrollTop = e.currentTarget.scrollTop;
+      setTopArrow(scrollTop);
+    };
+
     const increaseTime = () => {
       setUsersInfo((infos) => {
         return infos.map((info) => {
@@ -104,9 +112,11 @@ const StartPlan = forwardRef<RefType, PropType>(
       });
       databaseService.updateTime(uid, 0);
     };
-
+    const goToTop = () => {
+      timerRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
     return (
-      <StartPlanContainer>
+      <StartPlanContainer onScroll={handleScroll}>
         <AllSection ref={timerRef}>
           <TimerTitle>Timer</TimerTitle>
           <PlanTimer
@@ -121,6 +131,13 @@ const StartPlan = forwardRef<RefType, PropType>(
         <RankingContainer ref={rankingRef}>
           <Ranking userInfo={usersInfo}></Ranking>
         </RankingContainer>
+        <ArrowBtn
+          opacityType={topArrow > 500 ? 'show' : undefined}
+          isVisible={topArrow > 450 ? 'show' : undefined}
+          onClick={goToTop}
+        >
+          <ArrowIcon />
+        </ArrowBtn>
       </StartPlanContainer>
     );
   }

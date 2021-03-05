@@ -127,14 +127,14 @@ const PlanTimer: React.FC<PropType> = ({
         </S.Btns>
       </S.TimerContainer>
       <S.TimerTitleContainer>
-        <S.StatusComment type={state}>
+        <S.StatusComment type={state === true ? 'show' : undefined}>
           <S.RunningIcon />
           Running
         </S.StatusComment>
         <S.Btns onClick={startOrStop} btnType="start">
           {!state ? <S.Icon as={PlaySVG} /> : <S.Icon as={PauseSVG} />}
         </S.Btns>
-        <S.StatusComment type={!state}>
+        <S.StatusComment type={state === false ? 'show' : undefined}>
           <S.BreakIcon />
           break
         </S.StatusComment>

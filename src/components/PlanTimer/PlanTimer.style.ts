@@ -38,7 +38,7 @@ export const TimerTitleContainer = styled.div`
   align-items: center;
 `;
 
-export const StatusComment = styled.span<{ type: boolean }>`
+export const StatusComment = styled.span<{ type: 'show' | undefined }>`
   display: flex;
   align-items: center;
   color: gray;
