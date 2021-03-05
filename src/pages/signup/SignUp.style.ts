@@ -26,18 +26,26 @@ export const SignUpForm = styled.form`
 
 export const SignUpTitle = styled.h1`
   font-size: 2rem;
+  margin: 0;
+  margin-top: 8px;
 `;
 
 export const SignUpLabel = styled.label`
   font-size: 1rem;
-  margin-bottom: 5px;
+  margin-top: 10px;
 `;
 export const SignUpBox = styled.div`
   width: 280px;
-  margin-bottom: 15px;
   display: flex;
   flex-direction: column;
   position: relative;
+`;
+
+export const TooltipMsg = styled.div<{ show: boolean }>`
+  font-size: 12px;
+  color: gray;
+  opacity: ${(props) => (props.show ? 1 : 0)};
+  transition: opacity 200ms ease;
 `;
 
 export const SinUpInput = styled.input`
@@ -55,7 +63,7 @@ export const CheckIcon = styled.span`
   height: 30px;
   line-height: 30px;
   right: -30px;
-  top: 30px;
+  top: 50px;
 `;
 
 type SignUpButtonType = {
@@ -69,6 +77,7 @@ export const SignUpBtn = styled.button`
   outline: none;
   background-color: white;
   border: 0.5px gray solid;
+  margin: 10px 0;
   opacity: ${(props: SignUpButtonType) => (props.isComplete ? '1' : '0.3')};
   cursor: ${(props: SignUpButtonType) =>
     props.isComplete ? 'pointer' : 'default'};
@@ -83,7 +92,7 @@ export const SignUpBtn = styled.button`
 
 export const BackLoginContainer = styled.div`
   position: absolute;
-  bottom: 15px;
+  bottom: 10px;
   right: 20px;
 `;
 

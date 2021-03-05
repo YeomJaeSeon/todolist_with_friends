@@ -29,10 +29,20 @@ export const StartPlanContainer = styled.div`
     opacity: 0.9;
   }
 `;
+
+export const ArrowIcon = styled(ArrowSVG)`
+  width: 50px;
+  height: 55px;
+  color: ${StrongMainColor};
+  transition: all 300ms ease;
+`;
+
 export const ArrowBtn = styled.button<{
   opacityType: 'show' | undefined;
   isVisible: 'show' | undefined;
 }>`
+  width: 68px;
+  height: 67px;
   border-radius: 50%;
   cursor: pointer;
   position: fixed;
@@ -46,15 +56,9 @@ export const ArrowBtn = styled.button<{
   transition: backgroud-color border 300ms ease;
   &:hover {
     background-color: ${StrongMainColor};
-  }
-`;
-export const ArrowIcon = styled(ArrowSVG)`
-  width: 50px;
-  height: 55px;
-  color: ${StrongMainColor};
-  transition: all 300ms ease;
-  &:hover {
-    color: white;
+    ${ArrowIcon} {
+      color: white;
+    }
   }
 `;
 

@@ -7,6 +7,7 @@ import {
   SinUpInput,
   CheckIcon,
   SignUpBtn,
+  TooltipMsg,
   BackLoginContainer,
   BackLoginText,
   BackLoginBtn,
@@ -15,7 +16,7 @@ import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
 import { DatabaseType } from 'src/services/data_service';
 
-const EmailReg = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.com/i;
+const EmailReg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 type PropType = {
   authService: AuthServiceType;
@@ -71,6 +72,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         if (err.code === 'auth/email-already-in-use') {
           alert('이미 존재하는 이메일입니다.');
         }
+        console.log(err);
       });
   };
   const upDateUserInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,6 +102,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     if (isEmailProper && isPwdProper && newUser.character) return true;
     else return false;
   };
+
   return (
     <SignUpForm
       onSubmit={(e) => {
@@ -112,6 +115,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         <SignUpLabel htmlFor="character">
           사용할 별명 입력하세요(6자리 이하)
         </SignUpLabel>
+        <TooltipMsg show={false}>별명칸</TooltipMsg>
         <SinUpInput
           type="text"
           id="character"
@@ -123,6 +127,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
       </SignUpBox>
       <SignUpBox>
         <SignUpLabel htmlFor="email">이메일 입력하세요</SignUpLabel>
+        <TooltipMsg show={newUser.email !== '' && isEmailProper === false}>
+          이메일 형식에 맞춰주세요
+        </TooltipMsg>
         <SinUpInput
           type="text"
           id="email"
@@ -140,6 +147,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
       </SignUpBox>
       <SignUpBox>
         <SignUpLabel htmlFor="pwd"> 비밀번호 입력하세요(6 ~ 8자리)</SignUpLabel>
+        <TooltipMsg show={newUser.pwd !== '' && isPwdProper === false}>
+          비밀번호 재입력 해주세요
+        </TooltipMsg>
         <SinUpInput
           type="password"
           id="pwd"
@@ -159,6 +169,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         <SignUpLabel htmlFor="rePwd">
           비밀번호 다시 입력하세요(6 ~ 8자리)
         </SignUpLabel>
+        <TooltipMsg show={newUser.pwd !== '' && isPwdProper === false}>
+          비밀번호가 다릅니다
+        </TooltipMsg>
         <SinUpInput
           type="password"
           id="rePwd"
