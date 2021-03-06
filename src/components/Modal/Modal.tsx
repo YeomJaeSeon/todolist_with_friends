@@ -3,6 +3,7 @@ import * as S from './Modal.style';
 import CloseButton from './CloseButton';
 import { DatabaseType } from 'src/services/data_service';
 import { AuthServiceType } from 'src/services/auth_service';
+import { CookieSetOptions } from 'universal-cookie';
 
 type PropType = {
   visible: boolean;
@@ -13,6 +14,7 @@ type PropType = {
   databaseService: DatabaseType;
   authService: AuthServiceType;
   notAuthorize: () => void;
+  removeCookie: (name: string, options?: CookieSetOptions | undefined) => void;
 };
 
 const Modal: React.FC<PropType> = ({
@@ -25,6 +27,7 @@ const Modal: React.FC<PropType> = ({
   databaseService,
   authService,
   notAuthorize,
+  removeCookie,
 }) => {
   const [characterChange, setCharacterChange] = useState(false);
   const [newUserName, setNewUserName] = useState('');
@@ -69,6 +72,7 @@ const Modal: React.FC<PropType> = ({
     onClose();
     notAuthorize();
     authService.delete();
+    removeCookie('login');
 
     databaseService.timeSync(uid)();
 

@@ -26,7 +26,13 @@ const App = ({ authService, databaseService }: PropType) => {
           />
         </Route>
         <Route path="/main" exact>
-          <Main authService={authService} databaseService={databaseService} />
+          <Main
+            authService={authService}
+            databaseService={databaseService}
+            cookies={cookies}
+            setCookie={setCookie}
+            removeCookie={removeCookie}
+          />
         </Route>
         <Route path="/signup" exact>
           <SignUp authService={authService} databaseService={databaseService} />

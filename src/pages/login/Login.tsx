@@ -22,15 +22,14 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
   const history = useHistory();
 
   const loginHandler = () => {
-    // 로그인 상태유지를위한 쿠키 설정 (로그인하면)
     const email = emailRef.current && emailRef.current.value;
     const pwd = pwdRef.current && pwdRef.current.value;
     if (email && pwd) {
       authService
         .login(email, pwd)
         .then(() => {
-          // if(cookies.login)
-          setCookie('login', true, { maxAge: 3 });
+          // 로그인성공 -> 만료기간 1일 쿠키설정
+          setCookie('login', true, { maxAge: 60 * 60 * 24 });
           alert('로그인 성공');
         })
         .catch((err) => {
@@ -55,14 +54,17 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
   const goToSignUp = () => {
     history.push('/signup');
   };
+
   useEffect(() => {
+    // 쿠키없으면 로그아웃
+    !cookies.login && authService.logout();
+
     const goToMain = (uid: string) => {
       history.push({
         pathname: '/main',
         state: { id: uid },
       });
     };
-
     const unscribe = authService.onAuthStatus((user: AuthType) => {
       user && goToMain(user.uid);
     });
@@ -77,14 +79,21 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
         <S.Logo src="/logo.png" alt="logo" />
         <S.Title>TodoList</S.Title>
         <S.Description>What is your first small step?</S.Description>
-        <S.FormContainer onSubmit={(e) => e.preventDefault()}>
+        <S.FormContainer
+          onSubmit={(e) => {
+            e.preventDefault();
+            loginHandler();
+          }}
+        >
           <S.FormTitle>Login to your account</S.FormTitle>
           <S.InputText ref={emailRef} type="text" placeholder="Email address" />
           <S.InputText ref={pwdRef} type="password" placeholder="Password" />
-          <S.Button onClick={loginHandler}>Sign in</S.Button>
+          <S.Button>Sign in</S.Button>
           <S.SignUpContainer>
             <S.SignUpText>처음 방문하셨나요?</S.SignUpText>
-            <S.SignUpButton onClick={goToSignUp}>Sign Up</S.SignUpButton>
+            <S.SignUpButton type="button" onClick={goToSignUp}>
+              Sign Up
+            </S.SignUpButton>
           </S.SignUpContainer>
         </S.FormContainer>
       </S.ContentContainer>

@@ -15,6 +15,7 @@ import {
 } from 'src/modules/todos';
 import Modal from 'src/components/Modal/Modal';
 import Header from 'src/components/Header/Header';
+import { CookieSetOptions } from 'universal-cookie';
 
 type LocationState = {
   id: string | null;
@@ -23,9 +24,24 @@ type LocationState = {
 type PropType = {
   authService: AuthServiceType;
   databaseService: DatabaseType;
+  cookies: {
+    [name: string]: any;
+  };
+  setCookie: (
+    name: string,
+    value: any,
+    options?: CookieSetOptions | undefined
+  ) => void;
+  removeCookie: (name: string, options?: CookieSetOptions | undefined) => void;
 };
 
-const Main = ({ authService, databaseService }: PropType) => {
+const Main = ({
+  authService,
+  databaseService,
+  cookies,
+  setCookie,
+  removeCookie,
+}: PropType) => {
   const [pending, setPending] = useState(true);
   const [currentUser, setCurrentUser] = useState('');
   const [modalDisplay, setModalDisplay] = useState(false);
@@ -38,6 +54,7 @@ const Main = ({ authService, databaseService }: PropType) => {
   const history = useHistory();
 
   useEffect(() => {
+    !cookies.login && authService.logout();
     const unscribe = authService.onAuthStatus((user) => {
       if (!user) {
         history.push('/');
@@ -82,6 +99,7 @@ const Main = ({ authService, databaseService }: PropType) => {
   };
 
   const logoutHandler = () => {
+    removeCookie('login');
     authService.logout();
   };
 
@@ -204,6 +222,7 @@ const Main = ({ authService, databaseService }: PropType) => {
           databaseService={databaseService}
           authService={authService}
           notAuthorize={notAuthorize}
+          removeCookie={removeCookie}
         >
           {currentUser}님의 사용자 관리
         </Modal>
