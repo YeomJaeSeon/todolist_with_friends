@@ -6,7 +6,7 @@ import {
   StrongMainColor,
 } from '../../utils/css-utils';
 
-export const Main = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;

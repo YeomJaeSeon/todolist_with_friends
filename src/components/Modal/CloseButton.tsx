@@ -1,5 +1,5 @@
 import React from 'react';
-import * as S from './CloseButton.style';
+import { Container, CancelIcon } from './CloseButton.style';
 
 type PropType = {
   onClick: () => void;
@@ -7,9 +7,9 @@ type PropType = {
 
 const CloseButton: React.FC<PropType> = ({ onClick }) => {
   return (
-    <S.CloseButton onClick={onClick}>
-      <S.CancelIcon />
-    </S.CloseButton>
+    <Container onClick={onClick}>
+      <CancelIcon />
+    </Container>
   );
 };
 

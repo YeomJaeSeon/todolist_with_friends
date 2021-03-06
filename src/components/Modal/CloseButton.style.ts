@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { ReactComponent as XSVG } from '../../assets/svg/times-solid.svg';
 
-export const CloseButton = styled.button`
+export const Container = styled.button`
   background-color: transparent;
   border: none;
   outline: none;

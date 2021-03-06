@@ -1,5 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import * as S from './Login.style';
+import {
+  LoginContainer,
+  ContentContainer,
+  Logo,
+  Title,
+  Description,
+  FormContainer,
+  FormTitle,
+  InputText,
+  SignButton,
+  SignUpContainer,
+  SignUpText,
+  SignUpButton,
+} from './Login.style';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
 import { AuthType } from '../../services/firebase';
@@ -69,45 +82,48 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
     // 쿠키없으면 로그아웃
     !cookies.login && authService.logout();
 
+    // main으로 이동하는데 uid데이터를 가지고 이동.
     const goToMain = (uid: string) => {
       history.push({
         pathname: '/main',
         state: { id: uid },
       });
     };
-    const unscribe = authService.onAuthStatus((user: AuthType) => {
+    // 유저의 로그인 상태알수있는 리스너등록. 마운트될떄
+    const unscribe = authService.getLoginStatus((user: AuthType) => {
       user && goToMain(user.uid);
     });
+    // 당연히 언마운트될때 리스너 함수 해제
     return () => {
       unscribe();
     };
   }, [authService, history]);
 
   return (
-    <S.LoginContainer>
-      <S.ContentContainer>
-        <S.Logo src="/logo.png" alt="logo" />
-        <S.Title>TodoList</S.Title>
-        <S.Description>What is your first small step?</S.Description>
-        <S.FormContainer
+    <LoginContainer>
+      <ContentContainer>
+        <Logo src="/logo.png" alt="logo" />
+        <Title>TodoList</Title>
+        <Description>What is your first small step?</Description>
+        <FormContainer
           onSubmit={(e) => {
             e.preventDefault();
             loginHandler();
           }}
         >
-          <S.FormTitle>Login to your account</S.FormTitle>
-          <S.InputText ref={emailRef} type="text" placeholder="Email address" />
-          <S.InputText ref={pwdRef} type="password" placeholder="Password" />
-          <S.Button>Sign in</S.Button>
-          <S.SignUpContainer>
-            <S.SignUpText>처음 방문하셨나요?</S.SignUpText>
-            <S.SignUpButton type="button" onClick={goToSignUp}>
+          <FormTitle>Login to your account</FormTitle>
+          <InputText ref={emailRef} type="text" placeholder="Email address" />
+          <InputText ref={pwdRef} type="password" placeholder="Password" />
+          <SignButton>Sign in</SignButton>
+          <SignUpContainer>
+            <SignUpText>처음 방문하셨나요?</SignUpText>
+            <SignUpButton type="button" onClick={goToSignUp}>
               Sign Up
-            </S.SignUpButton>
-          </S.SignUpContainer>
-        </S.FormContainer>
-      </S.ContentContainer>
-    </S.LoginContainer>
+            </SignUpButton>
+          </SignUpContainer>
+        </FormContainer>
+      </ContentContainer>
+    </LoginContainer>
   );
 };
 

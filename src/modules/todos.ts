@@ -9,6 +9,7 @@ const UPDATE_TODO = 'todo/UPDATE_TODO' as const;
 const TOGGLE_TODO = 'todo/TOGGLE_TODO' as const;
 const UPDATE_DATE = 'todo/UPDATE_DATE' as const;
 
+// 카드 초반상태
 export const initCardAction = (state: StateType) => {
   return {
     type: INIT_CARD,
@@ -16,6 +17,7 @@ export const initCardAction = (state: StateType) => {
   };
 };
 
+// 카드 추가 액션생성
 export const addCardAction = (id: string, today: string) => {
   return {
     type: ADD_CARD,
@@ -23,14 +25,15 @@ export const addCardAction = (id: string, today: string) => {
   };
 };
 
+// 카드 삭제 액션생성
 export const deleteCardAction = (id: string) => {
   return {
     type: DELETE_CARD,
     payload: { id: id },
   };
 };
-
-export const sameChangeCardAction = (newCards: StateType) => {
+// 같은 section 카드 드래깅할때 상태 변경
+export const changeSameCardAction = (newCards: StateType) => {
   return {
     type: SAME_CHANGE_CARD,
     payload: {
@@ -38,8 +41,8 @@ export const sameChangeCardAction = (newCards: StateType) => {
     },
   };
 };
-
-export const diffChangeCardAction = (newCards: StateType) => {
+// 다른 section으로 카드 드래깅할때 상태변경(좌 -> 우, 우 -> 좌)
+export const changeDiffCardAction = (newCards: StateType) => {
   return {
     type: DIFF_CHANGE_CARD,
     payload: {
@@ -48,6 +51,7 @@ export const diffChangeCardAction = (newCards: StateType) => {
   };
 };
 
+// todo 추가 액션생성
 export const addTodoAction = (cardId: string, id: number, newTodo: string) => {
   return {
     type: ADD_TODO,
@@ -59,6 +63,7 @@ export const addTodoAction = (cardId: string, id: number, newTodo: string) => {
   };
 };
 
+//todo 삭제액션생성
 export const deleteTodoAction = (cardId: string, id: number) => {
   return {
     type: DELETE_TODO,
@@ -69,6 +74,7 @@ export const deleteTodoAction = (cardId: string, id: number) => {
   };
 };
 
+// 할일 edit 업데이트 액션생성
 export const updateTodoAction = (cardId: string, id: number, todo: string) => {
   return {
     type: UPDATE_TODO,
@@ -80,6 +86,7 @@ export const updateTodoAction = (cardId: string, id: number, todo: string) => {
   };
 };
 
+// 할일 check uncheck 상태 변경 액션생성함수
 export const toggleTodoAction = (
   cardId: string,
   id: number,
@@ -95,6 +102,7 @@ export const toggleTodoAction = (
   };
 };
 
+// 날짜 변경
 export const updateDateAction = (cardId: string, today: string) => {
   return {
     type: UPDATE_DATE,
@@ -113,8 +121,8 @@ type ActionType =
   | ReturnType<typeof deleteTodoAction>
   | ReturnType<typeof updateTodoAction>
   | ReturnType<typeof toggleTodoAction>
-  | ReturnType<typeof sameChangeCardAction>
-  | ReturnType<typeof diffChangeCardAction>
+  | ReturnType<typeof changeSameCardAction>
+  | ReturnType<typeof changeDiffCardAction>
   | ReturnType<typeof updateDateAction>;
 
 export type StateType = {

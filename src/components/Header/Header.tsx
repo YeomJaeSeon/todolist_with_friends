@@ -1,5 +1,17 @@
 import React from 'react';
-import * as S from './Header.style';
+import {
+  HeaderContainer,
+  HeaderSection,
+  HeaderTitle,
+  HeaderLogo,
+  UserInfo,
+  CurrentUser,
+  UserIcon,
+  CharacterName,
+  Logout,
+  UserSection,
+  MoveBtn,
+} from './Header.style';
 
 type PropType = {
   logout: () => void;
@@ -22,29 +34,29 @@ const Header: React.FC<PropType> = ({
   };
 
   return (
-    <S.HeaderContainer>
-      <S.HeaderSection>
-        <S.HeaderLogo src="/logo.png" alt="logo" />
-        <S.HeaderTitle>TodoList with Friends</S.HeaderTitle>
-      </S.HeaderSection>
+    <HeaderContainer>
+      <HeaderSection>
+        <HeaderLogo src="/logo.png" alt="logo" />
+        <HeaderTitle>TodoList with Friends</HeaderTitle>
+      </HeaderSection>
       {!pending && (
-        <S.UserInfo>
-          <S.MoveBtn id="timer" onClick={goToOption}>
+        <UserInfo>
+          <MoveBtn id="timer" onClick={goToOption}>
             Timer
-          </S.MoveBtn>
-          <S.MoveBtn id="ranking" onClick={goToOption}>
+          </MoveBtn>
+          <MoveBtn id="ranking" onClick={goToOption}>
             Ranking
-          </S.MoveBtn>
-          <S.CurrentUser>
-            <S.CharacterName>{currentUser}</S.CharacterName>님 접속중
-          </S.CurrentUser>
-          <S.UserSection onClick={openModal}>
-            <S.UserIcon />
-          </S.UserSection>
-          <S.Logout onClick={logout}>Logout</S.Logout>
-        </S.UserInfo>
+          </MoveBtn>
+          <CurrentUser>
+            <CharacterName>{currentUser}</CharacterName>님 접속중
+          </CurrentUser>
+          <UserSection onClick={openModal}>
+            <UserIcon />
+          </UserSection>
+          <Logout onClick={logout}>Logout</Logout>
+        </UserInfo>
       )}
-    </S.HeaderContainer>
+    </HeaderContainer>
   );
 };
 

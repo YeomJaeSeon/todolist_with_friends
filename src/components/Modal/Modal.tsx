@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import * as S from './Modal.style';
+import {
+  ModalWrapper,
+  ModalOverlay,
+  ModalInner,
+  ModalTitle,
+  ModalUserSection,
+  ModalSelectorSection,
+  ModalUserBtn,
+  ChangeSection,
+  ChangeCharacterInput,
+  CheckBtn,
+} from './Modal.style';
 import CloseButton from './CloseButton';
 import { DatabaseType } from 'src/services/data_service';
 import { AuthServiceType } from 'src/services/auth_service';
@@ -87,39 +98,39 @@ const Modal: React.FC<PropType> = ({
 
   return (
     <>
-      <S.ModalOverlay visible={visible} />
-      <S.ModalWrapper
+      <ModalOverlay visible={visible} />
+      <ModalWrapper
         onClick={onMaskClick}
         className={className}
         tabIndex={-1}
         visible={visible}
       >
-        <S.ModalInner tabIndex={0} className="modal-inner">
+        <ModalInner tabIndex={0} className="modal-inner">
           {closable && <CloseButton onClick={close} />}
-          <S.ModalTitle>{children}</S.ModalTitle>
-          <S.ModalUserSection>
-            <S.ModalSelectorSection>
-              <S.ModalUserBtn btnType="change" onClick={changeCharacterClick}>
+          <ModalTitle>{children}</ModalTitle>
+          <ModalUserSection>
+            <ModalSelectorSection>
+              <ModalUserBtn btnType="change" onClick={changeCharacterClick}>
                 별명 수정
-              </S.ModalUserBtn>
-              <S.ChangeSection isChange={characterChange}>
-                <S.ChangeCharacterInput
+              </ModalUserBtn>
+              <ChangeSection isChange={characterChange}>
+                <ChangeCharacterInput
                   type="text"
                   placeholder="수정할 별명 입력해주세요"
                   value={newUserName}
                   onChange={changeName}
                 />
-                <S.CheckBtn onClick={completeChange}>✔</S.CheckBtn>
-              </S.ChangeSection>
-            </S.ModalSelectorSection>
-            <S.ModalSelectorSection>
-              <S.ModalUserBtn btnType="delete" onClick={deleteUser}>
+                <CheckBtn onClick={completeChange}>✔</CheckBtn>
+              </ChangeSection>
+            </ModalSelectorSection>
+            <ModalSelectorSection>
+              <ModalUserBtn btnType="delete" onClick={deleteUser}>
                 회원 탈퇴
-              </S.ModalUserBtn>
-            </S.ModalSelectorSection>
-          </S.ModalUserSection>
-        </S.ModalInner>
-      </S.ModalWrapper>
+              </ModalUserBtn>
+            </ModalSelectorSection>
+          </ModalUserSection>
+        </ModalInner>
+      </ModalWrapper>
     </>
   );
 };

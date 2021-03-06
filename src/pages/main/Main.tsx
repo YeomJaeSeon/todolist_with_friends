@@ -2,7 +2,12 @@ import React, { useEffect, useState, useRef } from 'react';
 import { AuthServiceType } from '../../services/auth_service';
 import { DatabaseType } from '../../services/data_service';
 import { useHistory, useLocation } from 'react-router-dom';
-import * as S from './Main.style';
+import {
+  Container,
+  MainContainer,
+  PendingBackground,
+  LoadingSpinner,
+} from './Main.style';
 import List from 'src/components/List/List';
 import StartPlan, { RefType } from 'src/components/StartPlan/StartPlan';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
@@ -10,8 +15,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootType } from '../../modules/index';
 import {
   initCardAction,
-  sameChangeCardAction,
-  diffChangeCardAction,
+  changeSameCardAction,
+  changeDiffCardAction,
 } from 'src/modules/todos';
 import Modal from 'src/components/Modal/Modal';
 import Header from 'src/components/Header/Header';
@@ -55,7 +60,7 @@ const Main = ({
 
   useEffect(() => {
     !cookies.login && authService.logout();
-    const unscribe = authService.onAuthStatus((user) => {
+    const unscribe = authService.getLoginStatus((user) => {
       if (!user) {
         history.push('/');
       }
@@ -114,7 +119,7 @@ const Main = ({
       const [reorderedItem] = newCards.splice(source.index, 1);
       newCards.splice(destination.index, 0, reorderedItem);
 
-      dispatch(sameChangeCardAction(newCards));
+      dispatch(changeSameCardAction(newCards));
     }
     // drop되는 위치가 다를때 좌 -> 우, 우 -> 좌
     else {
@@ -140,7 +145,7 @@ const Main = ({
                 return card;
               }
             });
-            dispatch(diffChangeCardAction(newCards));
+            dispatch(changeDiffCardAction(newCards));
             databaseService.changeToStart(
               uid,
               result.draggableId,
@@ -165,7 +170,7 @@ const Main = ({
               newCards.splice(destination.index - 1, 0, reorderedItem);
             else newCards.splice(destination.index, 0, reorderedItem);
 
-            dispatch(diffChangeCardAction(newCards));
+            dispatch(changeDiffCardAction(newCards));
             databaseService.changeToStart(
               uid,
               result.draggableId,
@@ -194,7 +199,7 @@ const Main = ({
   };
 
   return (
-    <S.Main>
+    <Container>
       <Header
         logout={logoutHandler}
         currentUser={currentUser}
@@ -203,11 +208,11 @@ const Main = ({
         pending={pending}
       />
       {pending ? (
-        <S.PendingBackground>
-          <S.LoadingSpinner></S.LoadingSpinner>
-        </S.PendingBackground>
+        <PendingBackground>
+          <LoadingSpinner></LoadingSpinner>
+        </PendingBackground>
       ) : (
-        <S.MainContainer>
+        <MainContainer>
           <DragDropContext onDragEnd={cardChangeHandler}>
             <List cards={cards} uid={uid} databaseService={databaseService} />
             <StartPlan
@@ -217,7 +222,7 @@ const Main = ({
               ref={moveRef}
             />
           </DragDropContext>
-        </S.MainContainer>
+        </MainContainer>
       )}
       {modalDisplay && (
         <Modal
@@ -234,7 +239,7 @@ const Main = ({
           {currentUser}님의 사용자 관리
         </Modal>
       )}
-    </S.Main>
+    </Container>
   );
 };
 
