@@ -6,6 +6,7 @@ type PropType = {
   currentUser: string;
   openModal: () => void;
   goToSection: (id: string) => void;
+  pending: boolean;
 };
 
 const Header: React.FC<PropType> = ({
@@ -13,6 +14,7 @@ const Header: React.FC<PropType> = ({
   logout,
   openModal,
   goToSection,
+  pending,
 }) => {
   const goToOption = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id;
@@ -25,7 +27,7 @@ const Header: React.FC<PropType> = ({
         <S.HeaderLogo src="/logo.png" alt="logo" />
         <S.HeaderTitle>TodoList with Friends</S.HeaderTitle>
       </S.HeaderSection>
-      {currentUser && (
+      {!pending && (
         <S.UserInfo>
           <S.MoveBtn id="timer" onClick={goToOption}>
             Timer

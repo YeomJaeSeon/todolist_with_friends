@@ -27,6 +27,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
   const [isCharacterProper, setIsCharacterProper] = useState(false);
   const [isEmailProper, setIsEmailProper] = useState(false);
   const [isPwdProper, setIsPwdProper] = useState(false);
+  const [isPwdLengthProper, setIsPwdLengthProper] = useState(false);
+  const [isRePwdLengthProper, setIsRePwdLengthProper] = useState(false);
+
   const [newUser, setNewUser] = useState({
     character: '',
     email: '',
@@ -34,6 +37,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     rePwd: '',
   });
   const [existedUsers, setExistedUsers] = useState<string[]>([]);
+  const [isSignUping, setIsSignUping] = useState(false);
 
   useEffect(() => {
     const getUsers = databaseService.getUserDatas((datas) => {
@@ -54,10 +58,15 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
   };
   const signUpHandler = () => {
     if (!isAllClear()) return;
+    if (isSignUping) return;
+    // 회원가입중이면 아무것도안함.
     if (!isCharacterProper) {
       alert('이미 존재하는 이름입니다.');
       return;
     }
+
+    setIsSignUping(true);
+    // 회원가입중
     authService
       .signUp(newUser.email, newUser.pwd)
       .then((user) => {
@@ -73,6 +82,10 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           alert('이미 존재하는 이메일입니다.');
         }
         console.log(err);
+      })
+      .finally(() => {
+        setIsSignUping(false);
+        // 회원가입상태 변경.
       });
   };
   const upDateUserInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,20 +99,32 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     } else if (id === 'email') {
       value.match(EmailReg) ? setIsEmailProper(true) : setIsEmailProper(false);
     } else if (id === 'pwd') {
+      if (value.length > 8) return;
+      if (value.length < 6) {
+        setIsPwdLengthProper(false);
+      } else {
+        setIsPwdLengthProper(true);
+      }
       if (newUser.rePwd)
-        newUser.rePwd === value && value.length >= 6 && value.length <= 8
-          ? setIsPwdProper(true)
-          : setIsPwdProper(false);
+        newUser.rePwd === value ? setIsPwdProper(true) : setIsPwdProper(false);
     } else if (id === 'rePwd') {
+      if (value.length > 8) return;
+      if (value.length < 6) setIsRePwdLengthProper(false);
+      else setIsRePwdLengthProper(true);
       if (newUser.pwd)
-        newUser.pwd === value && value.length >= 6 && value.length <= 8
-          ? setIsPwdProper(true)
-          : setIsPwdProper(false);
+        newUser.pwd === value ? setIsPwdProper(true) : setIsPwdProper(false);
     }
     setNewUser((user) => ({ ...user, [id]: value }));
   };
   const isAllClear = () => {
-    if (isEmailProper && isPwdProper && newUser.character) return true;
+    if (
+      isEmailProper &&
+      isPwdProper &&
+      newUser.character &&
+      isPwdLengthProper &&
+      isRePwdLengthProper
+    )
+      return true;
     else return false;
   };
 
@@ -116,6 +141,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           사용할 별명 입력하세요(6자리 이하)
         </SignUpLabel>
         <TooltipMsg show={false}>별명칸</TooltipMsg>
+        <TooltipMsg show={false}>별명칸</TooltipMsg>
         <SinUpInput
           type="text"
           id="character"
@@ -127,6 +153,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
       </SignUpBox>
       <SignUpBox>
         <SignUpLabel htmlFor="email">이메일 입력하세요</SignUpLabel>
+        <TooltipMsg show={false}>이메일칸</TooltipMsg>
         <TooltipMsg show={newUser.email !== '' && isEmailProper === false}>
           이메일 형식에 맞춰주세요
         </TooltipMsg>
@@ -147,8 +174,11 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
       </SignUpBox>
       <SignUpBox>
         <SignUpLabel htmlFor="pwd"> 비밀번호 입력하세요(6 ~ 8자리)</SignUpLabel>
+        <TooltipMsg show={newUser.pwd !== '' && isPwdLengthProper === false}>
+          최소 6자리 입력해주세요
+        </TooltipMsg>
         <TooltipMsg show={newUser.pwd !== '' && isPwdProper === false}>
-          비밀번호 재입력 해주세요
+          비밀번호가 다릅니다
         </TooltipMsg>
         <SinUpInput
           type="password"
@@ -158,7 +188,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           placeholder="비밀번호 입력해주세요"
         />
         {newUser.pwd ? (
-          isPwdProper ? (
+          isPwdProper && isPwdLengthProper ? (
             <CheckIcon>✔</CheckIcon>
           ) : (
             <CheckIcon>❕</CheckIcon>
@@ -169,6 +199,9 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         <SignUpLabel htmlFor="rePwd">
           비밀번호 다시 입력하세요(6 ~ 8자리)
         </SignUpLabel>
+        <TooltipMsg show={newUser.pwd !== '' && isRePwdLengthProper === false}>
+          최소 6자리 입력해주세요
+        </TooltipMsg>
         <TooltipMsg show={newUser.pwd !== '' && isPwdProper === false}>
           비밀번호가 다릅니다
         </TooltipMsg>
@@ -180,7 +213,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
           placeholder="비밀번호 다시 입력해주세요"
         />
         {newUser.rePwd ? (
-          isPwdProper ? (
+          isPwdProper && isRePwdLengthProper ? (
             <CheckIcon>✔</CheckIcon>
           ) : (
             <CheckIcon>❕</CheckIcon>

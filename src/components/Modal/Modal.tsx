@@ -79,7 +79,8 @@ const Modal: React.FC<PropType> = ({
     databaseService.getLoginUserData(uid)();
     databaseService.getUserDatas()();
 
-    databaseService.deleteUser(uid);
+    databaseService.deleteUserInfo(uid);
+    databaseService.deleteUserData(uid);
 
     alert('탈퇴 완료되었습니다.');
   };

@@ -76,7 +76,8 @@ export const ModalUserBtn = styled.button<{ btnType: string }>`
   margin: 0;
   padding: 5px 10px;
   background-color: transparent;
-  border: 0.5px gray solid;
+  border: 2px
+    ${(props) => (props.btnType === 'change' ? StrongMainColor : 'red')} solid;
   border-radius: 5px;
   cursor: pointer;
   font-size: 1.3rem;

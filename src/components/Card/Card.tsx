@@ -48,15 +48,18 @@ const Card: React.FC<PropType> = ({
   }, []);
 
   const deleteCard = () => {
-    databaseService.remove(uid, cardId);
+    databaseService.removeCard(uid, cardId);
     dispatch(deleteCardAction(cardId));
   };
   const addTodo = () => {
     if (inputRef.current?.value === '') return;
     const newId = Date.now();
+    console.log(uid, cardId, newId);
     if (inputRef && inputRef.current) {
       dispatch(addTodoAction(cardId, newId, inputRef.current.value));
-      databaseService.writeTodo(uid, cardId, newId, inputRef.current.value);
+      databaseService
+        .writeTodo(uid, cardId, newId, inputRef.current.value)
+        .then(console.log);
       inputRef.current.value = '';
     }
   };

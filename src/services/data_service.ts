@@ -1,24 +1,25 @@
 import { firebaseDatabase } from './firebase';
+import axios from 'axios';
 
 type CallbackType = (value: any) => void;
 
 export type DatabaseType = {
-  write(uid: string | null, id: string, today: string): void;
-  writeTodo(uid: string | null, id: string, todoId: number, todo: string): void;
-  remove(uid: string | null, id: string): void;
-  removeTodo(uid: string | null, id: string, todoId: number): void;
+  writeCard(uid: string | null, id: string, today: string): any;
+  writeTodo(uid: string | null, id: string, todoId: number, todo: string): any;
+  removeCard(uid: string | null, id: string): any;
+  removeTodo(uid: string | null, id: string, todoId: number): any;
   updateTodo(
     uid: string | null,
     id: string,
     todoId: number,
     updateTodo: string
-  ): void;
+  ): any;
   toggleTodo(
     uid: string | null,
     id: string,
     todoId: number,
     checked: boolean
-  ): void;
+  ): any;
   updateCalendar(uid: string | null, id: string, today: string): void;
   changeToStart(
     uid: string | null,
@@ -33,58 +34,81 @@ export type DatabaseType = {
   getUserDatas(show?: CallbackType): any;
   getLoginUserData(uid: string | null, get?: CallbackType): any;
   changeCharacterName(uid: string | null, newUserName: string): void;
-  deleteUser(uid: string | null): void;
+  deleteUserInfo(uid: string | null): void;
+  deleteUserData(uid: string | null): void;
 };
 
 export default class Database {
-  write(uid: string | null, id: string, today: string) {
-    firebaseDatabase.ref(`users/${uid}/${id}`).set({
+  // card생성
+  writeCard(uid: string | null, id: string, today: string) {
+    const CardData = {
       id: id,
       current: false,
       today: today,
       todos: '',
-    });
+    };
+    return axios.put(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}/${id}.json`,
+      CardData
+    );
   }
 
+  // todo 생성
   writeTodo(uid: string | null, id: string, todoId: number, todo: string) {
-    firebaseDatabase.ref(`users/${uid}/${id}/todos/${todoId}`).set({
+    const TodoData = {
       id: todoId,
       thing: todo,
       checked: false,
-    });
-  }
+    };
 
-  remove(uid: string | null, id: string) {
-    firebaseDatabase.ref(`users/${uid}/${id}`).remove();
+    return axios.put(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}/${id}/todos/${todoId}.json`,
+      TodoData
+    );
   }
-
+  // card삭제시 데이터도 삭제
+  removeCard(uid: string | null, id: string) {
+    return axios.delete(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}/${id}.json`
+    );
+  }
+  // todo삭제시 데이터도 삭제
   removeTodo(uid: string | null, id: string, todoId: number) {
-    firebaseDatabase.ref(`users/${uid}/${id}/todos/${todoId}`).remove();
+    return axios.delete(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}/${id}/todos/${todoId}.json`
+    );
   }
-
+  // 할일 업데이트 변경사항 저장
   updateTodo(
     uid: string | null,
     id: string,
     todoId: number,
     updateTodo: string
   ) {
-    firebaseDatabase.ref(`users/${uid}/${id}/todos/${todoId}`).update({
-      thing: updateTodo,
-    });
+    return axios.patch(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}/${id}/todos/${todoId}.json`,
+      {
+        thing: updateTodo,
+      }
+    );
   }
-
+  // todo의 토글상태 저장
   toggleTodo(uid: string | null, id: string, todoId: number, checked: boolean) {
-    firebaseDatabase.ref(`users/${uid}/${id}/todos/${todoId}`).update({
-      checked: checked,
-    });
+    return axios.patch(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}/${id}/todos/${todoId}.json`,
+      { checked: checked }
+    );
   }
-
+  // 입력한 캘린더 월일 저장
   updateCalendar(uid: string | null, id: string, today: string) {
-    firebaseDatabase.ref(`users/${uid}/${id}`).update({
-      today: today,
-    });
+    return axios.patch(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}/${id}.json`,
+      {
+        today: today,
+      }
+    );
   }
-
+  // 카드의 옮김 상태 데이터 저장
   changeToStart(
     uid: string | null,
     id: string,
@@ -99,26 +123,30 @@ export default class Database {
       current: current,
     });
   }
-
+  // 유저의 데이터 실시간 변경 반영
   dataSync(uid: string | null, update?: CallbackType) {
     const datasRef = firebaseDatabase.ref(`users/${uid}`);
     datasRef.once('value', (snapshot) => {
       update && update(snapshot.val());
     });
   }
-
+  // 유저 data 생성(회원가입시)
   createUser(uid: string | null, userName: string) {
-    firebaseDatabase.ref(`times/${uid}`).set({
-      userName: userName,
-      time: 0,
-    });
+    return axios.put(
+      `https://todolist-competition-default-rtdb.firebaseio.com/times/${uid}.json`,
+      {
+        userName: userName,
+        time: 0,
+      }
+    );
   }
-
+  // 시간 실시간으로 업데이트
   updateTime(uid: string | null, time: number) {
     firebaseDatabase.ref(`times/${uid}`).update({
       time: time,
     });
   }
+  // 타이머 sync맞추기위해 리스너 등록
   timeSync(uid: string | null, update?: CallbackType) {
     const datasRef = firebaseDatabase.ref(`times/${uid}`);
     datasRef.on('value', (snapshot) => {
@@ -127,6 +155,7 @@ export default class Database {
 
     return () => datasRef.off();
   }
+  // 유저들의 닉네임 데이터 실시간으로 받아옴 sync맞춤
   getUserDatas(show?: CallbackType) {
     const datasRef = firebaseDatabase.ref('times');
     datasRef.on('value', (snapshot) => {
@@ -135,6 +164,7 @@ export default class Database {
 
     return () => datasRef.off();
   }
+  // 로그인한 자신 ,본인 별명 수정
   getLoginUserData(uid: string | null, get?: CallbackType) {
     const datasRef = firebaseDatabase.ref(`times`);
     datasRef.on('value', (snapshop) => {
@@ -145,14 +175,23 @@ export default class Database {
 
     return () => datasRef;
   }
-
+  // 사용자 별명 변경
   changeCharacterName(uid: string | null, newUserName: string) {
-    firebaseDatabase.ref(`times/${uid}`).update({
-      userName: newUserName,
-    });
+    return axios.patch(
+      `https://todolist-competition-default-rtdb.firebaseio.com/times/${uid}.json`,
+      { userName: newUserName }
+    );
   }
-  deleteUser(uid: string | null) {
-    firebaseDatabase.ref(`times/${uid}`).remove();
-    firebaseDatabase.ref(`users/${uid}`).remove();
+  // 사용자 개인정보 삭제
+  deleteUserInfo(uid: string | null) {
+    return axios.delete(
+      `https://todolist-competition-default-rtdb.firebaseio.com/times/${uid}.json`
+    );
+  }
+  // 사용자 데이터삭제
+  deleteUserData(uid: string | null) {
+    return axios.delete(
+      `https://todolist-competition-default-rtdb.firebaseio.com/users/${uid}.json`
+    );
   }
 }

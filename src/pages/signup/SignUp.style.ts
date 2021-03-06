@@ -11,7 +11,7 @@ import {
 export const SignUpForm = styled.form`
   position: relative;
   width: 400px;
-  height: 500px;
+  height: 600px;
   background-color: ${MainBackgroundColor};
   border-radius: 10px;
   display: flex;
@@ -27,7 +27,7 @@ export const SignUpForm = styled.form`
 export const SignUpTitle = styled.h1`
   font-size: 2rem;
   margin: 0;
-  margin-top: 8px;
+  margin: 20px 0;
 `;
 
 export const SignUpLabel = styled.label`
@@ -63,7 +63,7 @@ export const CheckIcon = styled.span`
   height: 30px;
   line-height: 30px;
   right: -30px;
-  top: 50px;
+  top: 70px;
 `;
 
 type SignUpButtonType = {

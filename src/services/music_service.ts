@@ -1,5 +1,5 @@
-const Music = new Audio('/music/raining.mp3');
-Music.volume = 0.5;
+const Music = new Audio('/music/asmr.mp3');
+Music.volume = 0.3;
 Music.loop = true;
 
 export function musicPlay() {

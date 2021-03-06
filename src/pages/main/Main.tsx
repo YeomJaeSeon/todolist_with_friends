@@ -108,13 +108,16 @@ const Main = ({
     if (!destination) {
       return;
     }
+    // drop되는 위치 바뀌지않을때
     if (source.droppableId === destination.droppableId) {
       const newCards = [...cards];
       const [reorderedItem] = newCards.splice(source.index, 1);
       newCards.splice(destination.index, 0, reorderedItem);
 
       dispatch(sameChangeCardAction(newCards));
-    } else {
+    }
+    // drop되는 위치가 다를때 좌 -> 우, 우 -> 좌
+    else {
       const selectedCard = cards.find((card) => card.id === result.draggableId);
       const prevCard = cards.find((card) => card.current);
 
@@ -125,6 +128,7 @@ const Main = ({
         )
           alert('할일을 먼저 입력해주세요!');
         else {
+          // 우로 옮길때
           if (result.destination?.droppableId === 'card') {
             const newCards = cards.map((card) => {
               if (card.id === result.draggableId) {
@@ -143,7 +147,9 @@ const Main = ({
               true,
               prevCard && prevCard.id
             );
-          } else {
+          }
+          // 좌로 옮길때
+          else {
             const originIndex = cards.findIndex(
               (card) => card.id === result.draggableId
             );
@@ -194,6 +200,7 @@ const Main = ({
         currentUser={currentUser}
         openModal={openModal}
         goToSection={goToSection}
+        pending={pending}
       />
       {pending ? (
         <S.PendingBackground>

@@ -33,7 +33,7 @@ const ReadCard: React.FC<PropType> = ({
 
   const deleteCardHandelr = () => {
     dispatch(deleteCardAction(currentId));
-    databaseService.remove(uid, currentId);
+    databaseService.removeCard(uid, currentId);
   };
   return (
     <Draggable key={currentId} draggableId={currentId} index={0}>

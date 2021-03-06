@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as S from './Login.style';
 import { AuthServiceType } from '../../services/auth_service';
 import { useHistory } from 'react-router-dom';
@@ -20,11 +20,18 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
   const emailRef = useRef<HTMLInputElement>(null);
   const pwdRef = useRef<HTMLInputElement>(null);
   const history = useHistory();
+  const [isLogining, setIsLogining] = useState(false);
 
   const loginHandler = () => {
     const email = emailRef.current && emailRef.current.value;
     const pwd = pwdRef.current && pwdRef.current.value;
+
+    // 로그인중 상태이면 아무것도안함.
+    if (isLogining) return;
+
     if (email && pwd) {
+      // 로그인중..
+      setIsLogining(true);
       authService
         .login(email, pwd)
         .then(() => {
@@ -33,7 +40,6 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
           alert('로그인 성공');
         })
         .catch((err) => {
-          console.log(err.code);
           if (err.code === 'auth/user-not-found') {
             alert('존재하지 않는 아이디입니다.');
           } else if (err.code === 'auth/invalid-email') {
@@ -45,6 +51,10 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
           } else {
             alert(err.message);
           }
+        })
+        .finally(() => {
+          // 로그인끝나면 false로.
+          setIsLogining(false);
         });
     } else {
       alert('이메일이나 비밀번호를 입력해주세요');

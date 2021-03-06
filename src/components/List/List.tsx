@@ -16,6 +16,8 @@ import { ReactComponent as RightSVG } from '../../assets/svg/chevron-right-solid
 import { Droppable } from 'react-beautiful-dnd';
 import { DatabaseType } from 'src/services/data_service';
 
+import { debounce } from 'lodash';
+
 type PropType = {
   cards: StateType;
   uid: string | null;
@@ -38,9 +40,7 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
-  const addCard = () => {
-    // moveRef.current?.focusBtn();
-    // window.scroll(0, 0);
+  const addCard = debounce(() => {
     const newId = Date.now();
 
     const date = new Date();
@@ -51,8 +51,10 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
     const today = `${year}-${month}-${day}`;
 
     dispatch(addCardAction(String(newId), today));
-    databaseService.write(uid, String(newId), today);
-  };
+    // databaseService.write(uid, String(newId), today);
+    databaseService.writeCard(uid, String(newId), today).then(console.log);
+  }, 50);
+
   const onFoldHandler = () => {
     setFold((fold) => !fold);
   };
