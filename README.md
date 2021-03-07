@@ -3,7 +3,6 @@
 - DND이 가능해 계획한 일정들 중 오늘할 일정을 DND를 할수 있습니다.
 - 로그인, 회원가입, 회원탈퇴, 별명 수정등 사용자 관리를 할수 있습니다.
 - 공부를 시작하면 타이머를 킬수 있고 타이머 시간에 따라서 사용자들의 등수를 보여줄수 있습니다.
-- 반응형을 통해 모바일 지원이 가능합니다.
 
 ## URL
 https://jaeseonsite.netlify.app/
@@ -24,28 +23,30 @@ https://jaeseonsite.netlify.app/
 
 ### 로그인 화면
 ---
-![스크린샷(1037)](https://user-images.githubusercontent.com/67785334/109589527-cc95ce00-7b4d-11eb-891f-9e3a95e24d34.png)
-
-#### 모바일 버전
----
-![스크린샷(1038)](https://user-images.githubusercontent.com/67785334/109589855-59d92280-7b4e-11eb-917c-ea138289a778.png)
+![스크린샷(1068)](https://user-images.githubusercontent.com/67785334/110232665-68ff0c80-7f62-11eb-8667-48a167ccd695.png)
 
 ### 회원가입 화면
 ---
-![스크린샷(1039)](https://user-images.githubusercontent.com/67785334/109589948-7bd2a500-7b4e-11eb-8d58-b31f8edd39d5.png)
+![스크린샷(1069)](https://user-images.githubusercontent.com/67785334/110232669-6dc3c080-7f62-11eb-9f4c-e6ae591e896b.png)
 
-### 메인 화면
+### 메인 화면(타이머)
 ---
-![스크린샷(1040)](https://user-images.githubusercontent.com/67785334/109589993-8f7e0b80-7b4e-11eb-9141-5fb07421af4c.png)
+![스크린샷(1070)](https://user-images.githubusercontent.com/67785334/110232674-70beb100-7f62-11eb-9261-b1b6604370c2.png)
 
-#### 모바일 버전
+### 메인 화면(랭킹)
 ---
-![스크린샷(1041)](https://user-images.githubusercontent.com/67785334/109590082-b3d9e800-7b4e-11eb-8354-d0304cb9a481.png)
+![스크린샷(1071)](https://user-images.githubusercontent.com/67785334/110232679-7caa7300-7f62-11eb-9c92-3749de41fe59.png)
+
+### 메인 화면(회원 정보 수정)
+---
+![스크린샷(1072)](https://user-images.githubusercontent.com/67785334/110232684-846a1780-7f62-11eb-8a24-a5a799ede58c.png)
+
 
 ## 기능
 1. 로그인 기능
 - 로그인을 할수 있고 로그인을 하면 바로 메인 페이지로 이동합니다.
 - 로그아웃이나 회원 탈퇴를 하지않은 상태에서 창을닫고 다시 페이지를 열면 바로 메인페이지로 이동합니다.
+- 쿠키를 이용해 로그인 유지 기능을 강화하였습니다.
 
 2. 로그아웃 기능
 - 로그아웃을 할수 있고 로그아웃을 하면 바로 로그인 페이지로 이동하게 됩니다.
