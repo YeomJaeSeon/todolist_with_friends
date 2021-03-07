@@ -5,6 +5,7 @@ import {
   StrongMainColor,
   NotiColor,
   BoxShadow,
+  mobileQuery,
 } from '../../utils/css-utils';
 
 export const LoginContainer = styled.div`
@@ -15,6 +16,9 @@ export const LoginContainer = styled.div`
   background-color: ${MainBackgroundColor};
   border-radius: 10px;
   box-shadow: ${BoxShadow};
+  ${mobileQuery} {
+    height: 100vh;
+  }
 `;
 export const ContentContainer = styled.div`
   display: flex;

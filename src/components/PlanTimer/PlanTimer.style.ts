@@ -27,8 +27,8 @@ export const PlanTimerContainer = styled.div`
   border-radius: 15px;
   box-shadow: ${BoxShadow};
   ${mobileQuery} {
-    width: 340px;
-    height: 180px;
+    width: 400px;
+    height: 200px;
   }
 `;
 

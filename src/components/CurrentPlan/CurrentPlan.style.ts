@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import { BoxShadow } from '../../utils/css-utils';
+import { BoxShadow, mobileQuery } from '../../utils/css-utils';
 
 export const CurrentPlanContainer = styled.div<{ isDragging: boolean }>`
   opacity: ${(props) => (props.isDragging ? '0.5' : '1')};
@@ -10,6 +10,9 @@ export const CurrentPlanContainer = styled.div<{ isDragging: boolean }>`
   background-color: white;
   border-radius: 10px;
   box-shadow: ${BoxShadow};
+  ${mobileQuery} {
+    margin-top: 30px;
+  }
 `;
 
 const spakle = keyframes`

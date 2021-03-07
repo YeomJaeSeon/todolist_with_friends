@@ -22,3 +22,8 @@ code {
   background-color: #bdbdbd;
   overflow-y: auto;
 }
+@media screen and (max-width: 800px) {
+  #root {
+    height: 100%;
+  }
+}
