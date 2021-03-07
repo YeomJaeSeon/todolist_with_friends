@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Card from '../Card/Card';
 import {
   Container,
@@ -34,12 +34,15 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
     setFold(true);
   };
 
+  // 반응형을 위해서 resize 리스너 등록.
   useEffect(() => {
     window.addEventListener('resize', updateWidth);
 
+    // 리스너 해제
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
+  // 카드 추가할때 debounce적용, 어뷰징막으려고
   const addCard = debounce(() => {
     const newId = Date.now();
 
@@ -51,8 +54,7 @@ const List: React.FC<PropType> = ({ cards, uid, databaseService }) => {
     const today = `${year}-${month}-${day}`;
 
     dispatch(addCardAction(String(newId), today));
-    // databaseService.write(uid, String(newId), today);
-    databaseService.writeCard(uid, String(newId), today).then(console.log);
+    databaseService.writeCard(uid, String(newId), today);
   }, 50);
 
   const onFoldHandler = () => {

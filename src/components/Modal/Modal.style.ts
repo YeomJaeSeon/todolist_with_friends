@@ -1,9 +1,4 @@
-import {
-  mobileQuery,
-  NotiColor,
-  StrongMainColor,
-  WhiteColor,
-} from 'src/utils/css-utils';
+import { mobileQuery, StrongMainColor, WhiteColor } from 'src/utils/css-utils';
 import styled from 'styled-components';
 
 export const ModalWrapper = styled.div<{ visible: boolean }>`

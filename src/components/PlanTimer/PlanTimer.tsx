@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import * as S from './PlanTimer.style';
+import {
+  RunningIcon,
+  BreakIcon,
+  PlanTimerContainer,
+  TimerTitleContainer,
+  StatusComment,
+  MusicBtn,
+  MusicIcon,
+  TimerContainer,
+  TimeSection,
+  Btns,
+  Icon,
+} from './PlanTimer.style';
 import { ReactComponent as PlaySVG } from '../../assets/svg/play-solid.svg';
 import { ReactComponent as StopSVG } from '../../assets/svg/undo-alt-solid.svg';
 import { ReactComponent as PauseSVG } from '../../assets/svg/pause-solid.svg';
@@ -10,6 +22,7 @@ import * as Music from 'src/services/music_service';
 
 let TimerVal: NodeJS.Timeout;
 
+// display할 시간으로 변경하는 함수(sec -> hours)
 const hours = (time: number | undefined): string | number | undefined => {
   if (time)
     return time && Math.floor(time / 3600) > 9
@@ -19,6 +32,7 @@ const hours = (time: number | undefined): string | number | undefined => {
     return '00';
   }
 };
+// display할 분으로 변경하는 함수(sec -> minutes)
 const minutes = (time: number | undefined): string | number | undefined => {
   if (time)
     return time && Math.floor(time / 60) % 60 > 9
@@ -28,6 +42,7 @@ const minutes = (time: number | undefined): string | number | undefined => {
     return '00';
   }
 };
+// display할 초로 변경하는 함수(sec -> sec)
 const seconds = (time: number | undefined): string | number | undefined => {
   if (time)
     return time && time % 60 > 9 ? time && time % 60 : time && `0${time % 60}`;
@@ -56,6 +71,7 @@ const PlanTimer: React.FC<PropType> = ({
 
   const time = userInfo.find((user) => user.uid === uid)?.time;
 
+  // 컴포넌트 언마운트시 시간과 음악 멈춤
   useEffect(() => {
     const logout = () => {
       stop();
@@ -64,17 +80,19 @@ const PlanTimer: React.FC<PropType> = ({
     return () => logout();
   }, []);
 
+  // 모달 display되도 시간은 멈춤 - 사용자 변경하는부분은 시간공부타이머에 추가하면안되므로
   useEffect(() => {
     stop();
   }, [modalDisplay]);
 
+  // timer start
   const start = () => {
     setState(true);
     TimerVal = setInterval(() => {
       increaseTime();
     }, 1000);
   };
-
+  // timer start or stop - icon변경등을 위함.
   const startOrStop = () => {
     if (state === false) {
       start();
@@ -83,11 +101,13 @@ const PlanTimer: React.FC<PropType> = ({
     }
   };
 
+  // timer stop
   const stop = () => {
     setState(false);
     clearInterval(TimerVal);
   };
 
+  // timer reset
   const reset = () => {
     if (time === 0) return;
     const userResponse = window.confirm(
@@ -98,6 +118,7 @@ const PlanTimer: React.FC<PropType> = ({
     resetTime();
   };
 
+  // music play or stop
   const musicPlayOrStop = () => {
     setMusicState((music) => {
       if (music) {
@@ -110,36 +131,36 @@ const PlanTimer: React.FC<PropType> = ({
   };
 
   return (
-    <S.PlanTimerContainer>
-      <S.TimerContainer>
-        <S.MusicBtn onClick={musicPlayOrStop}>
+    <PlanTimerContainer>
+      <TimerContainer>
+        <MusicBtn onClick={musicPlayOrStop}>
           {!musicState ? (
-            <S.MusicIcon as={MusicSVG} />
+            <MusicIcon as={MusicSVG} />
           ) : (
-            <S.MusicIcon as={MusicStopSVG} />
+            <MusicIcon as={MusicStopSVG} />
           )}
-        </S.MusicBtn>
-        <S.TimeSection>
+        </MusicBtn>
+        <TimeSection>
           {hours(time)} : {minutes(time)} : {seconds(time)}
-        </S.TimeSection>
-        <S.Btns onClick={reset} btnType="reset">
-          <S.Icon as={StopSVG} />
-        </S.Btns>
-      </S.TimerContainer>
-      <S.TimerTitleContainer>
-        <S.StatusComment type={state === true ? 'show' : undefined}>
-          <S.RunningIcon />
+        </TimeSection>
+        <Btns onClick={reset} btnType="reset">
+          <Icon as={StopSVG} />
+        </Btns>
+      </TimerContainer>
+      <TimerTitleContainer>
+        <StatusComment type={state === true ? 'show' : undefined}>
+          <RunningIcon />
           Running
-        </S.StatusComment>
-        <S.Btns onClick={startOrStop} btnType="start">
-          {!state ? <S.Icon as={PlaySVG} /> : <S.Icon as={PauseSVG} />}
-        </S.Btns>
-        <S.StatusComment type={state === false ? 'show' : undefined}>
-          <S.BreakIcon />
+        </StatusComment>
+        <Btns onClick={startOrStop} btnType="start">
+          {!state ? <Icon as={PlaySVG} /> : <Icon as={PauseSVG} />}
+        </Btns>
+        <StatusComment type={state === false ? 'show' : undefined}>
+          <BreakIcon />
           break
-        </S.StatusComment>
-      </S.TimerTitleContainer>
-    </S.PlanTimerContainer>
+        </StatusComment>
+      </TimerTitleContainer>
+    </PlanTimerContainer>
   );
 };
 

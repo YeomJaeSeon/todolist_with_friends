@@ -1,6 +1,18 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
-import * as S from './ReadCard.style';
+import {
+  ReadCardContainer,
+  ReadCardHeader,
+  ReadCardTitle,
+  ReadCardListContainer,
+  TodoContent,
+  ToggleBtn,
+  ReadCardList,
+  DragElement,
+  DragIcon,
+  CardDeleteBtn,
+  TrashIcon,
+} from './ReadCard.style';
 import { useDispatch } from 'react-redux';
 import { toggleTodoAction, deleteCardAction } from '../../modules/todos';
 import { DatabaseType } from 'src/services/data_service';
@@ -26,11 +38,13 @@ const ReadCard: React.FC<PropType> = ({
 }) => {
   const dispatch = useDispatch();
 
+  // todo toggle되면 상태와 데이터베이스 변경
   const onToggleHandler = (id: number, checked: boolean) => () => {
     dispatch(toggleTodoAction(currentId, id, !checked));
     databaseService.toggleTodo(uid, currentId, id, !checked);
   };
 
+  // current Card부분도 삭제기능이 존재, 상태와 데이터베이스 변경
   const deleteCardHandelr = () => {
     dispatch(deleteCardAction(currentId));
     databaseService.removeCard(uid, currentId);
@@ -38,31 +52,31 @@ const ReadCard: React.FC<PropType> = ({
   return (
     <Draggable key={currentId} draggableId={currentId} index={0}>
       {(provided, snapshot) => (
-        <S.ReadCardContainer
+        <ReadCardContainer
           ref={provided.innerRef}
           {...provided.draggableProps}
           isDragging={snapshot.isDragging}
         >
-          <S.ReadCardHeader>
-            <S.ReadCardTitle>{today} 할일 목록</S.ReadCardTitle>
-            <S.CardDeleteBtn onClick={deleteCardHandelr}>
-              <S.TrashIcon />
-            </S.CardDeleteBtn>
-            <S.DragElement {...provided.dragHandleProps}>
-              <S.DragIcon />
-            </S.DragElement>
-          </S.ReadCardHeader>
-          <S.ReadCardListContainer>
+          <ReadCardHeader>
+            <ReadCardTitle>{today} 할일 목록</ReadCardTitle>
+            <CardDeleteBtn onClick={deleteCardHandelr}>
+              <TrashIcon />
+            </CardDeleteBtn>
+            <DragElement {...provided.dragHandleProps}>
+              <DragIcon />
+            </DragElement>
+          </ReadCardHeader>
+          <ReadCardListContainer>
             {todos.map((todo) => (
-              <S.ReadCardList done={todo.checked} key={todo.id}>
-                <S.TodoContent>{todo.thing}</S.TodoContent>
-                <S.ToggleBtn onClick={onToggleHandler(todo.id, todo.checked)}>
+              <ReadCardList done={todo.checked} key={todo.id}>
+                <TodoContent>{todo.thing}</TodoContent>
+                <ToggleBtn onClick={onToggleHandler(todo.id, todo.checked)}>
                   {todo.checked ? 'uncheck' : 'check'}
-                </S.ToggleBtn>
-              </S.ReadCardList>
+                </ToggleBtn>
+              </ReadCardList>
             ))}
-          </S.ReadCardListContainer>
-        </S.ReadCardContainer>
+          </ReadCardListContainer>
+        </ReadCardContainer>
       )}
     </Draggable>
   );

@@ -1,15 +1,11 @@
-import { mobileQuery } from './../../utils/css-utils';
 import styled, { keyframes } from 'styled-components';
 import {
   MainBackgroundColor,
-  BlackColor,
   WhiteColor,
   StrongMainColor,
   NotiColor,
   BoxShadow,
 } from '../../utils/css-utils';
-import { ReactComponent as GithubSVG } from '../../assets/svg/github-brands.svg';
-import { ReactComponent as MailSVG } from '../../assets/svg/envelope-solid.svg';
 
 export const LoginContainer = styled.div`
   display: flex;
@@ -25,9 +21,6 @@ export const ContentContainer = styled.div`
   flex-direction: column;
   align-items: center;
   flex-basis: 80%;
-  ${mobileQuery} {
-    flex-direction: column;
-  }
 `;
 
 export const Logo = styled.img`
@@ -82,9 +75,6 @@ export const InputText = styled.input`
   border-radius: 5px;
   outline: none;
   border: 0.5px gray solid;
-  ${mobileQuery} {
-    max-width: 60%;
-  }
 `;
 
 export const SignButton = styled.button`
@@ -104,17 +94,11 @@ export const SignButton = styled.button`
     background-color: ${StrongMainColor};
     color: ${WhiteColor};
   }
-  ${mobileQuery} {
-    max-width: 60%;
-  }
 `;
 
 export const SignUpContainer = styled.div`
   display: flex;
   align-items: center;
-  ${mobileQuery} {
-    margin-bottom: 15px;
-  }
 `;
 
 export const SignUpText = styled.span`

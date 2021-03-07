@@ -97,7 +97,7 @@ const Login: React.FC<PropType> = ({ authService, cookies, setCookie }) => {
     return () => {
       unscribe();
     };
-  }, [authService, history]);
+  }, [authService, history, cookies.login]);
 
   return (
     <LoginContainer>

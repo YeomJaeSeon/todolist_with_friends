@@ -43,6 +43,7 @@ const Modal: React.FC<PropType> = ({
   const [characterChange, setCharacterChange] = useState(false);
   const [newUserName, setNewUserName] = useState('');
 
+  // modal밖부분 클릭->닫힘
   const onMaskClick = (
     e: React.MouseEvent<HTMLDivElement, MouseEvent> | null
   ) => {
@@ -51,21 +52,25 @@ const Modal: React.FC<PropType> = ({
     }
   };
 
+  // 모달 닫히는 함수.
   const close = () => {
     if (onClose) {
       onClose();
     }
   };
 
+  // 별명 수정클릭
   const changeCharacterClick = () => {
     setCharacterChange((characterChange) => !characterChange);
   };
 
+  // 별명 수정
   const changeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (value.length > 6) return;
     setNewUserName(e.target.value);
   };
+  // 별명수정 적절성 판단함수
   const completeChange = () => {
     if (!newUserName) {
       alert('수정할 이름 입력해주세요.');
@@ -75,16 +80,20 @@ const Modal: React.FC<PropType> = ({
     onClose();
   };
 
+  // 유저 삭제, 데이터베이스, 상태 모두적용(회원탈퇴)
   const deleteUser = () => {
     const userResponse = window.confirm(
       '다시는 복구할수 없습니다. 정말 삭제하시겠습니까?'
     );
     if (!userResponse) return;
     onClose();
+    // 삭제하는동안 여러 접근을 막기위함
     notAuthorize();
     authService.delete();
+    // 쿠키삭제
     removeCookie('login');
 
+    // sync맞추던 데이터베이스와의 연결 끊음
     databaseService.timeSync(uid)();
 
     databaseService.getLoginUserData(uid)();

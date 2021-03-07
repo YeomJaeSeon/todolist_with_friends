@@ -40,6 +40,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
   const [isSignUping, setIsSignUping] = useState(false);
 
   useEffect(() => {
+    // 이미 가입한 유저들의 별명들을 가져옴. 비교를위해 중복되면안되닌까
     const getUsers = databaseService.getUserDatas((datas) => {
       if (!datas) setExistedUsers([]);
       else {
@@ -49,6 +50,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         setExistedUsers(existedUsersList);
       }
     });
+    // 클린업
     return () => getUsers();
   }, [databaseService]);
 
@@ -81,13 +83,13 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
         if (err.code === 'auth/email-already-in-use') {
           alert('이미 존재하는 이메일입니다.');
         }
-        console.log(err);
       })
       .finally(() => {
         setIsSignUping(false);
         // 회원가입상태 변경.
       });
   };
+  // input onChange할때 적절성 판단
   const upDateUserInfo = (e: React.ChangeEvent<HTMLInputElement>) => {
     const id = e.currentTarget.id;
     const value = e.currentTarget.value;
@@ -116,6 +118,7 @@ const SignUp: React.FC<PropType> = ({ authService, databaseService }) => {
     }
     setNewUser((user) => ({ ...user, [id]: value }));
   };
+  // 모두 적절한지 아닌지 판단
   const isAllClear = () => {
     if (
       isEmailProper &&

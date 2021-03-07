@@ -20,4 +20,5 @@ code {
   justify-content: center;
   align-items: center;
   background-color: #bdbdbd;
+  overflow-y: auto;
 }

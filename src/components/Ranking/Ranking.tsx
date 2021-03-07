@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { UserStateType } from '../StartPlan/StartPlan';
-import * as S from './Ranking.style';
+import {
+  RankingContainer,
+  RankingTitle,
+  UserList,
+  CrwonIcon,
+  NoRankerUser,
+  User,
+  RankNum,
+  RankName,
+  RankTIme,
+} from './Ranking.style';
 
 type PropType = {
   userInfo: UserStateType;
@@ -17,30 +27,31 @@ const minute = (time: number): number => Math.floor(time / 60) % 60;
 const Ranking: React.FC<PropType> = ({ userInfo }) => {
   const [rankers, setRankers] = useState<StateType>([]);
 
+  // user정보 수정되면 랭킹 부분도 변경되야하므로.
   useEffect(() => {
     setRankers(userInfo);
   }, [userInfo]);
 
   return (
-    <S.RankingContainer>
-      <S.RankingTitle>Ranking</S.RankingTitle>
-      <S.UserList>
+    <RankingContainer>
+      <RankingTitle>Ranking</RankingTitle>
+      <UserList>
         {rankers.map((user, idx) => {
           return (
-            <S.User rank={idx} key={user.userName}>
-              <S.RankNum>{idx + 1}등</S.RankNum>
-              <S.RankName>
-                {idx <= 2 ? <S.CrwonIcon /> : <S.NoRankerUser></S.NoRankerUser>}
+            <User rank={idx} key={user.userName}>
+              <RankNum>{idx + 1}등</RankNum>
+              <RankName>
+                {idx <= 2 ? <CrwonIcon /> : <NoRankerUser></NoRankerUser>}
                 {user.userName}
-              </S.RankName>
-              <S.RankTIme>{`${hour(user.time)}시간 ${minute(
+              </RankName>
+              <RankTIme>{`${hour(user.time)}시간 ${minute(
                 user.time
-              )}분`}</S.RankTIme>
-            </S.User>
+              )}분`}</RankTIme>
+            </User>
           );
         })}
-      </S.UserList>
-    </S.RankingContainer>
+      </UserList>
+    </RankingContainer>
   );
 };
 

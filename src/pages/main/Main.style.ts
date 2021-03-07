@@ -1,10 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import {
-  MainBackgroundColor,
-  NotiColor,
-  mobileQuery,
-  StrongMainColor,
-} from '../../utils/css-utils';
+import { NotiColor, mobileQuery, StrongMainColor } from '../../utils/css-utils';
 
 export const Container = styled.div`
   display: flex;
@@ -22,7 +17,6 @@ export const MainContainer = styled.div`
   ${mobileQuery} {
     flex-direction: column;
     align-items: center;
-    background: none;
   }
 `;
 

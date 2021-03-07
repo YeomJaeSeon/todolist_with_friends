@@ -1,9 +1,4 @@
-import {
-  NotiColor,
-  StrongMainColor,
-  WhiteColor,
-  MainBackgroundColor,
-} from 'src/utils/css-utils';
+import { StrongMainColor, MainBackgroundColor } from 'src/utils/css-utils';
 import styled from 'styled-components';
 import { ReactComponent as UserSVG } from '../../assets/svg/user-cog-solid.svg';
 

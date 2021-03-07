@@ -89,7 +89,7 @@ const Main = ({
     return () => {
       unscribe();
     };
-  }, [databaseService, authService, dispatch, uid, history]);
+  }, [databaseService, authService, dispatch, uid, history, cookies.login]);
 
   useEffect(() => {
     const datasRef = databaseService.getLoginUserData(uid, (character) => {
@@ -189,11 +189,11 @@ const Main = ({
     setModalDisplay(false);
   };
 
+  // option클릭시 해당 섹션으로 스크롤링
   const goToSection = (id: string) => {
     if (id === 'timer') {
       moveRef.current?.timer();
     } else {
-      console.log('clicked');
       moveRef.current?.ranking();
     }
   };

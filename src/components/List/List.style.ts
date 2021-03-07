@@ -17,7 +17,9 @@ export const Container = styled.div<{ fold: boolean }>`
     border-radius: 6px;
   }
   ${mobileQuery} {
-    overflow-x: auto;
+    width: 100%;
+    overflow-y: hidden;
+    /* overflow-x: auto;
     &::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -28,7 +30,7 @@ export const Container = styled.div<{ fold: boolean }>`
       background-color: rgba(0, 0, 0, 0.3);
       border-radius: 6px;
     }
-    padding-left: 30px;
+    padding-left: 30px; */
   }
 `;
 export const EditorTitle = styled.h1<{ fold: boolean }>`
@@ -39,7 +41,7 @@ export const EditorTitle = styled.h1<{ fold: boolean }>`
   display: ${(props) => (props.fold ? 'inline' : 'none')};
   text-align: center;
   ${mobileQuery} {
-    margin-top: 60px;
+    display: none;
   }
 `;
 
@@ -63,6 +65,10 @@ export const CardAddBtn = styled.button`
   &:hover {
     transform: scale(1.1);
   }
+  ${mobileQuery} {
+    margin: 0;
+    padding: 30px;
+  }
 `;
 
 export const EditorContainer = styled.div<{ fold: boolean }>`
@@ -80,12 +86,10 @@ export const EditorContainer = styled.div<{ fold: boolean }>`
     display: ${(props) => (props.fold ? 'flex' : 'none')};
   }
   ${mobileQuery} {
-    flex-direction: row;
-  }
-  ${mobileQuery} {
+    height: 500px;
     width: 100vw;
-    height: ${(props) => (props.fold ? '332px' : '150px')};
-    transition: height 100ms ease;
+    flex-direction: row;
+    align-items: center;
   }
 `;
 export const ArrowIcon = styled.div`
@@ -96,4 +100,7 @@ export const ArrowIcon = styled.div`
   height: 40px;
   cursor: pointer;
   padding: 0 10px;
+  ${mobileQuery} {
+    display: none;
+  }
 `;

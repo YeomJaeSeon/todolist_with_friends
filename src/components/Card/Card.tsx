@@ -39,6 +39,7 @@ const Card: React.FC<PropType> = ({
   const buttonRef = useRef<HTMLButtonElement>(null);
   const dispatch = useDispatch();
 
+  // 카드 새로만들어질떄마다 해당 카드로 scroll
   useEffect(() => {
     buttonRef.current?.scrollIntoView({
       behavior: 'smooth',
@@ -47,19 +48,18 @@ const Card: React.FC<PropType> = ({
     });
   }, []);
 
+  // 카드삭제 상태와 데이터베이스모두적용
   const deleteCard = () => {
     databaseService.removeCard(uid, cardId);
     dispatch(deleteCardAction(cardId));
   };
+  // 할일 추가 , 상태와 데이터베이스 모두 적용
   const addTodo = () => {
     if (inputRef.current?.value === '') return;
     const newId = Date.now();
-    console.log(uid, cardId, newId);
     if (inputRef && inputRef.current) {
       dispatch(addTodoAction(cardId, newId, inputRef.current.value));
-      databaseService
-        .writeTodo(uid, cardId, newId, inputRef.current.value)
-        .then(console.log);
+      databaseService.writeTodo(uid, cardId, newId, inputRef.current.value);
       inputRef.current.value = '';
     }
   };

@@ -19,16 +19,19 @@ const Todo: React.FC<PropType> = ({ cardId, todo, uid, databaseService }) => {
   const [canEdit, setCanEdit] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // edit클릭하면 edit할수있는 상태로 변경
   const clickEdit = () => {
     setCanEdit((edit) => !edit);
     inputRef.current && inputRef.current.focus();
   };
 
+  // todo삭제시 상태와 db변경
   const deleteTodo = () => {
     dispatch(deleteTodoAction(cardId, todo.id));
     databaseService.removeTodo(uid, cardId, todo.id);
   };
 
+  // todo 업데이트 되면 업데이트된 todo를 상태와 데이터베이스에변경
   const updateTodo = () => {
     if (inputRef && inputRef.current) {
       dispatch(updateTodoAction(cardId, todo.id, inputRef.current.value));

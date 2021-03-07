@@ -28,6 +28,7 @@ const Header: React.FC<PropType> = ({
   goToSection,
   pending,
 }) => {
+  // scroll을 위해 역방향 흐름 추가
   const goToOption = (e: React.MouseEvent<HTMLButtonElement>) => {
     const id = e.currentTarget.id;
     goToSection(id);

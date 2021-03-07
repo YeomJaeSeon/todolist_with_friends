@@ -42,6 +42,8 @@ const StartPlan = forwardRef<RefType, PropType>(
     const timerRef = useRef<HTMLDivElement>(null);
     const rankingRef = useRef<HTMLDivElement>(null);
 
+    // timerRef와 rankingRef 커스텀하게 부모컴포넌트로 함수 전달.
+    // 이 함수는 해당 ref로 스크롤이 가능하게하는 함수임
     useImperativeHandle(
       ref,
       () => ({
@@ -61,6 +63,8 @@ const StartPlan = forwardRef<RefType, PropType>(
       }),
       []
     );
+    // 유저들정보를 받아오는데 ranking에 따라 소트되서 받아옴
+    // data 동기화로 실시간반영됨.
     useEffect(() => {
       const datasSync = databaseService.getUserDatas((datas) => {
         if (datas) {
@@ -84,11 +88,13 @@ const StartPlan = forwardRef<RefType, PropType>(
       return () => datasSync();
     }, [databaseService]);
 
+    // top arrow button 클릭시 top으로 스크롤되게 하기위해서(top arrow btn의 display를 위해)
     const handleScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
       const scrollTop = e.currentTarget.scrollTop;
       setTopArrow(scrollTop);
     };
 
+    // timer 업데이트시 데이터베이스 반영
     const increaseTime = () => {
       setUsersInfo((infos) => {
         return infos.map((info) => {
@@ -101,6 +107,7 @@ const StartPlan = forwardRef<RefType, PropType>(
       });
     };
 
+    // reset타임시 데이터베이스 반영
     const resetTime = () => {
       setUsersInfo((infos) => {
         return infos.map((info) => {
@@ -112,6 +119,8 @@ const StartPlan = forwardRef<RefType, PropType>(
       });
       databaseService.updateTime(uid, 0);
     };
+
+    // top으로 스크롤
     const goToTop = () => {
       timerRef.current?.scrollIntoView({ behavior: 'smooth' });
     };

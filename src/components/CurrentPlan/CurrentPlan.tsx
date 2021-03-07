@@ -12,12 +12,14 @@ type PropType = {
   databaseService: DatabaseType;
 };
 
+// current로 옮긴 카드가 있는지 판단
 const CurrentPlan: React.FC<PropType> = ({ uid, databaseService }) => {
   const currentCard = useSelector((state: RootType) => state.todoReducer).find(
     (card) => card.current === true
   );
 
   return (
+    // 드랍 가능한부분이므로 droppable적용
     <Droppable droppableId="card">
       {(provided, snapshot) => (
         <CurrentPlanContainer

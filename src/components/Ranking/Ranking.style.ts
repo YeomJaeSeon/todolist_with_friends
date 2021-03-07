@@ -1,4 +1,4 @@
-import { MainBackgroundColor, mobileQuery } from 'src/utils/css-utils';
+import { mobileQuery } from 'src/utils/css-utils';
 import styled from 'styled-components';
 import { ReactComponent as CrownSVG } from '../../assets/svg/crown-solid.svg';
 

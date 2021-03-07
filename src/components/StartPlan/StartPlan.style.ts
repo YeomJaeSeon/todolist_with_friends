@@ -21,12 +21,12 @@ export const StartPlanContainer = styled.div`
     border-radius: 6px;
   }
   ${mobileQuery} {
+    margin: 0;
     flex: 1 1 70%;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    background: url('/background.jpg') center/cover no-repeat;
-    opacity: 0.9;
+    height: 100%;
   }
 `;
 
@@ -75,6 +75,10 @@ export const AllSection = styled.div`
   align-items: center;
   padding-bottom: 100px;
   background-color: #bdbdbd;
+  ${mobileQuery} {
+    padding: 0;
+    height: 500px;
+  }
 `;
 
 export const RankingContainer = styled.div`
